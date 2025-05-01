@@ -1,5 +1,5 @@
-# 🛒 Tech-Eshop
-#Still in progress
+# 🛒 Tech-Eshop (Still in progress)
+
 
 A modern e-commerce web application for computer parts, built with React, Redux Toolkit, React Router, and Firebase.
 
