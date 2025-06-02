@@ -1,16 +1,18 @@
-
 @import "tailwindcss";
 
 *,
 *::after,
-*::before{
+*::before {
   margin: 0;
   box-sizing: border-box;
 }
 
 html,
 body,
-#root{
+#root {
   width: 100%;
   height: 100%;
+}
+.active {
+  color: rgb(197, 190, 190);
 }
