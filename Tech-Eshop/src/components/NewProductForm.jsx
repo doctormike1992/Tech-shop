@@ -34,20 +34,16 @@ export default function NewProductForm() {
 
   //PRICE FORMAT
   function handleBlur() {
-    let value = inputValue.replace(/,/g, ".");
+    let value = inputValue.replace(",", ".");
 
     if (value === "") return;
 
     const number = parseFloat(value);
     if (isNaN(number)) return;
 
-    const formatted = new Intl.NumberFormat("de-DE", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }).format(number);
-
-    setInputValue(formatted);
+    setInputValue(number.toString());
   }
+  
 
   //IMAGE LOADER
   function handleImageChange(event) {
@@ -81,11 +77,17 @@ export default function NewProductForm() {
       // Prepare product data
       const formData = new FormData(event.target);
       const data = Object.fromEntries(formData.entries());
+      const originalPrice = parseFloat(inputValue.replace(",", "."));
+      const discount = ischeck ? parseInt(data.percentage, 10) / 100 : 0;
+      const finalPrice = ischeck
+        ? originalPrice * (1 - discount)
+        : originalPrice;
 
       const productData = {
         ...data,
         image: downloadURL,
-        price: parseFloat(inputValue.replace(",", ".")),
+        price: originalPrice,
+        finalPrice: finalPrice,
         sale: ischeck,
         percentage: ischeck ? parseInt(data.percentage, 10) / 100 : 0,
       };

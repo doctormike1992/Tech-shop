@@ -7,7 +7,7 @@ export default function MainLayout() {
   return (
     <>
       <Header />
-      <main className="h-full"> 
+      <main className="h-full w-full"> 
         <Outlet />
       </main>
     </>

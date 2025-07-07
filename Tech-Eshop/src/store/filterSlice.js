@@ -36,7 +36,7 @@ export const filterSlice = createSlice({
   
 });
 
-console.log(initialFilterState);
+
 
 
 export const filterActions = filterSlice.actions;

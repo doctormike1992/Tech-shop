@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 
 *,
 *::after,
@@ -12,7 +14,23 @@ body,
 #root {
   width: 100%;
   height: 100%;
+  font-family: 'roboto';
 }
 .active {
   color: rgb(197, 190, 190);
+}
+
+select,
+::picker(select){
+  appearance: base-select;
+}
+select::after{
+  
+}
+option::checkmark{
+  display: none;
+}
+option:checked{
+  background-color: rgb(226, 43, 217);
+  color: white;
 }

@@ -9,5 +9,8 @@
     "firebase": "^11.6.1",
     "react-dual-range-slider": "^1.0.4",
     "tailwindcss": "^4.1.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.10"
   }
 }

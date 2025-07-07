@@ -10,6 +10,12 @@ import { productsActions } from "./store/productsSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { db } from "./firebase/firebase";
+import Cart from "./pages/Cart";
+import Favorites from "./pages/Favorites";
+import { onAuthStateChanged } from "firebase/auth";
+import { userActions } from "./store/userSclice";
+import { getAuth } from "firebase/auth";
+
 
 
 
@@ -17,8 +23,34 @@ import { db } from "./firebase/firebase";
 export default function App() {
   const dispatch = useDispatch();
 
+
+
+  //ADDING THE USER ON REDUX
   useEffect(() => {
-    
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(userActions.userLoggedIn(true));
+        dispatch(userActions.userId(user.uid));
+        dispatch(
+          userActions.getUserInfo({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          })
+        );
+      } else {
+        dispatch(userActions.userLoggedIn(false));
+        dispatch(userActions.userId(null));
+        dispatch(userActions.getUserInfo(null));
+      }
+    });
+    return unsubscribe;
+  }, [dispatch]);
+
+  //ADDING THE PRODUCTS ON REDUX ON MOUNT
+  useEffect(() => {
      const unsubscribe =  onSnapshot(
       collection(db, "products"),
       (snapshot) => {
@@ -58,18 +90,14 @@ export default function App() {
           path: "/admin",
           element: <Admin />,
         },
-        // {
-        //   path: '/favorites',
-        //   element:
-        // },
-        // {
-        //   path: '/favorites/:favoritesId',
-        //   element: ,
-        // },
-        // {
-        //   path: '/cart',
-        //   element: ,
-        // },
+        {
+          path: '/favorites',
+          element: <Favorites />
+        },
+        {
+          path: '/cart',
+          element: <Cart />,
+        },
         // {
         //   path: '/cart/:cartId',
         //   element: ,

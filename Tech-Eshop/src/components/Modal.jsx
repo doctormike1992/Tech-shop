@@ -1,7 +1,7 @@
 import { useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
 
-export default function Modal({ ref, children, closeButton, noButton, modalClass, buttonClass }) {
+export default function Modal({ ref, children, modalClass, closeButton }) {
   const dialog = useRef();
   useImperativeHandle(ref, () => {
     return {
@@ -12,20 +12,18 @@ export default function Modal({ ref, children, closeButton, noButton, modalClass
         dialog.current.close();
       }
     };
-  });
+  }, []);
 
   return createPortal(
-    <dialog ref={dialog} className={modalClass}>
+    <dialog ref={dialog}>
       <div
         className={`fixed  inset-0  bg-[#3b3b3be0] z-50 transition-transform duration-300 ease-in-out  ${modalClass} `}
       >
         {children}
+        {closeButton && <button className="bg-stone-800 py-0.5 px-2 text-sm md:text-lg text-stone-50 hover:bg-stone-700 rounded-2xl" onClick={() => dialog.current.close()}>Cancel</button>}
+         
       </div>
-      <form method="dialog">
-        <button hidden={!noButton} className={buttonClass}>
-          {closeButton}
-        </button>
-      </form>
+    
     </dialog>,
     document.getElementById("modal")
   );

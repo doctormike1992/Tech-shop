@@ -94,7 +94,7 @@ export default function SideBar() {
           {isMobile && hideNav && (
             <button
               onClick={handleNav}
-              className="absolute left-[90%]   md:left-[94%] top-[5%] w-[22%] text-start rounded-br-xl rounded-tr-xl bg-[#c7c5c575] flex justify-end pr-3 py-2 md:text-2xl text-lg font-bold text-stone-50"
+              className="absolute left-[90%]  md:left-[94%] top-[5%] w-[22%] text-start text-fuchsia-800 flex justify-end pr-3 py-2 md:text-2xl text-lg font-bold "
             >
               X
             </button>
@@ -102,7 +102,7 @@ export default function SideBar() {
           {!isMobile && (
             <button
               onClick={handleNav}
-              className="absolute left-[100%] top-[5%] w-[18%] text-start rounded-br-xl rounded-tr-xl bg-[#c7c5c575] flex justify-end pr-3 md:px-7  py-2 md:text-2xl text-lg font-bold text-stone-50"
+              className="absolute left-[100%] top-[5%] w-[18%] text-start flex justify-end pr-3 md:px-7  py-2 md:text-2xl text-lg font-bold text-fuchsia-800"
             >
               X
             </button>
