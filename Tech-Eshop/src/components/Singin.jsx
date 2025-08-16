@@ -43,6 +43,8 @@ export default function Singin() {
       dispatch(userActions.userId(user.uid));
       setEmail('')
       setPassword('')
+      setShowPass(false);
+
 
       console.log("Account created:", user);
     } catch (err) {
@@ -81,6 +83,7 @@ export default function Singin() {
       dispatch(userActions.userId(userCredential.user.uid));
       setEmail("");
       setPassword("");
+      setShowPass(false);
     // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setError('Invalid Email or Password');
@@ -124,22 +127,28 @@ export default function Singin() {
                 Password
               </label>
               <input
-                type={showPass ? 'text' : 'password'}
+                type={showPass ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
-                
               />
-              <button type="button" className="absolute right-1 top-[50%]" onClick={() => setShowPass(prev => !prev)}>
-                {showPass ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} /> }
-                
+              <button
+                type="button"
+                className="absolute right-1 top-[50%]"
+                onClick={() => setShowPass((prev) => !prev)}
+              >
+                {showPass ? (
+                  <FontAwesomeIcon icon={faEye} />
+                ) : (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                )}
               </button>
             </div>
           </div>
           <button
             type="submit"
-            className=" w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
+            className=" w-full bg-fuchsia-600 text-white py-2 rounded-lg hover:bg-fuchsia-700 transition"
           >
             {islogin ? "Sing in" : "Create new Account"}
           </button>

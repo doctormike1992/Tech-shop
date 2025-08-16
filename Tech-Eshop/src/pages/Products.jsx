@@ -7,6 +7,8 @@ import { discountOnFilter } from "../utils/discountOnFilter";
 import { guestActions } from "../store/guestSlice";
 import { faArrowsUpDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { collection, doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
+import { db, auth } from "../firebase/firebase";
 
 export default function Products() {
   const products = useSelector((state) => state.products.products);
@@ -18,12 +20,11 @@ export default function Products() {
   const max = useSelector((state) => state.filter.max);
   const sale = useSelector((state) => state.filter.sale);
   const search = useSelector((state) => state.filter.search);
-  const guestCart = useSelector((state) => state.guest.cart);
+  const userLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const dispatch = useDispatch();
   const [productOrder, setProductOrder] = useState("alphabetical");
   const guestFavorites = useSelector((state) => state.guest.favorites);
-  
 
   //FILTERS
   useEffect(() => {
@@ -75,21 +76,24 @@ export default function Products() {
   ]);
 
   // ADD TO CART FUNCTION
-  function handleAddToCart(item) {
-    const existing = guestCart.find((ex) => ex.id === item.id);
-    let updatedCart;
+  async function handleAddToCart(item) {
+    const uid = auth.currentUser.uid;
+    const cartRef = collection(db, `users/${uid}/cart`);
+    const itemDocRef = doc(cartRef, item.id.toString());
 
-    if (existing) {
-      updatedCart = guestCart.map((cartItem) =>
-        cartItem.id === item.id
-          ? { ...cartItem, quantity: cartItem.quantity + 1 }
-          : cartItem
-      );
+    const docSnap = await getDoc(itemDocRef);
+    if (docSnap.exists()) {
+      const current = docSnap.data();
+      await setDoc(itemDocRef, {
+        ...current,
+        quantity: current.quantity + 1,
+      });
     } else {
-      updatedCart = [...guestCart, { ...item, quantity: 1 }];
+      await setDoc(itemDocRef, {
+        ...item,
+        quantity: 1,
+      });
     }
-
-    dispatch(guestActions.addToCart(updatedCart));
   }
 
   //CHANGE THE ORDER OF PRODUCTS
@@ -98,15 +102,19 @@ export default function Products() {
   }
 
   //ADD TO FAVORITES FUNCTION
-  function handleFavorites(item) {
-    const existing = guestFavorites.find((ex) => ex.id === item.id);
-    let updatedFavorites;
+  async function handleFavorites(item) {
+    const uid = auth.currentUser.uid;
+    const itemDocRef = doc(db, `users/${uid}/favorites`, item.id.toString());
 
-    if (existing) {
-      dispatch(guestActions.removeFromFavorites(item));
+    const docSnap = await getDoc(itemDocRef);
+    if (docSnap.exists()) {
+     
+      await deleteDoc(itemDocRef);
+      dispatch(guestActions.removeFromFavorites(item.id));
     } else {
-      updatedFavorites = [...guestFavorites, { ...item }];
-      dispatch(guestActions.addToFavorites(updatedFavorites));
+      
+      await setDoc(itemDocRef, { ...item });
+      dispatch(guestActions.addToFavorites([...guestFavorites, item]));
     }
   }
 
@@ -144,7 +152,10 @@ export default function Products() {
 
           <ul className="flex w-full flex-row items-center md:justify-start justify-center flex-wrap xl:gap-20 lg:gap-10 gap-7 py-10  pl-2 md:pl-0 ">
             {filteredProducts.length === 0 ? (
-              <p className="text-2xl">No Items Found!</p>
+              <div
+                className="w-12 h-12 border-4 border-blue-500 border-t-transparent
+                            rounded-full animate-spin"
+              ></div>
             ) : (
               filteredProducts.map((item) => {
                 const existing = guestFavorites.find((ex) => ex.id === item.id);
@@ -158,11 +169,11 @@ export default function Products() {
                         inFavorites={existing}
                         handleFavorites={() => handleFavorites(item)}
                         item={item}
-                    
                       />
                     </Link>
                     <div className="w-full">
                       <button
+                        hidden={!userLoggedIn}
                         className="bg-stone-950 text-stone-50 text-xl text-bold  py-2 w-full cursor-pointer hover:text-stone-300 active:text-lg"
                         onClick={() => handleAddToCart(item)}
                       >

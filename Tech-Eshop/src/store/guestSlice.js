@@ -1,35 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { saveCartStorage, saveFavoritesStorage } from "../utils/localeStorage";
-
 
 const initialGuestState = {
-  cart: JSON.parse(sessionStorage.getItem("cart")) || [],
-  favorites: JSON.parse(sessionStorage.getItem("favorites")) || [],
+  cart:  [],
+  favorites: [],
+  orders: [],
+  info: [],
 };
 
-export const guestSlice = createSlice({
-  name: "guest",
+export const cartSlice = createSlice({
+  name: "userCart",
   initialState: initialGuestState,
   reducers: {
     addToCart(state, action) {
       state.cart = action.payload;
-      saveCartStorage(state.cart);
     },
     removeFromCart(state, action) {
-      state.cart = state.cart.filter((item) => item.id !== action.payload.id);
-      saveCartStorage(state.cart);
+      state.favorites = state.favorites.filter(
+        (item) => item.id !== action.payload
+      );
+    },
+    clearCart(state) {
+      state.cart = []
     },
     addToFavorites(state, action) {
-      state.favorites = action.payload;     
-      saveFavoritesStorage(state.favorites);
-      
+      state.favorites = action.payload;
     },
     removeFromFavorites(state, action) {
-      state.favorites = state.cart.filter((item) => item.id !== action.payload.id);
-      saveFavoritesStorage(state.favorites);
+      state.favorites = state.favorites.filter(
+        (item) => item.id !== action.payload
+      );
     },
+    addToOrders(state, action) {
+      state.orders =  action.payload;
+    },
+    addInfo(state, action) {
+      state.info = action.payload;
+    }
   },
 });
 
-
-export const guestActions = guestSlice.actions;
+export const guestActions = cartSlice.actions;

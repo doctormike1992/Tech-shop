@@ -1,7 +1,9 @@
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
 
 export default function ProductItem({ item, quantity, handleFavorites, inFavorites }) {
+    const uid = useSelector((state) => state.user.userUID);
 
   let heart = "absolute top-2 right-2 py-1 z-50 px-2 bg-[#80808042] rounded-2xl ";
 
@@ -18,7 +20,7 @@ export default function ProductItem({ item, quantity, handleFavorites, inFavorit
           SALE
         </div>
       )}
-      <button
+      {uid &&  <button
         onClick={(e) => {
           e.preventDefault(); 
           e.stopPropagation(); 
@@ -27,7 +29,8 @@ export default function ProductItem({ item, quantity, handleFavorites, inFavorit
         className={heart}
       >
         <FontAwesomeIcon icon={faHeart} className="active:scale-70" />
-      </button>
+      </button>}
+     
       <div className="md:w-80 w-60 z-[-10]">
         <img
           src={item.image}

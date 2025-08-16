@@ -51,12 +51,6 @@ console.log(products)
           >
             Products
           </button>
-          <button
-            className={buttonClick === "Orders" ? activeButton : buttonClass}
-            onClick={() => handleButtons("Orders")}
-          >
-            Orders
-          </button>
         </div>
         <div className="w-[70%] border-1 border-stone-200 ">{show}</div>
       </main>

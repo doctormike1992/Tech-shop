@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import Search from "./Search";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
@@ -23,8 +23,12 @@ export default function Header() {
   const adminLogged = useSelector((state) => state.user.userUID);
   const dispatch = useDispatch();
   const auth = getAuth();
+  const navigate = useNavigate();
 
+  //LOGOUT
   const handleLogout = async () => {
+    navigate("/");
+
     try {
       await signOut(auth);
       dispatch(userActions.userLoggedIn(false));
@@ -75,6 +79,16 @@ export default function Header() {
     setIsVisible(true);
   }
 
+  //NAVIGATE TO ORDERS PAGE FUNCTION
+  function navigateToOrders() {
+    navigate("/orders");
+  }
+
+  //NAVIGATE TO PROFILE PAGE FUNCTION
+  function navigateToInfo() {
+    navigate("/info");
+  }
+
   return (
     <header
       className="flex flex-col lg:flex-row w-full items-center justify-between bg-fuchsia-800 lg:py-5
@@ -107,8 +121,12 @@ export default function Header() {
         )}
       </div>
 
-      <nav className='flex justify-end md:text-xl text-sm items-center lg:w-[50%] w-full'>
-        <div className={`xl:w-[70%] w-full flex  justify-around ${userLogState ? 'xl:justify-between ' : 'justify-end'}`}>
+      <nav className="flex justify-end md:text-xl text-sm items-center lg:w-[50%] w-full">
+        <div
+          className={`xl:w-[70%] w-full flex  justify-around ${
+            userLogState ? "xl:justify-between " : "justify-end"
+          }`}
+        >
           {adminLogged === "WsPXtBodtbhmqPI8DLTvvufq46B2" && (
             <NavLink
               to="/admin"
@@ -137,8 +155,19 @@ export default function Header() {
               <button className="relative h-full group">
                 Account <FontAwesomeIcon icon={faRightToBracket} />
                 <ul className="scale-y-0 absolute group-focus:scale-y-100 text-stone-950 bg-stone-200 right-[-10%] left-[-10%]  origin-top duration-200 flex flex-col gap-4 z-40 border-1 border-stone-300 rounded-md">
-                  <li className="hover:text-fuchsia-800">Profile</li>
-                  <li className="hover:text-fuchsia-800">Orders</li>
+                  <li
+                    className="hover:text-fuchsia-800"
+                    onClick={navigateToInfo}
+                  >
+                    Profile
+                  </li>
+                  <li
+                    onClick={navigateToOrders}
+                    className="hover:text-fuchsia-800"
+                  >
+                    Orders
+                  </li>
+
                   <li className="hover:text-fuchsia-800" onClick={handleLogout}>
                     Log out
                   </li>

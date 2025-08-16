@@ -7,23 +7,20 @@ import Products from "./pages/Products";
 import ProductDetail from "./components/ProductDetail";
 import { collection, onSnapshot } from "firebase/firestore";
 import { productsActions } from "./store/productsSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { db } from "./firebase/firebase";
 import Cart from "./pages/Cart";
 import Favorites from "./pages/Favorites";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { userActions } from "./store/userSclice";
-import { getAuth } from "firebase/auth";
-
-
-
-
+import { guestActions } from "./store/guestSlice";
+import Orders from "./pages/Orders";
+import Info from "./pages/Info";
 
 export default function App() {
   const dispatch = useDispatch();
-
-
+  const uid = useSelector((state) => state.user.userUID);
 
   //ADDING THE USER ON REDUX
   useEffect(() => {
@@ -49,28 +46,89 @@ export default function App() {
     return unsubscribe;
   }, [dispatch]);
 
-  //ADDING THE PRODUCTS ON REDUX ON MOUNT
+  //ADDING THE PRODUCTS,CART,FAVORITES,ORDERS,PROFILE ON REDUX ON LOG IN
   useEffect(() => {
-     const unsubscribe =  onSnapshot(
+    const unsubscribe = onSnapshot(
       collection(db, "products"),
       (snapshot) => {
-        const productData =  snapshot.docs.map((doc) => ({
+        const productData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-          
         }));
-        console.log(productData)
-        dispatch(productsActions.setProducts( productData));
+        dispatch(productsActions.setProducts(productData));
       },
       (error) => {
         console.error("Error fetching products: ", error);
       }
     );
-    return () => unsubscribe();
-    
-  }, [dispatch]);
-  
 
+    if (uid) {
+      const unsubscribeOrders = onSnapshot(
+        collection(db, `users/${uid}/orders`),
+        (snapshot) => {
+          const ordersData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          dispatch(guestActions.addToOrders());
+          dispatch(guestActions.addToOrders(ordersData));
+        },
+        (error) => {
+          console.error("Error fetching orders: ", error);
+        }
+      );
+
+      const unsubscribeCart = onSnapshot(
+        collection(db, `users/${uid}/cart`),
+        (snapshot) => {
+          const cartData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          dispatch(guestActions.addToCart(cartData));
+        },
+        (error) => {
+          console.error("Error fetching cart: ", error);
+        }
+      );
+
+      const unsubscribeFavorites = onSnapshot(
+        collection(db, `users/${uid}/favorites`),
+        (snapshot) => {
+          const favoiritesData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          dispatch(guestActions.addToFavorites(favoiritesData));
+        },
+        (error) => {
+          console.error("Error fetching favories: ", error);
+        }
+      );
+
+      const unsubscribeInfo = onSnapshot(
+        collection(db, `users/${uid}/info`),
+        (snapshot) => {
+          const infoData = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+          }));
+          dispatch(guestActions.addInfo(infoData));
+        },
+        (error) => {
+          console.error("Error fetching infos: ", error);
+        }
+      );
+
+      return () => {
+        unsubscribe();
+        uid &&
+          (unsubscribeCart(),
+          unsubscribeFavorites(),
+          unsubscribeOrders,
+          unsubscribeInfo());
+      };
+    }
+  }, [dispatch, uid]);
 
   const router = createBrowserRouter([
     {
@@ -91,25 +149,21 @@ export default function App() {
           element: <Admin />,
         },
         {
-          path: '/favorites',
-          element: <Favorites />
+          path: "/favorites",
+          element: <Favorites />,
         },
         {
-          path: '/cart',
+          path: "/cart",
           element: <Cart />,
         },
-        // {
-        //   path: '/cart/:cartId',
-        //   element: ,
-        // },
-        // {
-        //   path: '/orders',
-        //   element: ,
-        // },
-        // {
-        //   path: '/orders/:ordersId',
-        //   element: ,
-        // },
+        {
+          path: "/orders",
+          element: <Orders />,
+        },
+        {
+          path: "/info",
+          element: <Info />,
+        },
       ],
     },
   ]);
