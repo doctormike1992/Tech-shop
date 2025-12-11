@@ -13,7 +13,7 @@ export default function UserInfo({ handleToOrder, closeModal }) {
   const postCode = useRef();
   const floor = useRef();
   const info = useSelector((state) => state.guest.info);
-
+  console.log(typeof{ info })
 
 
   
@@ -60,8 +60,8 @@ export default function UserInfo({ handleToOrder, closeModal }) {
               <label className="text-xl">Name</label>
               <input
                 type="text"
-                name="name"
-                defaultValue={info.length !== 0 && info[0].name}
+                name="userName"
+                defaultValue={info.length !== 0 && info[0].userName}
                 ref={userName}
                 required
                 className=" border-2 border-stone-400 rounded p-2 text-lg"
@@ -69,8 +69,8 @@ export default function UserInfo({ handleToOrder, closeModal }) {
               <label className="text-xl">Post Code</label>
               <input
                 type="number"
-                name="postcode"
-                defaultValue={info.length !== 0 && info[0].postcode}
+                name="postCode"
+                defaultValue={info.length !== 0 && info[0].postCode}
                 ref={postCode}
                 required
                 className="border-2 border-stone-400 rounded p-2 text-lg"
@@ -90,8 +90,8 @@ export default function UserInfo({ handleToOrder, closeModal }) {
               <label className="text-xl">Last Name</label>
               <input
                 type="text"
-                name="lastname"
-                defaultValue={info.length !== 0 && info[0].lastname}
+                name="lastName"
+                defaultValue={info.length !== 0 && info[0].lastName}
                 ref={lastName}
                 required
                 className="border-2 border-stone-400 rounded p-2 text-lg"

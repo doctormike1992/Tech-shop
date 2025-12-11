@@ -91,7 +91,7 @@ export default function Header() {
 
   return (
     <header
-      className="flex flex-col lg:flex-row w-full items-center justify-between bg-fuchsia-800 lg:py-5
+      className="flex flex-col lg:flex-row w-full items-center justify-between bg-[#680BF4] lg:py-5
     py-3 md:px-3 px-1 text-stone-50 active:text-stone-200  md:gap-6  gap-2"
     >
       <div className="flex flex-row w-full  items-center">

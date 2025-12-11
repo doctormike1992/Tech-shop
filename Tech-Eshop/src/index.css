@@ -19,13 +19,9 @@ body,
 .active {
   color: rgb(197, 190, 190);
 }
-
 select,
 ::picker(select){
   appearance: base-select;
-}
-select::after{
-  
 }
 option::checkmark{
   display: none;

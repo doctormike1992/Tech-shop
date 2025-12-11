@@ -153,9 +153,8 @@ export default function Products() {
           <ul className="flex w-full flex-row items-center md:justify-start justify-center flex-wrap xl:gap-20 lg:gap-10 gap-7 py-10  pl-2 md:pl-0 ">
             {filteredProducts.length === 0 ? (
               <div
-                className="w-12 h-12 border-4 border-blue-500 border-t-transparent
-                            rounded-full animate-spin"
-              ></div>
+                className="text-2xl text-bold"
+              >No Items Found</div>
             ) : (
               filteredProducts.map((item) => {
                 const existing = guestFavorites.find((ex) => ex.id === item.id);
@@ -174,7 +173,7 @@ export default function Products() {
                     <div className="w-full">
                       <button
                         hidden={!userLoggedIn}
-                        className="bg-stone-950 text-stone-50 text-xl text-bold  py-2 w-full cursor-pointer hover:text-stone-300 active:text-lg"
+                        className="bg-stone-950 text-stone-50 text-xl text-bold  py-2 w-full cursor-pointer hover:text-[#97F40B] active:text-lg"
                         onClick={() => handleAddToCart(item)}
                       >
                         Add to cart

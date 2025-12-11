@@ -8,6 +8,7 @@ import Modal from "../components/Modal";
 import { auth, db } from "../firebase/firebase";
 import { deleteDoc, doc, writeBatch, increment } from "firebase/firestore";
 import UserInfo from "../components/UserInfo";
+import dayjs from "dayjs";
 
 export default function Cart() {
   const guestCart = useSelector((state) => state.guest.cart);
@@ -16,6 +17,7 @@ export default function Cart() {
     return acc + discountOnFilter(item) * item.quantity;
   }, 0);
   const dialog = useRef();
+ const readableTime = dayjs().format("YYYY-MM-DD");
 
  
 
@@ -42,6 +44,7 @@ export default function Cart() {
         {
           ...item,
           quantity: increment(item.quantity ?? 1),
+          time: readableTime
         },
         { merge: true }
       );
@@ -70,7 +73,6 @@ export default function Cart() {
                   to={`/${item.id}`}
                   className="flex md:flex-row  items-center justify-between  border-b-2 border-stone-400 md:h-50 h-30 w-full md:text-xl text-bold text-sm overflow-hidden"
                 >
-                  
                   <div className=" h-full w-full ">
                     <img
                       src={item.image}
@@ -80,7 +82,9 @@ export default function Cart() {
                   </div>
 
                   <div className="w-[20%] h-full flex items-center justify-center border-l-2 border-stone-400">
-                    <h2 className="text-center whitespace-normal break-words">{item.name}</h2>
+                    <h2 className="text-center whitespace-normal break-words">
+                      {item.name}
+                    </h2>
                   </div>
                   <div className="w-full border-l-2 border-stone-400  h-full flex items-center justify-center ">
                     {item.sale ? (
@@ -105,7 +109,7 @@ export default function Cart() {
                   </div>
                 </Link>
                 <button
-                  className="absolute right-0  top-1 md:top-2 text-fuchsia-500 bg-stone-200 hover:bg-fuchsia-500 hover:text-stone-50 md:px-3 px-2 text-sm md:text-lg py-1 rounded-full cursor-pointer"
+                  className="absolute right-0  top-1 md:top-2 text-[#97F40B] bg-stone-900 hover:bg-stone-700 hover:text-[#97F40B]  md:px-3 px-2 text-sm md:text-lg py-1  cursor-pointer"
                   onClick={() => handleRemoveFromCart(item)}
                 >
                   CLEAR
