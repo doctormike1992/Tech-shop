@@ -37,7 +37,7 @@ console.log(products)
 
   return (
     <>
-      <main className="h-full  w-full md:gap-5 gap-0.5 flex justify-center items-center flex-col ">
+      <main className="pt-10  w-full md:gap-5 gap-0.5 flex justify-center items-center flex-col ">
         <div className=" flex w-[70%] justify-center md:gap-3">
           <button
             className={buttonClick === "Add" ? activeButton : buttonClass}

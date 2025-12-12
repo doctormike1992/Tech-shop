@@ -43,7 +43,6 @@ export default function NewProductForm() {
 
     setInputValue(number.toString());
   }
-  
 
   //IMAGE LOADER
   function handleImageChange(event) {
@@ -64,7 +63,6 @@ export default function NewProductForm() {
       return;
     }
 
-  
     setIsLoading(true);
     setNoImage(false);
 
@@ -78,6 +76,7 @@ export default function NewProductForm() {
       const formData = new FormData(event.target);
       const data = Object.fromEntries(formData.entries());
       const originalPrice = parseFloat(inputValue.replace(",", "."));
+      const deliveryTime = Number(data.deliveryTime);
       const discount = ischeck ? parseInt(data.percentage, 10) / 100 : 0;
       const finalPrice = ischeck
         ? originalPrice * (1 - discount)
@@ -89,6 +88,7 @@ export default function NewProductForm() {
         price: originalPrice,
         finalPrice: finalPrice,
         sale: ischeck,
+        deliveryTime: deliveryTime,
         percentage: ischeck ? parseInt(data.percentage, 10) / 100 : 0,
       };
 
@@ -119,21 +119,17 @@ export default function NewProductForm() {
   let formClass =
     "flex items-center justify-center md:flex-row flex-col md:gap-2 gap-0.5  h-full w-full bg-stone-50 ";
   if (isLoading) {
-    formClass += 'pointer-events-none'
+    formClass += "pointer-events-none";
   }
 
   return (
     <>
-      <form
-        onSubmit={hanldeNewProduct}
-        className= {formClass}
-        
-      >
+      <form onSubmit={hanldeNewProduct} className={formClass}>
         <div className="flex items-center justify-center flex-col gap-2 bg-stone-50 w-full h-full ">
           <img
             src={imageSrc}
             alt="Selected"
-            className="w-lg h-lg aspect-square"
+            className="w-lg h-lg object-cover aspect-square"
           />
           {noImage && <p className=" text-red-500 text-xl">Enter an image</p>}
 
@@ -156,7 +152,7 @@ export default function NewProductForm() {
         </div>
 
         <div className="flex flex-col md:gap-4 gap-0 w-full justify-center bg-stone-50 h-full">
-          <div className="flex  justify-around items-center  p-3 border-b-stone-300  border-b-2 ">
+          <div className="flex  justify-around items-center  p-2 border-b-stone-300  border-b-2 ">
             <Input
               label="Name:"
               labelClass="md:text-xl text-sm"
@@ -165,10 +161,10 @@ export default function NewProductForm() {
               id="name"
               name="name"
               required
-              inputClass="bg-stone-200 rounded-sm p-1 outline-0 w-[90%]"
+              inputClass="bg-stone-200 rounded-sm p-1 outline-0 w-[80%]"
             />
           </div>
-          <div className="flex  justify-around items-center p-2 border-b-stone-300 border-b-2">
+          <div className="flex justify-around  items-center p-2 border-b-stone-300 border-b-2">
             <Input
               label="Price:"
               labelClass="md:text-xl text-sm"
@@ -180,75 +176,92 @@ export default function NewProductForm() {
               onBlur={handleBlur}
               id="price"
               name="price"
-              inputClass="bg-stone-200 rounded-sm p-1 outline-0 w-[90%]"
+              inputClass="bg-stone-200 rounded-sm p-1 outline-0 w-[80%]"
             />
           </div>
-          <div className="flex md:gap-2  justify-around items-center md:text-md lg:text-lg text-[0.7rem]  p-2 border-b-stone-300 border-b-2">
-            <label htmlFor="category">Category:</label>
-            <select
-              id="category"
-              name="category"
-              className="bg-stone-200 rounded-sm outline-0 text-center cursor-pointer w-[20%] "
-              required
-              onChange={hundleCategories}
-            >
-              {Object.keys(categories).map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
 
-            <label htmlFor="category">Sub-Category:</label>
-            <select
-              id="subCategory"
-              name="subCategory"
-              className="bg-stone-200 rounded-sm outline-0 text-center cursor-pointer w-[20%] "
-              required
-            >
-              {subcategories.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
+          <div className="flex gap-1 md:gap-2 justify-around items-center md:text-[0.7rem] lg:text-md xl:text-lg text-[0.7rem]  md:p-2 border-b-stone-300 border-b-2">
+            <div className="flex w-full items-center flex-col md:flex-row">
+              <label htmlFor="category">Category:</label>
+              <select
+                id="category"
+                name="category"
+                className="bg-stone-200 p-2 rounded-sm outline-0 text-center cursor-pointer  w-[100%] "
+                required
+                onChange={hundleCategories}
+              >
+                {Object.keys(categories).map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex flex-col items-center w-full md:flex-row">
+              <label htmlFor="subCategory">Sub-Category:</label>
+              <select
+                id="subCategory"
+                name="subCategory"
+                className="bg-stone-200 rounded-sm outline-0 p-2 whitespace-nowrap text-center cursor-pointer  w-[100%]"
+                required
+              >
+                {subcategories.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
-          <div className="flex md:gap-2 gap-1   justify-around items-center text-xl  p-3 border-b-stone-300 border-b-2">
-            <div className="flex gap-1 items-center text-stone-900">
+          <div className="flex gap-1  items-center text-lg  p-1 border-b-stone-300 border-b-2">
+            <div className="flex flex-col  justify-start gap-3 w-[100%] items-center text-stone-900">
               <Input
                 label="On Sale?"
-                labelClass="md:text-lg text-[0.7rem]"
+                labelClass=" lg:text-lg  text-center text-[0.7rem]"
                 htmlFor="sale"
                 type="checkbox"
                 id="sale"
                 name="sale"
                 onChange={onSale}
-                inputClass="w-6 scale-150 cursor-pointer"
+                inputClass="w-[50%]  scale-240 cursor-pointer"
+              />
+            </div>
+            <div className="flex flex-col  gap-3 justify-center w-[100%] items-center text-stone-900">
+              <Input
+                label="Days for Delivery:"
+                labelClass="  text-center lg:text-lg text-[0.7rem]"
+                htmlFor="deliveryTime"
+                type="number"
+                id="deliveryTime"
+                name="deliveryTime"
+                inputClass="outline-1 rounded pl-1  w-[50%] "
+                required
               />
             </div>
 
             {ischeck ? (
-              <div className="flex md:gap-2 gap-0.5 items-center text-stone-900">
+              <div className="flex gap-3 flex-col  w-[100%] items-center text-stone-900">
                 <Input
                   label="percentage:"
-                  labelClass="md:text-lg text-[0.7rem]"
+                  labelClass="md:text-md text-center lg:text-lg text-[0.7rem]"
                   htmlFor="howMuch"
                   type="number"
                   id="howMuch"
                   name="percentage"
                   required
-                  inputClass="w-[100%] p-0.5 outline-0 bg-stone-200 rounded text-bold "
+                  inputClass="w-[50%] pl-1 outline-1  rounded  "
                   placeholder="%"
                 />
               </div>
             ) : (
-              <div className="flex md:gap-2 gap-0.5 items-center text-stone-200 pointer-events-none">
+              <div className="flex flex-col  gap-3 items-center w-[100%] text-stone-200 pointer-events-none">
                 <Input
                   label="percentage:"
-                  labelClass="md:text-lg text-[0.7rem]"
+                  labelClass="md:text-md lg:text-lg text-[0.7rem]"
                   htmlFor="howMuch"
-                  inputClass="w-[100%] p-0.5 outline-0 bg-stone-200 rounded text-bold "
+                  inputClass="w-[50%] pl-1 outline-1 text-center bg-stone-200 rounded "
                   placeholder="%"
                 />
               </div>

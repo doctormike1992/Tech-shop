@@ -44,7 +44,7 @@ export default function Favorites() {
 
   return (
     <>
-      <section className="flex flex-row md:gap-16 h-screen">
+      <section className="flex flex-row md:gap-16 ">
         <div className="w-full flex flex-col ">
           <ul className="flex w-full flex-row items-center md:justify-start justify-center flex-wrap xl:gap-20 lg:gap-10 gap-7 py-10  pl-2 md:pl-0 ">
             {guestFavorites.length === 0 ? (

@@ -120,7 +120,7 @@ export default function Products() {
 
   return (
     <>
-      <section className="flex flex-row md:gap-16 h-screen">
+      <section className="flex flex-row md:gap-16 ">
         <SideBar />
         <div className="w-full flex flex-col ">
           <div className="flex w-full  justify-end items-end border-b-2 z-0  pr-16 pb-5 pt-20  ">

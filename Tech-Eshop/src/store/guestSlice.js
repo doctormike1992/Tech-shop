@@ -4,7 +4,6 @@ const initialGuestState = {
   cart:  [],
   favorites: [],
   orders: [],
-  orderHistory: [],
   info: [],
 };
 
@@ -33,13 +32,6 @@ export const cartSlice = createSlice({
     },
     addToOrders(state, action) {
       state.orders =  action.payload;
-    },
-    removeFromOrders(state, action) {
-      state.orders = state.orders.filter(
-        (item) => !action.payload.includes(item.id));
-    },
-    addToOrderHistory(state, action) {
-      state.orderHistory.push(...action.payload);
     },
     addInfo(state, action) {
       state.info = action.payload;

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
 
-export function isOrderExpired(orderDate) {
-  return dayjs().diff(dayjs(orderDate, "YYYY-MM-DD"), "day") >= 3;
+export function isOrderExpired(orderDate, deliveryDate) {
+  return dayjs().diff(dayjs(orderDate, "YYYY-MM-DD"), "day") >= deliveryDate;
 }

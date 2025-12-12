@@ -9,6 +9,7 @@
   box-sizing: border-box;
 }
 
+
 html,
 body,
 #root {
@@ -27,6 +28,6 @@ option::checkmark{
   display: none;
 }
 option:checked{
-  background-color: rgb(226, 43, 217);
+  background-color: #97F40B;
   color: white;
 }
