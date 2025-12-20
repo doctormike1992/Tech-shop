@@ -11,7 +11,7 @@ export default function Info() {
     <>
       <div className="flex flex-row justify-around items-start">
         <div className="grid grid-cols-1 md:grid-cols-[300px_300px] gap-5 place-content-center text-center">
-          <h2 className="md:text-2xl p-1 col-span-2  text-fuchsia-700 text-center">
+          <h2 className="md:text-2xl p-1 col-span-2  text-[var(--secondary)] text-center">
             YOUR INFORMATIONS
           </h2>
           <div className="flex flex-col gap-2">
@@ -51,19 +51,18 @@ export default function Info() {
         </div>
 
         <div>
-          <h2 className="md:text-2xl p-1 col-span-2  text-fuchsia-700 text-center">
-             ORDER HISTORY
+          <h2 className="md:text-2xl p-1 col-span-2  text-[var(--secondary)] text-center">
+            ORDER HISTORY
           </h2>
-          <section className="overflow-scroll h-[80vh]">
-             {orders.map((item) => (
-            <div key={item.id}>
-              <img src={item.image} />
-              <p>{item.name}</p>
-              <p>{item.price}</p>
-            </div>
-          ))}
+          <section className="overflow-y-scroll  h-[80vh]">
+            {orders.map((item) => (
+              <div key={item.id}>
+                <img src={item.image} />
+                <p>{item.name}</p>
+                <p>{item.price}</p>
+              </div>
+            ))}
           </section>
-         
         </div>
       </div>
     </>

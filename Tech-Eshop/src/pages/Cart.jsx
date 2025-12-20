@@ -62,7 +62,7 @@ export default function Cart() {
       <div className="flex flex-col w-full items-center justify-center py-20">
         <h3 className="text-2xl">CART</h3>
 
-        <ul className="border-t-4 border-fuchsia-800 lg:w-[60%] md:w-[90%] w-full text-center">
+        <ul className="border-t-4 border-[var(--secondary)] lg:w-[60%] md:w-[90%] w-full text-center">
           {guestCart.length === 0 && <h1>The Cart is Empty!!</h1>}
           {guestCart.map((item) => {
             const total = discountOnFilter(item) * item.quantity;
@@ -109,7 +109,7 @@ export default function Cart() {
                   </div>
                 </Link>
                 <button
-                  className="absolute right-0  top-1 md:top-2 text-[#97F40B] bg-stone-900 hover:bg-stone-700 hover:text-[#97F40B]  md:px-3 px-2 text-sm md:text-lg py-1  cursor-pointer"
+                  className="absolute right-0  top-1 md:top-2 text-[var(--secondary)] bg-stone-900 hover:bg-stone-700  md:px-3 px-2 text-sm md:text-lg py-1 cursor-pointer"
                   onClick={() => handleRemoveFromCart(item)}
                 >
                   CLEAR

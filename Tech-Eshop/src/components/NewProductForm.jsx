@@ -1,48 +1,29 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { productsActions } from "../store/productsSlice";
 import Input from "./Input";
-import categories from "../store/categories";
+import { categories, subCategories, brands } from "../store/categories";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { db, storage } from "../firebase/firebase";
+import SwitchButton from "./SwitchButton";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function NewProductForm() {
   const [imageSrc, setImageSrc] = useState("/placeholder.png");
   const [ischeck, setIscheck] = useState(false);
-  const [inputValue, setInputValue] = useState("");
   const [noImage, setNoImage] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [subcategories, setSubcategories] = useState(categories.motherboard);
   const [isLoading, setIsLoading] = useState(false);
+  const [specs, setSpecs] = useState([]);
+  const categoryRef = useRef();
+  const [categoryValue, setCategoryValue] = useState("choose one...");
+  const subCategoryRef = useRef();
+  const [subCategoryValue, setSubCategoryValue] = useState("choose one...");
+  const brandRef = useRef();
+  const [brandValue, setBrandValue] = useState("choose one...");
   const dispatch = useDispatch();
-
-  //SUB-CATEGORIES
-  function hundleCategories(event) {
-    const category = event.target.value;
-    setSubcategories(categories[category] || []);
-  }
-
-  //PRICE FORMAT
-  function handleChange(e) {
-    let value = e.target.value;
-
-    value = value.replace(/[^\d.,]/g, "");
-
-    setInputValue(value);
-  }
-
-  //PRICE FORMAT
-  function handleBlur() {
-    let value = inputValue.replace(",", ".");
-
-    if (value === "") return;
-
-    const number = parseFloat(value);
-    if (isNaN(number)) return;
-
-    setInputValue(number.toString());
-  }
 
   //IMAGE LOADER
   function handleImageChange(event) {
@@ -75,12 +56,13 @@ export default function NewProductForm() {
       // Prepare product data
       const formData = new FormData(event.target);
       const data = Object.fromEntries(formData.entries());
-      const originalPrice = parseFloat(inputValue.replace(",", "."));
+      const originalPrice = Number(data.price);
       const deliveryTime = Number(data.deliveryTime);
       const discount = ischeck ? parseInt(data.percentage, 10) / 100 : 0;
       const finalPrice = ischeck
         ? originalPrice * (1 - discount)
         : originalPrice;
+      const specifications = specs;
 
       const productData = {
         ...data,
@@ -89,6 +71,7 @@ export default function NewProductForm() {
         finalPrice: finalPrice,
         sale: ischeck,
         deliveryTime: deliveryTime,
+        specifications: specifications,
         percentage: ischeck ? parseInt(data.percentage, 10) / 100 : 0,
       };
 
@@ -98,40 +81,316 @@ export default function NewProductForm() {
       // Optionally, dispatch to Redux store
       dispatch(productsActions.setProducts({ ...productData, id: docRef.id }));
 
-      // Reset form
+      // RESET FORM
       event.target.reset();
       setImageSrc("/placeholder.png");
-      setInputValue("");
       setSelectedFile(null);
       setIscheck(false);
       setIsLoading(false);
+      setCategoryValue("choose one");
+      setSubCategoryValue("choose one");
+      setBrandValue("choose one");
+      setSpecs([]);
     } catch (error) {
       console.error("Error adding product: ", error);
     }
   }
 
-  //ON SALE CHECKBOX
-  function onSale() {
-    setIscheck((prev) => !prev);
-  }
-
   //DISABLE FORM UNTIL ITS SUBMITED
   let formClass =
-    "flex items-center justify-center md:flex-row flex-col md:gap-2 gap-0.5  h-full w-full bg-stone-50 ";
+    "flex items-start justify-center md:flex-row flex-col md:gap-2 gap-0.5  h-full w-full ";
   if (isLoading) {
     formClass += "pointer-events-none";
+  }
+ 
+  //ADD MORE SPECIFICATIONS
+  function addSpecs() {
+    setSpecs((prev) => [
+      ...prev,
+      { id: crypto.randomUUID(), name: "", value: "" },
+    ]);
+    console.log(specs)
+  }
+
+  function handleDeleteSpec(specId) {
+    const updatedSpec = specs.filter((item) => item.id != specId);
+    setSpecs(updatedSpec);
   }
 
   return (
     <>
       <form onSubmit={hanldeNewProduct} className={formClass}>
-        <div className="flex items-center justify-center flex-col gap-2 bg-stone-50 w-full h-full ">
-          <img
+        <div className="flex flex-col w-full justify-center h-full">
+          <div className="flex flex-col  items-start  p-2 ">
+            <Input
+              label="Product Name"
+              labelClass="text-sm font-semibold"
+              htmlFor="name"
+              type="text"
+              id="name"
+              name="name"
+              required
+              inputClass="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+            />
+          </div>
+
+          <div className="flex flex-col justify-center items-start p-2 ">
+            <label htmlFor="summary" className="text-sm font-semibold">
+              Summary
+            </label>
+            <textarea
+              name="summary"
+              id="summary"
+              required
+              className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+            />
+          </div>
+
+          <div className="flex flex-col  justify-center items-start  p-2  ">
+            <label htmlFor="description" className="text-sm font-semibold">
+              Description
+            </label>
+            <textarea
+              name="description"
+              id="description"
+              required
+              className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+            />
+          </div>
+
+          <div className="flex flex-row justify-around gap-2 items-start p-2 ">
+            <div className="w-full">
+              <label htmlFor="price" className="text-sm font-semibold">
+                Price
+              </label>
+              <input
+                type="number"
+                id="price"
+                step="0.01"
+                name="price"
+                className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+              />
+            </div>
+            <div className="w-full">
+              <label htmlFor="delivery" className="text-sm font-semibold">
+                Delivery Days
+              </label>
+              <input
+                type="number"
+                id="delivery"
+                name="deliveryTime"
+                className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-row justify-start gap-2 items-center p-2">
+            <SwitchButton enabled={ischeck} setEnabled={setIscheck} />
+            <p className="text-sm font-semibold">On Sale</p>
+          </div>
+
+          {ischeck && (
+            <div className="w-full p-2">
+              <label htmlFor="percentage" className="text-sm font-semibold">
+                Sale Percentage
+              </label>
+              <input
+                name="percentage"
+                type="number"
+                id="percentage"
+                className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+              />
+            </div>
+          )}
+
+          <div className="w-full flex flex-col p-2 ">
+            <label htmlFor="category" className="text-sm font-semibold">
+              Category
+            </label>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => categoryRef.current?.focus()}
+                className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
+                  categoryValue === "choose one..." && "text-stone-400"
+                }`}
+              >
+                <span>{categoryValue}</span>
+                <FontAwesomeIcon
+                  className="text-stone-400"
+                  icon={faChevronDown}
+                />
+              </button>
+              <select
+                ref={categoryRef}
+                value={categoryValue}
+                onChange={(e) => setCategoryValue(e.target.value)}
+                name="category"
+                id="category"
+                className=" w-full rounded-md p-2  outline-0 opacity-0  absolute inset-0 cursor-pointer"
+              >
+                {categories.map((item) => (
+                  <option
+                    className="text-md font-medium py-1"
+                    value={item}
+                    key={item}
+                  >
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="w-full flex flex-col p-2 ">
+            <label htmlFor="subCategory" className="text-sm font-semibold">
+              Sub Category
+            </label>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => subCategoryRef.current?.focus()}
+                className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
+                  subCategoryValue === "choose one..." && "text-stone-400"
+                }`}
+              >
+                <span>{subCategoryValue}</span>
+                <FontAwesomeIcon
+                  className="text-stone-400"
+                  icon={faChevronDown}
+                />
+              </button>
+              <select
+                ref={subCategoryRef}
+                value={subCategoryValue}
+                onChange={(e) => setSubCategoryValue(e.target.value)}
+                name="subCategory"
+                id="subCategory"
+                className=" w-full rounded-md p-2  outline-0 opacity-0  absolute inset-0 cursor-pointer"
+              >
+                {subCategories.map((item) => (
+                  <option
+                    className="text-md font-medium py-1"
+                    value={item}
+                    key={item}
+                  >
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="w-full flex flex-col p-2 ">
+            <label htmlFor="brand" className="text-sm font-semibold">
+              Brand
+            </label>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => brandRef.current?.focus()}
+                className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
+                  brandValue === "choose one..." && "text-stone-400"
+                }`}
+              >
+                <span>{brandValue}</span>
+                <FontAwesomeIcon
+                  className="text-stone-400"
+                  icon={faChevronDown}
+                />
+              </button>
+              <select
+                ref={subCategoryRef}
+                value={subCategoryValue}
+                onChange={(e) => setBrandValue(e.target.value)}
+                name="brand"
+                id="brand"
+                className="w-full rounded-md p-2  outline-0 opacity-0  absolute inset-0 cursor-pointer"
+              >
+                {brands.map((item) => (
+                  <option
+                    className="text-md font-medium py-1"
+                    value={item}
+                    key={item}
+                  >
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="w-full flex justify-between items-center flex-col p-2">
+            <div className="flex flex-row justify-between w-full">
+              <p className="text-sm font-semibold">Specifications</p>
+              <button
+                type="button"
+                onClick={addSpecs}
+                className="border transition-all cursor-pointer border-stone-300 hover:bg-stone-200 text-sm font-medium px-2 py-1 rounded-sm"
+              >
+                + Add Spec
+              </button>
+            </div>
+
+            {specs.map((spec, index) => (
+              <div
+                className="w-full flex justify-between gap-2 pt-3 flex-row "
+                key={spec.id}
+              >
+                <input
+                  className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                  type="text"
+                  placeholder="expample (battery life)"
+                  id={`specName${spec.id}`}
+                  value={spec.name}
+                  onChange={(e) => {
+                    const updated = [...specs];
+                    updated[index].name = e.target.value;
+                    setSpecs(updated);
+                  }}
+                />
+
+                <input
+                  type="text"
+                  placeholder="example (8 hours)"
+                  className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                  id={`specValue${spec.id}`}
+                  value={spec.value}
+                  onChange={(e) => {
+                    const updated = [...specs];
+                    updated[index].value = e.target.value;
+                    setSpecs(updated);
+                  }}
+                />
+
+                <button
+                  onClick={() => handleDeleteSpec(spec.id)}
+                  type="button"
+                  className="transition-all  text-md py-2 px-3 rounded-md hover:bg-[#f3f3f5]"
+                >
+                  X
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-center items-center w-full p-2 ">
+            <button className=" text-sm bg-stone-900 font-medium text-stone-50 py-1.5  w-full rounded-md  cursor-pointer ">
+              Add Product
+            </button>
+          </div>
+        </div>
+
+        <div className="flex  items-center justify-center p-2 flex-col gap-2 h-full  w-full">
+          
+             <img
             src={imageSrc}
             alt="Selected"
-            className="w-lg h-lg object-cover aspect-square"
+            className="w-xl h-xl object-cover aspect-square"
           />
-          {noImage && <p className=" text-red-500 text-xl">Enter an image</p>}
+          {noImage && <p className=" text-red-500 font-medium text-xl">Enter an image</p>}
+        
+         
 
           <Input
             htmlFor="file"
@@ -140,149 +399,15 @@ export default function NewProductForm() {
             accept="image/*"
             onChange={handleImageChange}
             label="select image"
-            labelClass="border-2 p-1 md:text-xl text-sm rounded-md active:scale-75 bg-stone-600 text-amber-50 hover:bg-stone-500 cursor-pointer"
+            labelClass="p-1  text-md font-medium rounded-md active:scale-75 bg-stone-900 text-amber-50 px-2 text-center cursor-pointer"
             hidden
           />
           {isLoading && (
             <div
-              className="w-12 h-12 border-4 border-blue-500 border-t-transparent
+              className="w-12 h-12 border-4 border-stone-900 border-t-transparent
                             rounded-full animate-spin"
             ></div>
           )}
-        </div>
-
-        <div className="flex flex-col md:gap-4 gap-0 w-full justify-center bg-stone-50 h-full">
-          <div className="flex  justify-around items-center  p-2 border-b-stone-300  border-b-2 ">
-            <Input
-              label="Name:"
-              labelClass="md:text-xl text-sm"
-              htmlFor="name"
-              type="text"
-              id="name"
-              name="name"
-              required
-              inputClass="bg-stone-200 rounded-sm p-1 outline-0 w-[80%]"
-            />
-          </div>
-          <div className="flex justify-around  items-center p-2 border-b-stone-300 border-b-2">
-            <Input
-              label="Price:"
-              labelClass="md:text-xl text-sm"
-              htmlFor="price"
-              type="text"
-              inputMode="decimal"
-              value={inputValue}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              id="price"
-              name="price"
-              inputClass="bg-stone-200 rounded-sm p-1 outline-0 w-[80%]"
-            />
-          </div>
-
-          <div className="flex gap-1 md:gap-2 justify-around items-center md:text-[0.7rem] lg:text-md xl:text-lg text-[0.7rem]  md:p-2 border-b-stone-300 border-b-2">
-            <div className="flex w-full items-center flex-col md:flex-row">
-              <label htmlFor="category">Category:</label>
-              <select
-                id="category"
-                name="category"
-                className="bg-stone-200 p-2 rounded-sm outline-0 text-center cursor-pointer  w-[100%] "
-                required
-                onChange={hundleCategories}
-              >
-                {Object.keys(categories).map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex flex-col items-center w-full md:flex-row">
-              <label htmlFor="subCategory">Sub-Category:</label>
-              <select
-                id="subCategory"
-                name="subCategory"
-                className="bg-stone-200 rounded-sm outline-0 p-2 whitespace-nowrap text-center cursor-pointer  w-[100%]"
-                required
-              >
-                {subcategories.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="flex gap-1  items-center text-lg  p-1 border-b-stone-300 border-b-2">
-            <div className="flex flex-col  justify-start gap-3 w-[100%] items-center text-stone-900">
-              <Input
-                label="On Sale?"
-                labelClass=" lg:text-lg  text-center text-[0.7rem]"
-                htmlFor="sale"
-                type="checkbox"
-                id="sale"
-                name="sale"
-                onChange={onSale}
-                inputClass="w-[50%]  scale-240 cursor-pointer"
-              />
-            </div>
-            <div className="flex flex-col  gap-3 justify-center w-[100%] items-center text-stone-900">
-              <Input
-                label="Days for Delivery:"
-                labelClass="  text-center lg:text-lg text-[0.7rem]"
-                htmlFor="deliveryTime"
-                type="number"
-                id="deliveryTime"
-                name="deliveryTime"
-                inputClass="outline-1 rounded pl-1  w-[50%] "
-                required
-              />
-            </div>
-
-            {ischeck ? (
-              <div className="flex gap-3 flex-col  w-[100%] items-center text-stone-900">
-                <Input
-                  label="percentage:"
-                  labelClass="md:text-md text-center lg:text-lg text-[0.7rem]"
-                  htmlFor="howMuch"
-                  type="number"
-                  id="howMuch"
-                  name="percentage"
-                  required
-                  inputClass="w-[50%] pl-1 outline-1  rounded  "
-                  placeholder="%"
-                />
-              </div>
-            ) : (
-              <div className="flex flex-col  gap-3 items-center w-[100%] text-stone-200 pointer-events-none">
-                <Input
-                  label="percentage:"
-                  labelClass="md:text-md lg:text-lg text-[0.7rem]"
-                  htmlFor="howMuch"
-                  inputClass="w-[50%] pl-1 outline-1 text-center bg-stone-200 rounded "
-                  placeholder="%"
-                />
-              </div>
-            )}
-          </div>
-          <div className="flex flex-col  justify-center items-center  p-2 border-b-stone-300  border-b-2 ">
-            <label htmlFor="description" className="md:text-xl text-sm">
-              Description
-            </label>
-            <textarea
-              name="description"
-              id="description"
-              required
-              className="bg-stone-200 rounded-sm p-1 outline-0 w-[90%] lg:h-[200px] h-sm align-text-top"
-            />
-          </div>
-          <div className="flex justify-center items-center overflow-hidden ">
-            <button className="md:text-xl text-sm bg-stone-900 text-amber-50 py-2 px-4 rounded-t-lg hover:bg-stone-800 active:translate-y-4 cursor-pointer overflow-hidden">
-              ADD
-            </button>
-          </div>
         </div>
       </form>
     </>

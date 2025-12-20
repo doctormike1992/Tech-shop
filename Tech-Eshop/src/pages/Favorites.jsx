@@ -67,7 +67,7 @@ export default function Favorites() {
                     </Link>
                     <div className="w-full">
                       <button
-                        className="bg-stone-950 text-stone-50 text-xl text-bold  py-2 w-full cursor-pointer hover:text-stone-300 active:text-lg"
+                        className="bg-stone-950  text-stone-50 text-xl text-bold  py-2 w-full cursor-pointer hover:text-stone-300 active:text-lg"
                         onClick={() => handleAddToCart(item)}
                       >
                         Add to cart

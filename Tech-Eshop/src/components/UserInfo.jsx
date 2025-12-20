@@ -51,7 +51,7 @@ export default function UserInfo({ handleToOrder, closeModal }) {
           onSubmit={handleInfos}
           className="bg-stone-50 flex flex-col items-center rounded-lg"
         >
-          <h2 className="md:text-2xl p-1 text-fuchsia-700">
+          <h2 className="md:text-2xl p-1 text-[var(--secondary)]">
             {info.length !== 0 ? "CHECK" : "ADD"} YOUR INFORMATIONS
           </h2>
 

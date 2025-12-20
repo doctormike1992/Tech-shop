@@ -113,6 +113,20 @@ export default function EditProduct({ product }) {
           />
           <input
             type="text"
+            name="summary"
+            value={editedProduct.summary}
+            onChange={handleChange}
+            className="w-full p-1 border my-1"
+          />
+          <input
+            type="text"
+            name="description"
+            value={editedProduct.description}
+            onChange={handleChange}
+            className="w-full p-1 border my-1"
+          />
+          <input
+            type="text"
             name="category"
             value={editedProduct.category}
             onChange={handleChange}
@@ -122,6 +136,13 @@ export default function EditProduct({ product }) {
             type="text"
             name="subCategory"
             value={editedProduct.subCategory}
+            onChange={handleChange}
+            className="w-full p-1 border my-1"
+          />
+          <input
+            type="text"
+            name="brand"
+            value={editedProduct.brand}
             onChange={handleChange}
             className="w-full p-1 border my-1"
           />

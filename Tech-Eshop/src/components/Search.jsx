@@ -9,35 +9,34 @@ export default function Search({onModal, searchBarModal, searchButtonModal}) {
   const dispatch = useDispatch();
   const input = useRef();
 
-  function handleClrearInput(e) {
-    if (e.target.value === "") {
-      dispatch(filterActions.search(e.target.value));
-    }
-  }
-
  
 
   return (
-    <div className={onModal ? onModal : "relative md:w-[90%] flex flex-row "}>
+    <div
+      className={
+        onModal
+          ? onModal
+          : "relative md:min-w-[20rem]  md:w-[30rem] flex flex-row "
+      }
+    >
       <input
         className={
           searchBarModal
             ? searchBarModal
-            : "bg-stone-50 text-stone-950 md:h-11 h-full  rounded-xl text-xl outline-0 p-1 text-nowrap md:pr-11 md:pl-2 md:w-full"
+            : "bg-stone-100 text-stone-700 md:h-10 h-full  rounded-lg text-md font-medium outline-0 p-1 text-nowrap md:pr-11  md:pl-10 md:w-full"
         }
         type="text"
-        placeholder="Search products"
+        placeholder="search products..."
         ref={input}
-        onChange={handleClrearInput}
+        onChange={() => dispatch(filterActions.search(input.current.value))}
       />
       <Link to="/">
         <button
           className={
             searchButtonModal
               ? searchButtonModal
-              : "absolute right-0 top-0 bottom-0 text-[#863CF6] text-2xl bg-stone-300 md:px-2 rounded-br-xl rounded-tr-xl cursor-pointer hover:text-stone-700"
+              : "absolute left-0 top-0 bottom-0 text-stone-400 text-2xl bg-stone-100 md:px-2 rounded-lg "
           }
-          onClick={() => dispatch(filterActions.search(input.current.value))}
         >
           <FontAwesomeIcon icon={faSearch} />
         </button>

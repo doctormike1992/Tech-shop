@@ -148,11 +148,11 @@ export default function Singin() {
           </div>
           <button
             type="submit"
-            className=" w-full bg-fuchsia-600 text-white py-2 rounded-lg hover:bg-fuchsia-700 transition"
+            className=" w-full bg-[var(--primary)] text-white py-2 rounded-lg hover:bg-stone-800 transition"
           >
             {islogin ? "Sing in" : "Create new Account"}
           </button>
-          <p className="text-sm text-center text-gray-600">
+          <p className="text-sm text-center text-stone-600">
             {islogin
               ? "Don’t have an account? "
               : "You already have an account? "}

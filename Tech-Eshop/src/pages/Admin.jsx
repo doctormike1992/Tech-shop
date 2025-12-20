@@ -1,19 +1,17 @@
 import NewProductForm from "../components/NewProductForm";
 import { useState } from "react";
-import ProductManagment from "../components/ProductManagment";
-import { useSelector } from "react-redux";
+// import ProductManagment from "../components/ProductManagment";
+// import { useSelector } from "react-redux";
 
 export default function Admin() {
-  const products = useSelector(state => state.products.products)
+  // const products = useSelector(state => state.products.products)
   const [buttonClick, setButtonClick] = useState("Add");
    
-console.log(products)
-  // CSS CLASSES
-  const buttonClass =
-    "rounded-md border-2 border-stone-500 p-1 w-40 md:text-lg text-[0.5rem] text-bold text-stone-500 cursor-pointer hover:text-stone-800";
 
-  const activeButton =
-    "rounded-md border-2  p-1 w-40 md:text-lg text-[0.5rem] text-bold text-stone-50 bg-stone-900 border-stone-900";
+  // CSS CLASSES
+  const buttonClass = "text-sm font-medium py-1 px-2";
+
+  const activeButton = "text-sm font-medium bg-stone-50 py-1 px-2 rounded-2xl";
 
   //COMONENT DISPLAY BASED ON BUTTON PRESSED
   let show;
@@ -22,9 +20,9 @@ console.log(products)
   if (buttonClick === "Add") {
     show = <NewProductForm />;
   }
-  if (buttonClick === "Products") {
-    show = <ProductManagment products={products}/>;
-  }
+  // if (buttonClick === "Products") {
+  //   show = <ProductManagment products={products}/>;
+  // }
   // BUTTONS FUNCTION
   function handleButtons(param) {
     setButtonClick(param);
@@ -37,22 +35,27 @@ console.log(products)
 
   return (
     <>
-      <main className="pt-10  w-full md:gap-5 gap-0.5 flex justify-center items-center flex-col ">
-        <div className=" flex w-[70%] justify-center md:gap-3">
-          <button
+      <main className="pt-10 w-full md:gap-5 gap-0.5 px-2 flex justify-center items-start  flex-col ">
+        <div className=" flex  flex-col w-full items-start justify-start md:gap-3">
+          <h1 className="font-semibold text-2xl">Admin Dashboard</h1>
+          <div className="bg-[#ececf0]
+           flex gap-0.5 px-1.5 py-1 rounded-2xl">
+            <button
             className={buttonClick === "Add" ? activeButton : buttonClass}
             onClick={() => handleButtons("Add")}
           >
-            Add{" "}
+            Add Product
           </button>
           <button
             className={buttonClick === "Products" ? activeButton : buttonClass}
             onClick={() => handleButtons("Products")}
           >
-            Products
+            Manage Products
           </button>
+          </div>
+          
         </div>
-        <div className="w-[70%] border-1 border-stone-200 ">{show}</div>
+        <div className=" border-1 rounded-md border-stone-200 ">{show}</div>
       </main>
     </>
   );

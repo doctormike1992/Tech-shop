@@ -1,17 +1,18 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import Search from "./Search";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "./Modal";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import Singin from "./Singin";
 import { getAuth, signOut } from "firebase/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../store/userSclice";
+
 
 export default function Header() {
   const modal = useRef();
@@ -19,11 +20,22 @@ export default function Header() {
   const searchContainerRef = useRef();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
   const [isVisible, setIsVisible] = useState(false);
+  const [cartQuantity, setCartQuantity] = useState(0);
   const userLogState = useSelector((state) => state.user.isLoggedIn);
   const adminLogged = useSelector((state) => state.user.userUID);
   const dispatch = useDispatch();
   const auth = getAuth();
   const navigate = useNavigate();
+  const favorites = useSelector((state) => state.guest.favorites);
+  const cart = useSelector((state) => state.guest.cart);
+
+  //UPDATE THE CART QUANTITY POP UP
+  useEffect(() => {
+    const cartTotalQuantity = cart.reduce((sum, item) => sum += item.quantity, 0);
+    setCartQuantity(cartTotalQuantity);
+  }, [cart])
+  
+
 
   //LOGOUT
   const handleLogout = async () => {
@@ -80,22 +92,17 @@ export default function Header() {
   }
 
   //NAVIGATE TO ORDERS PAGE FUNCTION
-  function navigateToOrders() {
-    navigate("/orders");
-  }
-
-  //NAVIGATE TO PROFILE PAGE FUNCTION
-  function navigateToInfo() {
-    navigate("/info");
-  }
+  // function navigateToOrders() {
+  //   navigate("/orders");
+  // }
 
   return (
     <header
-      className="flex flex-col lg:flex-row w-full items-center justify-between bg-[#680BF4] lg:py-5
-    py-3 md:px-3 px-1 text-stone-50 active:text-stone-200  md:gap-6  gap-2"
+      className="flex sticky top-0 z-99 backdrop-blur-md  bg-white/60 flex-col md:flex-row w-full items-center justify-start  lg:py-4
+    py-3 md:px-3 px-1 text-stone-50 active:text-stone-200  md:gap-8 shadow-sm shadow-stone-900/10 gap-2  "
     >
-      <div className="flex flex-row w-full  items-center">
-        <h2 className=" text-2xl w-full">
+      <div className="flex flex-row gap-6 text-nowrap items-center">
+        <h2 className=" text-stone-900 text-xl ">
           <Link to="/">Tech-Eshop</Link>
         </h2>
         {isMobile ? (
@@ -107,11 +114,11 @@ export default function Header() {
             <Modal ref={modal} modalClass="w-full">
               <div ref={modalContainerRef}>
                 <Search
-                  onModal={`w-full flex flex-row transition-transform transition-opacity duration-300 ease-in-out ${
-                    isVisible ? "translate-y-0 " : "translate-y-10 "
+                  onModal={`w-full flex flex-row transition-transform transition-all duration-300 ease-in-out ${
+                    isVisible ? "translate-y-0.5" : "translate-y-10"
                   } `}
-                  searchBarModal="bg-stone-400  md:h-11 h-full w-full text-xl outline-0 p-1 text-nowrap md:pr-11 md:pl-2 md:w-full relative"
-                  searchButtonModal="h-full text-stone-500 text-3xl bg-stone-300 md:px-3 px-4 cursor-pointer hover:text-stone-700"
+                  searchBarModal="bg-stone-50   h-full w-full text-2xl outline-0 py-1 px-5 text-nowrap pr-2  md:w-full relative rounded-lg border-2 border-stone-600"
+                  searchButtonModal=" hidden"
                 />
               </div>
             </Modal>
@@ -121,18 +128,23 @@ export default function Header() {
         )}
       </div>
 
-      <nav className="flex justify-end md:text-xl text-sm items-center lg:w-[50%] w-full">
+      <nav className="flex justify-start text-md font-medium  items-center  w-full">
         <div
-          className={`xl:w-[70%] w-full flex  justify-around ${
-            userLogState ? "xl:justify-between " : "justify-end"
+          className={`w-full md:gap-10 flex text-stone-900 justify-start ${
+            userLogState ? "xl:justify-start " : "justify-start"
           }`}
         >
           {adminLogged === "WsPXtBodtbhmqPI8DLTvvufq46B2" && (
             <NavLink
               to="/admin"
-              className={({ isActive }) => (isActive ? "active" : "underline")}
+              className={({ isActive }) => (isActive ? "active" : undefined)}
             >
-              admin
+              <li
+                title="Administrator"
+                className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg "
+              >
+                admin
+              </li>
             </NavLink>
           )}
 
@@ -142,41 +154,49 @@ export default function Header() {
                 to="/favorites"
                 className={({ isActive }) => (isActive ? "active" : undefined)}
               >
-                favorites
-                <FontAwesomeIcon icon={faStar} />
+                <li className="transition-all cursor-pointer relative hover:bg-stone-200  py-1 px-2 rounded-lg ">
+                  <FontAwesomeIcon title="Favorites" icon={faHeart} />
+                  {favorites.length !== 0 && (
+                    <span className="py-0.5 px-1 w-6 text-center border-2 border-stone-50  rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
+                      {favorites.length}
+                    </span>
+                  )}
+                </li>
               </NavLink>
+
               <NavLink
                 to="/cart"
                 className={({ isActive }) => (isActive ? "active" : undefined)}
               >
-                cart
-                <FontAwesomeIcon icon={faCartShopping} />
+                <li className="transition-all cursor-pointer hover:bg-stone-200 py-1 relative px-2 rounded-lg ">
+                  <FontAwesomeIcon title="Cart" icon={faCartShopping} />
+                  {cart.length !== 0 && (
+                    <span className="py-0.5 px-1 w-6 text-center border-2 border-stone-50  rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
+                      {cartQuantity}
+                    </span>
+                  )}
+                </li>
               </NavLink>
-              <button className="relative h-full group">
-                Account <FontAwesomeIcon icon={faRightToBracket} />
-                <ul className="scale-y-0 absolute group-focus:scale-y-100 text-stone-950 bg-stone-200 right-[-10%] left-[-10%]  origin-top duration-200 flex flex-col gap-4 z-40 border-1 border-stone-300 rounded-md">
-                  <li
-                    className="hover:text-fuchsia-800"
-                    onClick={navigateToInfo}
-                  >
-                    Profile
-                  </li>
-                  <li
-                    onClick={navigateToOrders}
-                    className="hover:text-fuchsia-800"
-                  >
-                    Orders
-                  </li>
+              <NavLink to="/info">
+                <li className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg ">
+                  <FontAwesomeIcon title="User" icon={faUser} />
+                </li>
+              </NavLink>
 
-                  <li className="hover:text-fuchsia-800" onClick={handleLogout}>
-                    Log out
-                  </li>
-                </ul>
+              <button
+                className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg "
+                title="log out"
+                onClick={handleLogout}
+              >
+                <FontAwesomeIcon icon={faRightToBracket} />
               </button>
             </>
           ) : (
-            <button onClick={() => modal.current.open()}>
-              Log in <FontAwesomeIcon icon={faRightToBracket} />
+            <button
+              className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg "
+              onClick={() => modal.current.open()}
+            >
+              <FontAwesomeIcon title="Log In" icon={faRightToBracket} />
             </button>
           )}
         </div>

@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function ProductManagment({products}) {
   const [shownCategories, setShownCategories] = useState({});
 
-  const categoryKeys = Object.keys(categories);
+  
 
   //SHOW THE PRODUCTS FUNCTION
   function toggleCategoryVisibility(cat) {
@@ -23,7 +23,7 @@ export default function ProductManagment({products}) {
   return (
     <>
       <ul>
-        {categoryKeys.map((cat) => {
+        {categories.map((cat) => {
           let categoryProducts = products?.filter(
             (items) => items.category === cat
           );
@@ -31,9 +31,9 @@ export default function ProductManagment({products}) {
             <li key={cat}>
               <button
                 onClick={() => toggleCategoryVisibility(cat)}
-                className="text-lg text-stone-50 text-bold tracking-wider bg-stone-600 z-100 cursor-pointer flex justify-items-start w-full hover:bg-stone-800 transition-all"
+                className="text-xl text-stone-50 text-bold tracking-wider bg-stone-900 z-100 cursor-pointer flex justify-center w-full p-2 border-3 border-stone-950 hover:text-stone-950 hover:bg-stone-50 transition-all"
               >
-                {cat} {shownCategories[cat] ? "↓" : ">"}
+                {cat} 
               </button>
               <hr className="text-stone-300 border-2" />
               <div

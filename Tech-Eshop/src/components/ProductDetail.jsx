@@ -27,6 +27,10 @@ export default function ProductDetail() {
     category,
     subCategory,
     description,
+    summary,
+    brand,
+    specifications
+
   } = product;
   const discountedPrice = sale ? price - price * (percentage / 100) : price;
 
@@ -47,7 +51,16 @@ export default function ProductDetail() {
       <p>
         <strong>Sub-Category:</strong> {subCategory}
       </p>
+      <p>{summary}</p>
+      <p>{brand}</p>
       <p>{description}</p>
+      {specifications?.map((item) => (
+        <div key={item.id}> 
+          <p>{item.name}</p>
+        <p>{item.value}</p>
+        </div>
+        
+      )) }
     </div>
   );
 }
