@@ -1,60 +1,103 @@
-import EditProduct from "./EditProduct";
-import categories from "../store/categories";
-import { useState } from "react";
+// import EditProduct from "./EditProduct";
+import { useSelector, useDispatch } from "react-redux";
+import { categories } from "../store/categories";
+import { Fragment } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db, storage } from "../firebase/firebase";
+import { ref, deleteObject } from "firebase/storage";
+import { productsActions } from "../store/productsSlice";
 
-export default function ProductManagment({products}) {
-  const [shownCategories, setShownCategories] = useState({});
+export default function ProductManagment() {
+  const products = useSelector((state) => state.products.products);
+  const dispatch = useDispatch();
 
-  
+  //DELETE PRODUCT AND IMAGE FORM REDUX AND FIREBASE  
+  const handleDeleteProduct = async (product) => {
+    try {
+      if (product.image) {
+        const imageRef = ref(storage,product.image);
+        await deleteObject(imageRef);
+        const productRef = doc(db, "products", product.id);
+        await deleteDoc(productRef);
+      }
 
-  //SHOW THE PRODUCTS FUNCTION
-  function toggleCategoryVisibility(cat) {
-    setShownCategories((prev) => ({
-      ...prev,
-      [cat]: !prev[cat],
-    }));
-  }
+      
+      const updatedProducts = products.filter(item => item.id !== product.id);
+      dispatch(productsActions.setProducts(updatedProducts));
+      
+    } catch (error) {
+      console.log("problem removing the product", error);
+    }
+  };
 
   if (!Array.isArray(products)) {
     return <div>Loading...</div>;
   }
- 
 
   return (
     <>
-      <ul>
-        {categories.map((cat) => {
-          let categoryProducts = products?.filter(
-            (items) => items.category === cat
-          );
-          return (
-            <li key={cat}>
-              <button
-                onClick={() => toggleCategoryVisibility(cat)}
-                className="text-xl text-stone-50 text-bold tracking-wider bg-stone-900 z-100 cursor-pointer flex justify-center w-full p-2 border-3 border-stone-950 hover:text-stone-950 hover:bg-stone-50 transition-all"
-              >
-                {cat} 
-              </button>
-              <hr className="text-stone-300 border-2" />
-              <div
-                className={`transition-all duration-500 ease-in-out transform overflow-hidden flex flex-row ${
-                  shownCategories[cat]
-                    ? " max-h-96 "
-                    : " max-h-0 "
-                }`}
-              >
-                {shownCategories[cat] &&
-                  categoryProducts.map((pro) => (
-                    <EditProduct
-                      key={pro.id}                 
-                      product={pro}
-                    />
-                  ))}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      {categories.map((item) => (
+        <div
+          className="flex w-full h-full flex-col justify-center items-start gap-3"
+          key={item}
+        >
+          <h1 className="text-xl font-medium">{item}</h1>
+          <div className="flex flex-row gap-10 h-full w-full">
+            {products.map((product) => (
+              <Fragment key={product.id}>
+                {product.category === item && (
+                  <div className="flex  flex-col border min-w-130 max-w-130 max-h-90 border-stone-300 p-2 rounded-lg ">
+                    <div className="flex flex-row items-start  justify-start h-full">
+                      <div className="h-full flex items-start justify-start ">
+                        <img
+                          src={product.image}
+                          className="w-30 h-30 aspect-[4/3] object-cover rounded-lg flex-shrink-0"
+                        />
+                      </div>
+                      <div className="flex flex-col px-4 gap-10 w-full justify-center min-w-0">
+                        <div className="flex flex-col justify-start gap-1  items-start">
+                          <h1 className="text-lg font-medium">
+                            {product.name}
+                          </h1>
+                          <p className="text-sm font-medium text-stone-500 break-all max-h-5">
+                            {product.summary}
+                          </p>
+                        </div>
+                        <div className="flex flex-row  items-center justify-between">
+                          <p className="text-lg font-medium">
+                            ${product.price}
+                          </p>
+                          <p className="text-sm  text-stone-400">
+                            Days tp Deliver: {product.deliveryTime}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-row justify-around pt-4  items-center">
+                      <button className="flex gap-1 items-center border font-medium border-stone-400 rounded-md px-22 py-0.5 cursor-pointer">
+                        <FontAwesomeIcon className="text-sm" icon={faPencil} />
+                        Edit
+                      </button>
+                      <button className="flex gap-1 items-center border border-red-600 font-medium  rounded-md px-22 py-0.5 z-10 text-stone-50 bg-red-600 cursor-pointer"
+                        onClick={() => {handleDeleteProduct(product)}}
+                      >
+                        <FontAwesomeIcon
+                          className="text-sm  text-stone-50"
+                          icon={faTrashCan}
+                        />
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </Fragment>
+            ))}
+          </div>
+        </div>
+      ))}
     </>
   );
 }

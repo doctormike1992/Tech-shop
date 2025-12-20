@@ -1,10 +1,9 @@
 import NewProductForm from "../components/NewProductForm";
 import { useState } from "react";
-// import ProductManagment from "../components/ProductManagment";
-// import { useSelector } from "react-redux";
+import ProductManagment from "../components/ProductManagment";
+
 
 export default function Admin() {
-  // const products = useSelector(state => state.products.products)
   const [buttonClick, setButtonClick] = useState("Add");
    
 
@@ -20,9 +19,9 @@ export default function Admin() {
   if (buttonClick === "Add") {
     show = <NewProductForm />;
   }
-  // if (buttonClick === "Products") {
-  //   show = <ProductManagment products={products}/>;
-  // }
+  if (buttonClick === "Products") {
+    show = <ProductManagment/>;
+  }
   // BUTTONS FUNCTION
   function handleButtons(param) {
     setButtonClick(param);
@@ -55,7 +54,7 @@ export default function Admin() {
           </div>
           
         </div>
-        <div className=" border-1 rounded-md border-stone-200 ">{show}</div>
+        <div className="">{show}</div>
       </main>
     </>
   );

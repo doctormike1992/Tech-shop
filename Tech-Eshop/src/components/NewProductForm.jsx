@@ -98,7 +98,7 @@ export default function NewProductForm() {
 
   //DISABLE FORM UNTIL ITS SUBMITED
   let formClass =
-    "flex items-start justify-center md:flex-row flex-col md:gap-2 gap-0.5  h-full w-full ";
+    "flex items-start justify-center md:flex-row flex-col md:gap-2 gap-0.5  h-full w-full border-1 rounded-md border-stone-200";
   if (isLoading) {
     formClass += "pointer-events-none";
   }
@@ -141,6 +141,7 @@ export default function NewProductForm() {
             <textarea
               name="summary"
               id="summary"
+              maxLength={100}
               required
               className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
             />
