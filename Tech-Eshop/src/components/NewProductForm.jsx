@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { productsActions } from "../store/productsSlice";
 import Input from "./Input";
@@ -17,11 +17,8 @@ export default function NewProductForm() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [specs, setSpecs] = useState([]);
-  const categoryRef = useRef();
   const [categoryValue, setCategoryValue] = useState("choose one...");
-  const subCategoryRef = useRef();
   const [subCategoryValue, setSubCategoryValue] = useState("choose one...");
-  const brandRef = useRef();
   const [brandValue, setBrandValue] = useState("choose one...");
   const dispatch = useDispatch();
 
@@ -72,7 +69,7 @@ export default function NewProductForm() {
         sale: ischeck,
         deliveryTime: deliveryTime,
         specifications: specifications,
-        percentage: ischeck ? parseInt(data.percentage, 10) / 100 : 0,
+        percentage: ischeck ? data.percentage : 0,
       };
 
       // Add product to Firestore
@@ -211,7 +208,6 @@ export default function NewProductForm() {
             <div className="relative">
               <button
                 type="button"
-                onClick={() => categoryRef.current?.focus()}
                 className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
                   categoryValue === "choose one..." && "text-stone-400"
                 }`}
@@ -223,7 +219,6 @@ export default function NewProductForm() {
                 />
               </button>
               <select
-                ref={categoryRef}
                 value={categoryValue}
                 onChange={(e) => setCategoryValue(e.target.value)}
                 name="category"
@@ -250,7 +245,6 @@ export default function NewProductForm() {
             <div className="relative">
               <button
                 type="button"
-                onClick={() => subCategoryRef.current?.focus()}
                 className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
                   subCategoryValue === "choose one..." && "text-stone-400"
                 }`}
@@ -262,7 +256,6 @@ export default function NewProductForm() {
                 />
               </button>
               <select
-                ref={subCategoryRef}
                 value={subCategoryValue}
                 onChange={(e) => setSubCategoryValue(e.target.value)}
                 name="subCategory"
@@ -289,7 +282,6 @@ export default function NewProductForm() {
             <div className="relative">
               <button
                 type="button"
-                onClick={() => brandRef.current?.focus()}
                 className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
                   brandValue === "choose one..." && "text-stone-400"
                 }`}
@@ -301,8 +293,7 @@ export default function NewProductForm() {
                 />
               </button>
               <select
-                ref={subCategoryRef}
-                value={subCategoryValue}
+                value={brandValue}
                 onChange={(e) => setBrandValue(e.target.value)}
                 name="brand"
                 id="brand"
@@ -387,7 +378,7 @@ export default function NewProductForm() {
              <img
             src={imageSrc}
             alt="Selected"
-            className="w-xl h-xl object-cover aspect-square"
+            className="w-xl h-xl object-cover aspect-[4/3]"
           />
           {noImage && <p className=" text-red-500 font-medium text-xl">Enter an image</p>}
         

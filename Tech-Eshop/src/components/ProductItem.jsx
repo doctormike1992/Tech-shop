@@ -25,7 +25,7 @@ export default function ProductItem({
     <>
       {item.sale && (
         <div className="z-[1]  bg-red-600 text-stone-50 px-2 text-[12px] font-medium top-2 left-2 absolute rounded-md">
-          -{(item.percentage * 100).toFixed(0)}% OFF
+          -{item.percentage}% OFF
         </div>
       )}
       {uid && (

@@ -9,10 +9,20 @@ import { doc, deleteDoc } from "firebase/firestore";
 import { db, storage } from "../firebase/firebase";
 import { ref, deleteObject } from "firebase/storage";
 import { productsActions } from "../store/productsSlice";
+import Modal from "./Modal";
+import EditProduct from "./EditProduct";
+import { useRef } from "react";
+
 
 export default function ProductManagment() {
   const products = useSelector((state) => state.products.products);
   const dispatch = useDispatch();
+  const modal = useRef();
+
+
+  function openSideBar() {
+    modal.current.open();
+  }
 
   //DELETE PRODUCT AND IMAGE FORM REDUX AND FIREBASE  
   const handleDeleteProduct = async (product) => {
@@ -40,6 +50,7 @@ export default function ProductManagment() {
   return (
     <>
       {categories.map((item) => (
+      
         <div
           className="flex w-full h-full flex-col justify-center items-start gap-3"
           key={item}
@@ -49,6 +60,12 @@ export default function ProductManagment() {
             {products.map((product) => (
               <Fragment key={product.id}>
                 {product.category === item && (
+                  <>
+                    <Modal ref={modal}
+                     modalClass='flex items-start pt-[1%] justify-center'
+                    >
+                    <EditProduct product={product} modal={modal}/>
+                    </Modal>
                   <div className="flex  flex-col border min-w-130 max-w-130 max-h-90 border-stone-300 p-2 rounded-lg ">
                     <div className="flex flex-row items-start  justify-start h-full">
                       <div className="h-full flex items-start justify-start ">
@@ -68,7 +85,7 @@ export default function ProductManagment() {
                         </div>
                         <div className="flex flex-row  items-center justify-between">
                           <p className="text-lg font-medium">
-                            ${product.price}
+                            ${product.finalPrice}
                           </p>
                           <p className="text-sm  text-stone-400">
                             Days tp Deliver: {product.deliveryTime}
@@ -77,7 +94,7 @@ export default function ProductManagment() {
                       </div>
                     </div>
                     <div className="flex flex-row justify-around pt-4  items-center">
-                      <button className="flex gap-1 items-center border font-medium border-stone-400 rounded-md px-22 py-0.5 cursor-pointer">
+                      <button className="flex gap-1 items-center border font-medium border-stone-400 rounded-md px-22 py-0.5 cursor-pointer" onClick={openSideBar} >
                         <FontAwesomeIcon className="text-sm" icon={faPencil} />
                         Edit
                       </button>
@@ -92,6 +109,9 @@ export default function ProductManagment() {
                       </button>
                     </div>
                   </div>
+                  </>
+       
+                  
                 )}
               </Fragment>
             ))}
