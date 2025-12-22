@@ -41,7 +41,7 @@ export default function ProductItem({
         </button>
       )}
 
-      <div className="rounded-xl overflow-hidden border-stone-200 border group">
+      <div className="rounded-xl overflow-hidden border-stone-300 border group">
         <div className="md:w-88 lg:w-90 w-65 z-[-10]">
           <img
             src={item.image}

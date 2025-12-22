@@ -159,6 +159,7 @@ export default function Singin() {
 
             <button
               onClick={() => setIsLogin((prev) => !prev)}
+              type="button"
               className="text-indigo-600 hover:underline cursor-pointer"
             >
               {islogin ? "Register" : "Log in"}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import {
   ref,
@@ -22,7 +22,12 @@ export default function EditProduct({ product, modal }) {
   const [specs, setSpecs] = useState(product.specifications || []);
  
 
-
+  useEffect(() => {
+    setEditedProduct({ ...product });
+    setIscheck(product.sale);
+    setImageSrc(product.image);
+    setSpecs(product.specifications || []);
+  }, [product]);
  
 
   //CHANGE THE EXISTING IMAGE
@@ -201,10 +206,7 @@ export default function EditProduct({ product, modal }) {
           </div>
 
           <div className="flex flex-row justify-start gap-2 items-center p-2">
-            <SwitchButton
-              enabled={ischeck}
-              setEnabled={setIscheck}
-            />
+            <SwitchButton enabled={ischeck}  setEnabled={setIscheck} />
             <p className="text-sm font-semibold">On Sale</p>
           </div>
 
@@ -217,7 +219,8 @@ export default function EditProduct({ product, modal }) {
                 name="percentage"
                 type="number"
                 id="percentage"
-                value={editedProduct.percentage}
+                required
+                value={editedProduct.percentage || ''}
                 onChange={(e) =>
                   setEditedProduct({
                     ...editedProduct,
@@ -427,11 +430,17 @@ export default function EditProduct({ product, modal }) {
         </div>
       </div>
 
-      <div>
-        <button type="button" onClick={closeModal}>
+      <div className="flex justify-center gap-2 pb-2 flex-row w-full">
+        <button
+          type="button"
+          className="font-medium px-20 text-center border py-1.5 border-stone-400 rounded-md cursor-pointer hover:bg-[#f3f3f5]"
+          onClick={closeModal}
+        >
           Cancel
         </button>
-        <button>save</button>
+        <button className="font-medium px-20 text-center py-1.5  text-stone-50 bg-stone-950 border-stone-400 rounded-md cursor-pointer hover:bg-gray-900">
+          save
+        </button>
       </div>
     </form>
   );

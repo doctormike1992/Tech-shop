@@ -37,24 +37,31 @@ export default function Admin() {
       <main className="pt-10 w-full md:gap-5 gap-0.5 px-2 flex justify-center items-start  flex-col ">
         <div className=" flex  flex-col w-full items-start justify-start md:gap-3">
           <h1 className="font-semibold text-2xl">Admin Dashboard</h1>
-          <div className="bg-[#ececf0]
-           flex gap-0.5 px-1.5 py-1 rounded-2xl">
+          <div
+            className="bg-[#ececf0]
+           flex gap-0.5 px-1.5 py-1 rounded-2xl"
+          >
             <button
-            className={buttonClick === "Add" ? activeButton : buttonClass}
-            onClick={() => handleButtons("Add")}
-          >
-            Add Product
-          </button>
-          <button
-            className={buttonClick === "Products" ? activeButton : buttonClass}
-            onClick={() => handleButtons("Products")}
-          >
-            Manage Products
-          </button>
+              className={buttonClick === "Add" ? activeButton : buttonClass}
+              onClick={() => handleButtons("Add")}
+            >
+              Add Product
+            </button>
+            <button
+              className={
+                buttonClick === "Products" ? activeButton : buttonClass
+              }
+              onClick={() => handleButtons("Products")}
+            >
+              Manage Products
+            </button>
           </div>
-          
         </div>
-        <div className="">{show}</div>
+        <div
+          className={`${buttonClick === "Products" ? "xl:w-[80%]" : 'w-full'} pr-1`}
+        >
+          {show}
+        </div>
       </main>
     </>
   );
