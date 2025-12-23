@@ -389,7 +389,7 @@ export default function NewProductForm() {
           <img
             src={imageSrc}
             alt="Selected"
-            className="w-xl h-xl object-cover aspect-[4/3] rounded-md"
+            className="w-xl h-xl object-cover aspect-4/3 rounded-md"
           />
           {noImage && (
             <p className=" text-red-500 font-medium text-xl">Enter an image</p>

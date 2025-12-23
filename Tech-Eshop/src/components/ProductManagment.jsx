@@ -59,7 +59,7 @@ export default function ProductManagment() {
             <div className="flex flex-row pb-2 justify-center items-center gap-2">
               <FontAwesomeIcon icon={faBoxArchive} />
               <h1 className="text-xl font-medium">{item} </h1>
-              <p className=" inline-flex items-center justify-center py-0.5 text-xs font-medium bg-[var(--third)] px-2 rounded-md">
+              <p className=" inline-flex items-center justify-center py-0.5 text-xs font-medium bg-(--third) px-2 rounded-md">
                 {productsNum.length}
               </p>
             </div>
@@ -79,7 +79,7 @@ export default function ProductManagment() {
                             )}
                             <img
                               src={product.image}
-                              className="w-30 h-30 aspect-[4/3] object-cover rounded-lg flex-shrink-0"
+                              className="w-30 h-30 aspect-4/3 object-cover rounded-lg fshrink-0"
                             />
                           </div>
                           <div className="flex flex-col px-4 gap-10 w-full justify-center min-w-0">
@@ -87,8 +87,11 @@ export default function ProductManagment() {
                               <h1 className="text-lg font-medium">
                                 {product.name}
                               </h1>
-                              <p className="text-sm font-medium text-stone-500 break-all max-h-5">
-                                {product.summary}
+                              <p
+                                className="text-sm font-medium text-stone-500  max-w-90 max-h-9  line-clamp-2"
+                              >
+                                {/* {product.summary} */}
+                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui rem porro molestiae voluptatum beatae, nemo odit similique. Ipsum earum quisquam nobis eius? Necessitatibus ex maiores sequi temporibus rerum consectetur similique?
                               </p>
                             </div>
                             <div className="flex flex-row  items-center justify-between">

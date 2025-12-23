@@ -100,7 +100,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
           transform duration-500 ease-in-out sm:overflow-auto overflow-y-scroll transition-all ${
             isVisible
               ? "opacity-100 translate-0"
-              : "opacity-0 translate-x-[-100%]"
+              : "opacity-0 -translate-x-full"
           }
           `}
       >
@@ -115,7 +115,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
         </div>
 
         <div className="w-full pl-3">
-          <label className="md:text-2xl font-semibold text-lg text-[var(--primary)]">
+          <label className="md:text-2xl font-semibold text-lg text-(--primary)">
             Category
           </label>
           <div className="py-3">
@@ -141,7 +141,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
         </div>
 
         <div className=" w-full pl-3">
-          <label className="md:text-2xl font-semibold text-lg text-[var(--primary)]">
+          <label className="md:text-2xl font-semibold text-lg text-(--primary)">
             Type
           </label>
           <div className="py-3">
@@ -167,7 +167,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
         </div>
 
         <div className="w-full pl-3">
-          <label className="md:text-2xl font-semibold text-lg text-[var(--primary)]">
+          <label className="md:text-2xl font-semibold text-lg text-(--primary)">
             Brand
           </label>
           <div className="py-3">
@@ -193,7 +193,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
         </div>
 
         <div className="w-full flex flex-col  pl-3">
-          <label className="md:text-2xl pb-2 font-medium text-lg text-[var(--primary)]">
+          <label className="md:text-2xl pb-2 font-medium text-lg text-(--primary)">
             On Sale
           </label>
 
@@ -201,7 +201,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
         </div>
 
         <div className="w-full py-2 pb-6 px-2 pl-3">
-          <label className="md:text-2xl  font-medium text-lg text-[var(--primary)]">
+          <label className="md:text-2xl  font-medium text-lg text-(--primary)">
             Max price
           </label>
 

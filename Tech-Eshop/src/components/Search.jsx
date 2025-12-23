@@ -16,7 +16,7 @@ export default function Search({onModal, searchBarModal, searchButtonModal}) {
       className={
         onModal
           ? onModal
-          : "relative md:min-w-[20rem]  md:w-[30rem] flex flex-row "
+          : "relative md:min-w-[20rem]  md:w-120 flex flex-row "
       }
     >
       <input

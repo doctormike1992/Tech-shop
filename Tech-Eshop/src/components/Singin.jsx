@@ -148,7 +148,7 @@ export default function Singin() {
           </div>
           <button
             type="submit"
-            className=" w-full bg-[var(--primary)] text-white py-2 rounded-lg hover:bg-stone-800 transition"
+            className=" w-full bg-(--primary) text-white py-2 rounded-lg hover:bg-stone-800 transition"
           >
             {islogin ? "Sing in" : "Create new Account"}
           </button>

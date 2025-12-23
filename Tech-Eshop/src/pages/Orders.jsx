@@ -21,7 +21,7 @@ export default function Orders() {
       <div className="flex flex-col w-full items-center justify-center py-20">
         <h3 className="text-2xl">YOUR ORDERS</h3>
 
-        <ul className="border-t-4 border-[var(--secondary)] lg:w-[60%] md:w-[90%] w-full text-center">
+        <ul className="border-t-4 border-(--secondary) lg:w-[60%] md:w-[90%] w-full text-center">
           {guestOrders.length === 0 && <h1>No Orders Have been made!!</h1>}
           {orderInProgress.map((item) => {
             const total = discountOnFilter(item) * item.quantity;

@@ -24,7 +24,7 @@ export default function ProductItem({
   return (
     <>
       {item.sale && (
-        <div className="z-[1]  bg-red-600 text-stone-50 px-2 text-[12px] font-medium top-2 left-2 absolute rounded-md">
+        <div className="z-1  bg-red-600 text-stone-50 px-2 text-[12px] font-medium top-2 left-2 absolute rounded-md">
           -{item.percentage}% OFF
         </div>
       )}
@@ -37,24 +37,24 @@ export default function ProductItem({
           }}
           className={heart}
         >
-          <FontAwesomeIcon icon={faHeart} className="active:scale-70 z-[-10]" />
+          <FontAwesomeIcon icon={faHeart} className="active:scale-70 -z-10" />
         </button>
       )}
 
-      <div className="rounded-xl overflow-hidden border-stone-300 border group">
-        <div className="md:w-88 lg:w-90 w-65 z-[-10]">
+      <div className="rounded-xl overflow-hidden border-stone-300 border group md:w-88 lg:w-90 w-65 ">
+        <div className="w-full -z-10">
           <img
             src={item.image}
             alt="image"
-            className="w-full transition-all group-hover:scale-105 aspect-[4/3] object-cover z-0"
+            className="w-full transition-all group-hover:scale-105 aspect-4/3 object-cover z-0"
           />
         </div>
-        <div className="px-4 py-6">
-          <div className="flex flex-col justify-start w-full gap-1.5 items-start h-16">
+        <div className="px-4  py-1.5 min-w-0">
+          <div className="flex flex-col justify-start w-full gap-1.5 items-start  md:h-31 min-w-0">
             <p className="w-full tracking-wide font-medium">{item.name}</p>
 
             <div className="flex flex-row gap-2">
-              <p className="text-[0.8rem] tracking-wider font-medium  bg-[var(--secondary)] shadow/20 rounded-md py-1 px-1.5 ">
+              <p className="text-[0.8rem] tracking-wider font-medium  bg-(--secondary) shadow/20 rounded-md py-1 px-1.5 ">
                 {item.category}
               </p>
 
@@ -63,8 +63,8 @@ export default function ProductItem({
               </p>
             </div>
 
-            <p className="w-full font-normal text-sm text-stone-600">
-              {item.description}
+            <p className="w-full font-normal wrap-break-word text-sm text-stone-600 md:line-clamp-3 line-clamp-1">
+              {item.summary}
             </p>
           </div>
 
