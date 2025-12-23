@@ -23,7 +23,7 @@ export default function Search({onModal, searchBarModal, searchButtonModal}) {
         className={
           searchBarModal
             ? searchBarModal
-            : "bg-stone-100 text-stone-700 md:h-10 h-full  rounded-lg text-md font-medium outline-0 p-1 text-nowrap md:pr-11  md:pl-10 md:w-full"
+            : "bg-stone-100 text-stone-700 md:h-10 h-full  rounded-lg text-md font-medium outline-0 p-1 text-nowrap md:pr-11  md:pl-12 md:w-full"
         }
         type="text"
         placeholder="search products..."

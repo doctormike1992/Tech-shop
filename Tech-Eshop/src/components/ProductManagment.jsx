@@ -137,7 +137,7 @@ export default function ProductManagment() {
           </div>
         );
       })}
-      <Modal ref={modal} modalClass="flex items-start pt-[1%] justify-center">
+      <Modal ref={modal} modalClass="flex items-start pt-[1%] justify-center overflow-auto">
         {selectedProduct && <EditProduct product={selectedProduct} modal={modal} />}
       </Modal>
     </>

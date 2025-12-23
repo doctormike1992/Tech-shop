@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { productsActions } from "../store/productsSlice";
 import Input from "./Input";
@@ -20,7 +20,17 @@ export default function NewProductForm() {
   const [categoryValue, setCategoryValue] = useState("choose one...");
   const [subCategoryValue, setSubCategoryValue] = useState("choose one...");
   const [brandValue, setBrandValue] = useState("choose one...");
+  const [width, setWidth] = useState(window.innerWidth);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const widthChange = () => setWidth(window.innerWidth);
+
+    window.addEventListener('resize', widthChange);
+
+    return () => window.addEventListener("resize", widthChange);
+     
+  }, []);
 
   //IMAGE LOADER
   function handleImageChange(event) {
@@ -366,23 +376,24 @@ export default function NewProductForm() {
             ))}
           </div>
 
-          <div className="flex justify-center items-center w-full p-2 ">
-            <button className=" text-sm bg-stone-900 font-medium text-stone-50 py-1.5  w-full rounded-md  cursor-pointer ">
-              Add Product
-            </button>
-          </div>
+          {width > 766 && (
+            <div className="flex justify-center items-center w-full p-2 ">
+              <button className=" text-sm bg-stone-900 font-medium text-stone-50 py-1.5  w-full rounded-md  cursor-pointer ">
+                Add Product
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="flex  items-center justify-center p-2 flex-col gap-2 h-full  w-full">
-          
-             <img
+          <img
             src={imageSrc}
             alt="Selected"
-            className="w-xl h-xl object-cover aspect-[4/3]"
+            className="w-xl h-xl object-cover aspect-[4/3] rounded-md"
           />
-          {noImage && <p className=" text-red-500 font-medium text-xl">Enter an image</p>}
-        
-         
+          {noImage && (
+            <p className=" text-red-500 font-medium text-xl">Enter an image</p>
+          )}
 
           <Input
             htmlFor="file"
@@ -401,6 +412,14 @@ export default function NewProductForm() {
             ></div>
           )}
         </div>
+
+        {width < 767 && (
+          <div className="flex justify-center items-center w-full p-2 ">
+            <button className=" text-sm bg-stone-900 font-medium text-stone-50 py-1.5  w-full rounded-md  cursor-pointer ">
+              Add Product
+            </button>
+          </div>
+        )}
       </form>
     </>
   );

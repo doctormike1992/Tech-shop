@@ -31,7 +31,7 @@ html{
 
 .active {
   color: white;
-  background-color: rgb(61, 61, 61);
+  background-color: #3d3d3d;
   border-radius: .6rem;
   pointer-events: none;
 }
@@ -48,4 +48,8 @@ option:checked{
 }
 li{
   list-style: none;
+  cursor: pointer;
+}
+li:hover{
+  color: lightslategray;
 }

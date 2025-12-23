@@ -138,7 +138,10 @@ export default function Products() {
         <div className="w-full  flex flex-col ">
           <ul className="flex w-full flex-row items-center justify-start flex-wrap xl:gap-20 lg:gap-10 gap-7 py-10  pl-2 ">
             {filteredProducts.length === 0 ? (
-              <div className="text-2xl text-bold">No Items Found</div>
+              <div
+                className="w-12 h-12 border-4 border-stone-900 border-t-transparent
+                            rounded-full animate-spin absolute top-[50%] left-[50%]"
+              ></div>
             ) : (
               filteredProducts.map((item) => {
                 const existing = guestFavorites.find((ex) => ex.id === item.id);
@@ -163,6 +166,7 @@ export default function Products() {
           </ul>
         </div>
       </section>
+    
     </>
   );
 }

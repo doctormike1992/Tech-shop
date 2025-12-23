@@ -408,7 +408,7 @@ export default function EditProduct({ product, modal }) {
           <img
             src={imageSrc}
             alt="Selected"
-            className="w-md h-md object-cover aspect-[4/3]"
+            className="w-md h-md object-cover aspect-[4/3] rounded-md"
           />
 
           <Input
