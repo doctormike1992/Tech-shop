@@ -15,12 +15,26 @@ export const cartSlice = createSlice({
       state.cart = action.payload;
     },
     removeFromCart(state, action) {
-      state.cart = state.cart.filter(
-        (item) => item.id !== action.payload
-      );
+      state.cart = state.cart.filter((item) => item.id !== action.payload);
+    },
+    plusQuantity(state, action) {
+      state.cart = state.cart.map((item) => {
+        if (item.id === action.payload) {
+          item.quantity++;
+        }
+        return item;
+      });
+    },
+    minusQuantity(state, action) {
+      state.cart = state.cart.map((item) => {
+        if (item.id === action.payload && item.quantity > 1) {
+          item.quantity--;
+        }
+        return item;
+      });
     },
     clearCart(state) {
-      state.cart = []
+      state.cart = [];
     },
     addToFavorites(state, action) {
       state.favorites = action.payload;
@@ -31,11 +45,11 @@ export const cartSlice = createSlice({
       );
     },
     addToOrders(state, action) {
-      state.orders =  action.payload;
+      state.orders = action.payload;
     },
     addInfo(state, action) {
       state.info = action.payload;
-    }
+    },
   },
 });
 

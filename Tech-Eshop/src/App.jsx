@@ -21,8 +21,6 @@ import Info from "./pages/Info";
 export default function App() {
   const dispatch = useDispatch();
   const uid = useSelector((state) => state.user.userUID);
-  const prod = useSelector((state) => state.products.products);
-  console.log(prod);
 
   //ADDING THE USER ON REDUX
   useEffect(() => {
