@@ -1,124 +1,153 @@
 import { useSelector } from "react-redux";
-import { discountOnFilter } from "../utils/discountOnFilter";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { guestActions } from "../store/guestSlice";
-import {  useRef } from "react";
+// import { useDispatch } from "react-redux";
+// import { guestActions } from "../store/guestSlice";
+// import {  useRef } from "react";
 import Modal from "../components/Modal";
-import { auth, db } from "../firebase/firebase";
-import { deleteDoc, doc, writeBatch, increment } from "firebase/firestore";
+// import { auth, db } from "../firebase/firebase";
+// import { deleteDoc, doc, writeBatch, increment } from "firebase/firestore";
 import UserInfo from "../components/UserInfo";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function Cart() {
   const guestCart = useSelector((state) => state.guest.cart);
-  const dispatch = useDispatch();
-  const amount = guestCart.reduce((acc, item) => {
-    return acc + discountOnFilter(item) * item.quantity;
-  }, 0);
-  const dialog = useRef();
- const readableTime = dayjs().format("YYYY-MM-DD");
+  // const dispatch = useDispatch();
+  // const amount = guestCart.reduce((acc, item) => {
+  //   return acc + discountOnFilter(item) * item.quantity;
+  // }, 0);
+  // const dialog = useRef();
+//  const readableTime = dayjs().format("YYYY-MM-DD");
 
  
 
   //REMOVE FROM CART BUTTON
-  async function handleRemoveFromCart(item) {
-    const uid = auth.currentUser.uid;
-    const itemDocRef = doc(db, `users/${uid}/cart`, item.id.toString());
+  // async function handleRemoveFromCart(item) {
+  //   const uid = auth.currentUser.uid;
+  //   const itemDocRef = doc(db, `users/${uid}/cart`, item.id.toString());
 
-    await deleteDoc(itemDocRef);
-    dispatch(guestActions.removeFromCart(item.id));
-  }
+  //   await deleteDoc(itemDocRef);
+  //   dispatch(guestActions.removeFromCart(item.id));
+  // }
 
   // ADD TO ORDERS FUNCTION
-  async function handleAddToOrders() {
-    const uid = auth.currentUser.uid;
-    const batch = writeBatch(db);
+  // async function handleAddToOrders() {
+  //   const uid = auth.currentUser.uid;
+  //   const batch = writeBatch(db);
    
 
-    guestCart.forEach((item) => {
-      const ref = doc(db, `users/${uid}/orders/${item.id}`);
+  //   guestCart.forEach((item) => {
+  //     const ref = doc(db, `users/${uid}/orders/${item.id}`);
 
-      batch.set(
-        ref,
-        {
-          ...item,
-          quantity: increment(item.quantity ?? 1),
-          time: readableTime
-        },
-        { merge: true }
-      );
+  //     batch.set(
+  //       ref,
+  //       {
+  //         ...item,
+  //         quantity: increment(item.quantity ?? 1),
+  //         time: readableTime
+  //       },
+  //       { merge: true }
+  //     );
 
-      const cartRef = doc(db, `users/${uid}/cart/${item.id}`);
-      batch.delete(cartRef);
-    });
+  //     const cartRef = doc(db, `users/${uid}/cart/${item.id}`);
+  //     batch.delete(cartRef);
+  //   });
 
-    await batch.commit();
-    dispatch(guestActions.clearCart());
-  }
+  //   await batch.commit();
+  //   dispatch(guestActions.clearCart());
+  // }
 
-  return (
-    <>
-      <div className="flex flex-col w-full items-center justify-center py-20">
-        <h3 className="text-2xl">CART</h3>
-
-        <ul className="border-t-4 border-(--secondary) lg:w-[60%] md:w-[90%] w-full text-center">
-          {guestCart.length === 0 && <h1>The Cart is Empty!!</h1>}
-          {guestCart.map((item) => {
-            const total = discountOnFilter(item) * item.quantity;
-
+  return ( <>
+      <section className="flex flex-col max-w-[80%] items-center justify-center px-3">
+        <div className="w-full flex flex-row items-center justify-between py-15">
+        <h1 className="font-semibold text-2xl">Shopping Cart</h1>
+        {guestCart === 0 && <button>Clear Cart</button>}      
+        </div>
+        <div className="w-full">
+           <ul className=" w-full flex gap-5 flex-col items-center justify-start text-center">
+          {guestCart.length === 0 ? (
+            <div className="flex flex-col w-full gap-2 items-center justify-center">
+              <FontAwesomeIcon
+                className="text-white drop-shadow-[0_0_1px_rgba(0,0,0,2)] text-8xl"
+                icon={faBasketShopping}
+              />
+              <h1 className="text-xl font-semibold">Your cart is empty</h1>
+              <p className="text-(--secondText) pb-2">
+                Add some products to get started
+              </p>
+              <Link
+                className="bg-(--primary) text-(--white) py-1 px-2 rounded-md font-medium "
+                to={"/"}
+              >
+                Browse Products
+              </Link>
+            </div>
+          ) : (
+            guestCart.map((item) => {
             return (
-              <li key={item.id} className="w-full relative">
-                <Link
-                  to={`/${item.id}`}
-                  className="flex md:flex-row  items-center justify-between  border-b-2 border-stone-400 md:h-50 h-30 w-full md:text-xl text-bold text-sm overflow-hidden"
-                >
-                  <div className=" h-full w-full ">
-                    <img
-                      src={item.image}
-                      alt="image"
-                      className="w-full h-full aspect-square object-center"
-                    />
+              <li
+                key={item.id}
+                className="w-full border p-4 gap-4 flex flex-row items-center  rounded-xl border-stone-200"
+              >
+                <div className="w-24 h-24 shrink-0 content-center ">
+                  <img
+                    className="aspect-4/3 rounded-md w-full h-full"
+                    src={item.image}
+                  />
+                </div>
+
+                <div className="w-full min-w-o px-1 flex flex-col justify-between">
+                  <div className="flex  flex-row justify-between items-start">
+                    <div className="flex flex-col items-start">
+                      <p className="font-medium">{item.name} </p>
+                    <p className="text-(--secondText)  text-sm">
+                      {item.category}{" "}
+                    </p>
+                    </div>
+                    
+
+                    <button
+                      className=" cursor-pointer"
+                      // onClick={() => handleRemoveFromCart(item)}
+                    >
+                      <FontAwesomeIcon
+                        className="text-sm  text-red-600"
+                        icon={faTrashCan}
+                      />
+                    </button>
+
+                    
                   </div>
 
-                  <div className="w-[20%] h-full flex items-center justify-center border-l-2 border-stone-400">
-                    <h2 className="text-center whitespace-normal wrap-break-word">
-                      {item.name}
-                    </h2>
+                  <div className="flex flex-row items-end justify-between">
+
+                    <div className="w-full flex pt-2 flex-row gap-5 items-center">
+                      <button className="border border-stone-300 px-1 py-0.5 rounded-lg">
+                        <FontAwesomeIcon icon={faMinus} />
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button className="border border-stone-300 px-1 py-0.5 rounded-lg">
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                    </div>
+                    
+                    <p>${item.finalPrice.toFixed(2)}</p>
                   </div>
-                  <div className="w-full border-l-2 border-stone-400  h-full flex items-center justify-center ">
-                    {item.sale ? (
-                      <div>
-                        <p>{"$ " + discountOnFilter(item).toFixed(2)}</p>
-                        <p className="line-through text-stone-500">
-                          {"$ " + item.price.toFixed(2)}
-                        </p>
-                      </div>
-                    ) : (
-                      <p>{"$ " + item.price.toFixed(2)}</p>
-                    )}
-                  </div>
-                  <div className="w-full border-l-2 border-stone-400  h-full flex items-center justify-center ">
-                    {item.quantity && <p>{"x " + item.quantity}</p>}
-                  </div>
-                  <div className="w-full border-l-2 border-stone-400  h-full flex flex-col  items-center justify-center ">
-                    <p className="text-bold border-b-2 border-stone-900 ">
-                      Total
-                    </p>
-                    {"$ " + total.toFixed(2)}
-                  </div>
-                </Link>
-                <button
-                  className="absolute right-0  top-1 md:top-2 text-(--secondary) bg-stone-900 hover:bg-stone-700  md:px-3 px-2 text-sm md:text-lg py-1 cursor-pointer"
-                  onClick={() => handleRemoveFromCart(item)}
-                >
-                  CLEAR
-                </button>
+                </div>
               </li>
             );
-          })}
+          }) 
+          )}
+          
         </ul>
-        <div
+      </div>
+      </section>
+
+       
+        {/* <div
           hidden={guestCart.length === 0}
           className="flex flex-row justify-end items-center lg:w-[60%] md:w-[90%] w-full gap-3 pt-4 text-3xl "
         >
@@ -149,8 +178,11 @@ export default function Cart() {
         modalClass="flex flex-col w-full justify-center items-center"
         closeButton
       >
-        <UserInfo handleToOrder={handleAddToOrders} closeModal={() => dialog.current.close()}/>
-      </Modal>
+        <UserInfo
+          handleToOrder={handleAddToOrders}
+          closeModal={() => dialog.current.close()}
+        />
+      </Modal> */}
     </>
   );
 }

@@ -136,7 +136,7 @@ export default function Products() {
         </div>
 
         <div className="w-full  flex flex-col ">
-          <ul className="flex w-full flex-row items-center justify-start flex-wrap xl:gap-20 lg:gap-10 gap-7 py-10  pl-2 ">
+          <ul className="flex w-full flex-row items-center justify-start flex-wrap gap-6  py-10  pl-2 ">
             {filteredProducts.length === 0 ? (
               <div
                 className="w-12 h-12 border-4 border-stone-900 border-t-transparent

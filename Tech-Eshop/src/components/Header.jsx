@@ -2,7 +2,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import Search from "./Search";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "./Modal";
@@ -154,8 +154,11 @@ export default function Header() {
                 to="/favorites"
                 className={({ isActive }) => (isActive ? "active" : undefined)}
               >
-                <li className="transition-all cursor-pointer relative hover:bg-stone-200  py-1 px-2 rounded-lg ">
-                  <FontAwesomeIcon title="Favorites" icon={faHeart} />
+                <li
+                  className="transition-all cursor-pointer relative hover:bg-stone-200  py-1 px-2 rounded-lg "
+                  title="Favorites"
+                >
+                  <FontAwesomeIcon icon={faHeart} />
                   {favorites.length !== 0 && (
                     <span className="py-0.5 px-1 w-6 text-center border-2 border-stone-50  rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
                       {favorites.length}
@@ -168,8 +171,11 @@ export default function Header() {
                 to="/cart"
                 className={({ isActive }) => (isActive ? "active" : undefined)}
               >
-                <li className="transition-all cursor-pointer hover:bg-stone-200 py-1 relative px-2 rounded-lg ">
-                  <FontAwesomeIcon title="Cart" icon={faCartShopping} />
+                <li
+                  className="transition-all cursor-pointer hover:bg-stone-200 py-1 relative px-2 rounded-lg "
+                  title="Cart"
+                >
+                  <FontAwesomeIcon icon={faBasketShopping} />
                   {cart.length !== 0 && (
                     <span className="py-0.5 px-1 w-6 text-center border-2 border-stone-50  rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
                       {cartQuantity}
@@ -178,8 +184,11 @@ export default function Header() {
                 </li>
               </NavLink>
               <NavLink to="/info">
-                <li className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg ">
-                  <FontAwesomeIcon title="User" icon={faUser} />
+                <li
+                  className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg"
+                  title="User"
+                >
+                  <FontAwesomeIcon icon={faUser} />
                 </li>
               </NavLink>
 
@@ -193,7 +202,7 @@ export default function Header() {
             </>
           ) : (
             <button
-              className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg "
+              className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2  rounded-lg "
               onClick={() => modal.current.open()}
             >
               <FontAwesomeIcon title="Log In" icon={faRightToBracket} />

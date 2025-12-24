@@ -63,7 +63,7 @@ export default function ProductItem({
               </p>
             </div>
 
-            <p className="w-full font-normal wrap-break-word text-sm text-stone-600 md:line-clamp-3 line-clamp-1">
+            <p className="w-full font-normal wrap-break-word text-sm text-(--secondText) md:line-clamp-3 line-clamp-1">
               {item.summary}
             </p>
           </div>
