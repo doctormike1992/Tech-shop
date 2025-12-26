@@ -3,6 +3,8 @@ import { filterActions } from "../store/filterSlice";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { brands, subCategories, categories } from "../store/categories";
 import SwitchButton from "./SwitchButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 
 export default function SideBar({ dialog, isVisible, setIsVisible }) {
   const dispatch = useDispatch();
@@ -110,7 +112,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
             onClick={closeSideBar}
             className="flex items-center h-10 text-lg text-stone-700 hover:text-stone-950 cursor-pointer border-2 border-transparent active:border-black  px-1.5 rounded-md"
           >
-            X
+            <FontAwesomeIcon className="text-sm" icon={faX} />
           </button>
         </div>
 

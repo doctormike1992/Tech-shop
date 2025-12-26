@@ -137,7 +137,7 @@ export default function NewProductForm() {
               id="name"
               name="name"
               required
-              inputClass="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+              inputClass="bg-(--input) w-full rounded-md p-2  outline-0"
             />
           </div>
 
@@ -150,7 +150,7 @@ export default function NewProductForm() {
               id="summary"
               maxLength={100}
               required
-              className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+              className="bg-(--input) w-full rounded-md p-2  outline-0"
             />
           </div>
 
@@ -162,7 +162,7 @@ export default function NewProductForm() {
               name="description"
               id="description"
               required
-              className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+              className="bg-(--input) w-full rounded-md p-2  outline-0"
             />
           </div>
 
@@ -176,7 +176,7 @@ export default function NewProductForm() {
                 id="price"
                 step="0.01"
                 name="price"
-                className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                className="bg-(--input) w-full rounded-md p-2  outline-0"
               />
             </div>
             <div className="w-full">
@@ -187,7 +187,7 @@ export default function NewProductForm() {
                 type="number"
                 id="delivery"
                 name="deliveryTime"
-                className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                className="bg-(--input) w-full rounded-md p-2  outline-0"
               />
             </div>
           </div>
@@ -206,7 +206,7 @@ export default function NewProductForm() {
                 name="percentage"
                 type="number"
                 id="percentage"
-                className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                className="bg-(--input) w-full rounded-md p-2  outline-0"
               />
             </div>
           )}
@@ -218,7 +218,7 @@ export default function NewProductForm() {
             <div className="relative">
               <button
                 type="button"
-                className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
+                className={`bg-(--input) w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
                   categoryValue === "choose one..." && "text-stone-400"
                 }`}
               >
@@ -255,7 +255,7 @@ export default function NewProductForm() {
             <div className="relative">
               <button
                 type="button"
-                className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
+                className={`bg-(--input) w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
                   subCategoryValue === "choose one..." && "text-stone-400"
                 }`}
               >
@@ -292,7 +292,7 @@ export default function NewProductForm() {
             <div className="relative">
               <button
                 type="button"
-                className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
+                className={`bg-(--input) w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
                   brandValue === "choose one..." && "text-stone-400"
                 }`}
               >
@@ -340,7 +340,7 @@ export default function NewProductForm() {
                 key={spec.id}
               >
                 <input
-                  className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                  className="bg-(--input) w-full rounded-md p-2  outline-0"
                   type="text"
                   placeholder="expample (battery life)"
                   id={`specName${spec.id}`}
@@ -355,7 +355,7 @@ export default function NewProductForm() {
                 <input
                   type="text"
                   placeholder="example (8 hours)"
-                  className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                  className="bg-(--input) w-full rounded-md p-2  outline-0"
                   id={`specValue${spec.id}`}
                   value={spec.value}
                   onChange={(e) => {
@@ -368,7 +368,7 @@ export default function NewProductForm() {
                 <button
                   onClick={() => handleDeleteSpec(spec.id)}
                   type="button"
-                  className="transition-all  text-md py-2 px-3 rounded-md hover:bg-[#f3f3f5]"
+                  className="transition-all  text-md py-2 px-3 rounded-md hover:bg-(--input)"
                 >
                   X
                 </button>

@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { guestActions } from "../store/guestSlice";
-import {  useRef } from "react";
+import { useRef } from "react";
 import Modal from "../components/Modal";
 import { auth, db } from "../firebase/firebase";
 import {
@@ -22,9 +22,11 @@ import { useEffect, useState } from "react";
 export default function Cart() {
   const [subTotal, setSubTotal] = useState(0);
   const guestCart = useSelector((state) => state.guest.cart);
+  const dispatch = useDispatch();
+  const dialog = useRef();
   const shipping = 30;
   const tax = 5;
-  const dispatch = useDispatch();
+  const cartEmpty = guestCart.length === 0;
 
   // //FINDING THE SUBTOTAL OF THE CART AT THE START AND AT EVERY CHANGE OF IT
   useEffect(() => {
@@ -57,7 +59,7 @@ export default function Cart() {
     dispatch(guestActions.clearCart());
   }
 
-  const dialog = useRef();
+  
   //  const readableTime = dayjs().format("YYYY-MM-DD");
 
   // REMOVE FROM CART BUTTON
@@ -92,18 +94,25 @@ export default function Cart() {
   //   });
 
   //   await batch.commit();
-  //   dispatch(guestActions.clearCart());
+  //  clearCartButton();
+  // dialog.current.close();
   // }
 
   return (
     <>
-      <section className="flex flex-col max-w-full lg:max-w-[90%] xl:max-w-[65%] 2xl:max-w-[60%] items-center justify-center px-3">
+      <section
+        className={`flex flex-col max-w-full  ${
+          cartEmpty
+            ? "lg:max-w-full xl:max-w-full 2xl:max-w-full "
+            : "lg:max-w-[90%] xl:max-w-[65%] 2xl:max-w-[60%]"
+        }  items-center justify-center px-3`}
+      >
         <div className="w-full flex flex-row items-center justify-between py-15">
           <h1 className="font-semibold text-2xl">Shopping Cart</h1>
-          {guestCart !== 0 && (
+          {!cartEmpty && (
             <button
               onClick={clearCartButton}
-              className="border text-sm font-medium border-stone-300 py-2 px-3 rounded-md cursor-pointer hover:bg-stone-200 transition-all"
+              className="border text-sm font-medium border-stone-300 py-2 px-3 rounded-md cursor-pointer  hover:bg-stone-200 transition-all"
             >
               Clear Cart
             </button>
@@ -111,7 +120,7 @@ export default function Cart() {
         </div>
         <div className="w-full flex flex-col md:flex-row gap-5">
           <ul className=" w-full flex gap-5 flex-col items-center justify-start text-center">
-            {guestCart.length === 0 ? (
+            {cartEmpty ? (
               <div className="flex flex-col w-full gap-2 items-center justify-center">
                 <FontAwesomeIcon
                   className="text-white drop-shadow-[0_0_1px_rgba(0,0,0,2)] text-8xl"
@@ -187,47 +196,46 @@ export default function Cart() {
               })
             )}
           </ul>
+          {!cartEmpty && (
+            <div className="flex flex-col  border p-6 h-fit min-w-[35%] 2xl:min-w-[30%]  border-stone-300 rounded-2xl">
+              <h1 className="font-medium text-lg pb-10 ">Order Summary</h1>
+              <div className="flex justify-between pb-15  flex-row">
+                <div className="flex justify-start items-start flex-col text-(--secondText) font-medium text-sm gap-2">
+                  <p>Subtotal</p>
+                  <p>Shipping</p>
+                  <p>Tax</p>
+                </div>
 
-          <div className="flex flex-col  border p-6 h-fit min-w-[35%] 2xl:min-w-[30%]  border-stone-300 rounded-2xl">
-            <h1 className="font-medium text-lg pb-10 ">Order Summary</h1>
-            <div className="flex justify-between pb-15  flex-row">
-              <div className="flex justify-start items-start flex-col text-(--secondText) font-medium text-sm gap-2">
-                <p>Subtotal</p>
-                <p>Shipping</p>
-                <p>Tax</p>
+                <div className=" flex flex-col gap-2 justify-center items-end text-sm">
+                  <p>${subTotal.toFixed(2)}</p>
+                  <p>${shipping.toFixed(2)}</p>
+                  <p>${tax.toFixed(2)}</p>
+                </div>
               </div>
 
-              <div className=" flex flex-col gap-2 justify-center items-end text-sm">
-                <p>${subTotal.toFixed(2)}</p>
-                <p>${shipping.toFixed(2)}</p>
-                <p>${tax.toFixed(2)}</p>
+              <hr className="text-stone-300" />
+              <br />
+              <div className="flex py-10 flex-row justify-between">
+                <p className="text-lg">Total</p>
+                <p className="font-medium text-lg">
+                  ${(subTotal + shipping + tax).toFixed(2)}
+                </p>
               </div>
+              <button
+                onClick={() => dialog.current.open()}
+                className="w-full hover:bg-stone-900 cursor-pointer text-(--white) bg-(--primary) py-2 rounded-lg text-sm font-medium"
+              >
+                Procced to Checkout
+              </button>
             </div>
-
-            <hr className="text-stone-300" />
-            <br />
-            <div className="flex py-10 flex-row justify-between">
-              <p className="text-lg">Total</p>
-              <p className="font-medium text-lg">
-                ${(subTotal + shipping + tax).toFixed(2)}
-              </p>
-            </div>
-            <button onClick={() => dialog.current.open()} className="w-full hover:bg-stone-900 cursor-pointer text-(--white) bg-(--primary) py-2 rounded-lg text-sm font-medium">
-              Procced to Checkout
-            </button>
-
-            <Modal
-              ref={dialog}
-              modalClass="flex flex-col w-full justify-center items-center"
-              closeButton
-            >
-              <UserInfo
-                // handleToOrder={handleAddToOrders}
-                closeModal={() => dialog.current.close()}
-              />
-            </Modal>
-          </div>
+          )}
         </div>
+        <Modal ref={dialog} modalClass="flex items-center justify-center">
+          <UserInfo
+            // handleToOrder={handleAddToOrders}
+            closeModal={() => dialog.current.close()}
+          />
+        </Modal>
       </section>
     </>
   );
