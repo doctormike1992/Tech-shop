@@ -4,7 +4,7 @@ const initialGuestState = {
   cart:  [],
   favorites: [],
   orders: [],
-  info: [],
+  info: {},
 };
 
 export const cartSlice = createSlice({

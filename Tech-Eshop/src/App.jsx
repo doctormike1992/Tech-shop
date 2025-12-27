@@ -5,7 +5,7 @@ import MainLayout from "./pages/MainLayout";
 import ErrorPage from "./pages/ErrorPage";
 import Products from "./pages/Products";
 import ProductDetail from "./components/ProductDetail";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, doc } from "firebase/firestore";
 import { productsActions } from "./store/productsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -73,11 +73,11 @@ export default function App() {
           dispatch(guestActions.addToOrders());
           dispatch(guestActions.addToOrders(ordersData));
         },
-        (error) => {
+       (error) => {
           console.error("Error fetching orders: ", error);
         }
       );
-
+ 
       const unsubscribeCart = onSnapshot(
         collection(db, `users/${uid}/cart`),
         (snapshot) => {
@@ -106,18 +106,17 @@ export default function App() {
         }
       );
 
-      const unsubscribeInfo = onSnapshot(
-        collection(db, `users/${uid}/info`),
-        (snapshot) => {
-          const infoData = snapshot.docs.map((doc) => ({
-            ...doc.data(),
-          }));
-          dispatch(guestActions.addInfo(infoData));
-        },
-        (error) => {
-          console.error("Error fetching infos: ", error);
-        }
-      );
+     const unsubscribeInfo = onSnapshot(
+       doc(db, `users/${uid}/info/main`),
+       (docSnap) => {
+         if (!docSnap.exists()) return;
+
+         dispatch(guestActions.addInfo(docSnap.data()));
+       },
+       (error) => {
+         console.error("Error fetching info:", error);
+       }
+     );
 
       return () => {
         unsubscribe();

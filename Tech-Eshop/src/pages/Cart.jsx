@@ -10,10 +10,10 @@ import {
   doc,
   collection,
   getDocs,
-  // writeBatch, increment
+  writeBatch,
 } from "firebase/firestore";
 import UserInfo from "../components/UserInfo";
-// import dayjs from "dayjs";
+import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -26,9 +26,10 @@ export default function Cart() {
   const dialog = useRef();
   const shipping = 30;
   const tax = 5;
+  const totalPrice = subTotal + shipping + tax;
   const cartEmpty = guestCart.length === 0;
 
-  // //FINDING THE SUBTOTAL OF THE CART AT THE START AND AT EVERY CHANGE OF IT
+  // FINDING THE SUBTOTAL OF THE CART AT THE START AND AT EVERY CHANGE OF IT
   useEffect(() => {
     const total = guestCart.reduce(
       (sum, item) => sum + item.finalPrice * item.quantity,
@@ -60,7 +61,7 @@ export default function Cart() {
   }
 
   
-  //  const readableTime = dayjs().format("YYYY-MM-DD");
+   const readableTime = dayjs().format("YYYY-MM-DD");
 
   // REMOVE FROM CART BUTTON
   async function handleRemoveFromCart(item) {
@@ -71,32 +72,33 @@ export default function Cart() {
     dispatch(guestActions.removeFromCart(item.id));
   }
 
-  // ADD TO ORDERS FUNCTION
-  // async function handleAddToOrders() {
-  //   const uid = auth.currentUser.uid;
-  //   const batch = writeBatch(db);
+  // ADD THE CART TO ORDERS AT CHECKOUT AND CLEAR THE CART FROM REDUX AND FIREBASE
+  async function handleAddToOrders() {
+    const uid = auth.currentUser.uid;
+    const batch = writeBatch(db);
 
-  //   guestCart.forEach((item) => {
-  //     const ref = doc(db, `users/${uid}/orders/${item.id}`);
+    // 1️⃣ Create ONE order document
+    const orderRef = doc(collection(db, `users/${uid}/orders`));
 
-  //     batch.set(
-  //       ref,
-  //       {
-  //         ...item,
-  //         quantity: increment(item.quantity ?? 1),
-  //         time: readableTime
-  //       },
-  //       { merge: true }
-  //     );
+    batch.set(orderRef, {
+      items: guestCart, 
+      total: totalPrice,
+      status: "pending",
+      time: readableTime,
+    });
 
-  //     const cartRef = doc(db, `users/${uid}/cart/${item.id}`);
-  //     batch.delete(cartRef);
-  //   });
+    // 2️⃣ Clear cart (still batch-safe)
+    guestCart.forEach((item) => {
+      const cartRef = doc(db, `users/${uid}/cart/${item.id}`);
+      batch.delete(cartRef);
+    });
 
-  //   await batch.commit();
-  //  clearCartButton();
-  // dialog.current.close();
-  // }
+    // 3️⃣ Commit everything atomically
+    await batch.commit();
+
+    clearCartButton();
+    dialog.current.close();
+  }
 
   return (
     <>
@@ -217,9 +219,7 @@ export default function Cart() {
               <br />
               <div className="flex py-10 flex-row justify-between">
                 <p className="text-lg">Total</p>
-                <p className="font-medium text-lg">
-                  ${(subTotal + shipping + tax).toFixed(2)}
-                </p>
+                <p className="font-medium text-lg">${totalPrice.toFixed(2)}</p>
               </div>
               <button
                 onClick={() => dialog.current.open()}
@@ -232,7 +232,7 @@ export default function Cart() {
         </div>
         <Modal ref={dialog} modalClass="flex items-center justify-center">
           <UserInfo
-            // handleToOrder={handleAddToOrders}
+            handleToOrder={handleAddToOrders}
             closeModal={() => dialog.current.close()}
           />
         </Modal>

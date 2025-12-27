@@ -7,27 +7,31 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
 export default function UserInfo({ handleToOrder, closeModal }) {
-  const info = useSelector((state) => state.guest.info);
+  const userInfo = useSelector((state) => state.guest.info);
 
+  //ADDS THE INFOS OF THE USER FROM THE REDUX TO FIRESTORE WHEN THEY ARE CHANGED
   useEffect(() => {
     async function submitForm() {
+      if (!auth.currentUser) return;
+      if (Object.keys(userInfo).length === 0) return;
       const uid = auth.currentUser.uid;
       const infoDocRef = doc(db, `users/${uid}/info/main`);
-      await setDoc(infoDocRef, info);
+      await setDoc(infoDocRef, userInfo);
+    
     }
     submitForm();
-  }, [info]);
+  }, [userInfo]);
 
   return (
     <>
-      <div className="flex flex-col
+      <div
+        className="flex flex-col
        w-full max-w-lg
-       gap-2 rounded-xl bg-(--white) justify-center">
+       gap-2 rounded-xl bg-(--white) justify-center"
+      >
         <div className="flex flex-row items-center justify-between w-full p-5">
           <h1 className="text-lg font-medium ">Check your Informations</h1>
-          <button
-            onClick={closeModal}
-          >
+          <button onClick={closeModal}>
             <FontAwesomeIcon className="text-sm" icon={faX} />
           </button>
         </div>

@@ -2,33 +2,25 @@ import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { guestActions } from "../store/guestSlice";
 
-
 export default function UserForm() {
-  
-  
   const userName = useRef();
   const phone = useRef();
   const email = useRef();
   const city = useRef();
   const address = useRef();
- 
-  const info = useSelector((state) => state.guest.info);
+
+  const userInfo = useSelector((state) => state.guest.info);
   const dispatch = useDispatch();
- 
 
   //ON SUBMIT FUNTION THAT SENDS THE INFOS FORM TO BACKEND
+  function handleInfos(e) {
+    e.preventDefault();
+    const phoneValid = phone.current.value.trim();
+    const isValidPhone = /^\d{10}$/.test(phoneValid);
 
-
-   function handleInfos(e) {
-     e.preventDefault();
-     const isValidPhone = /^\d{10}$/.test(phone);
-
- 
-
-    
     if (
       userName.current.value.trim() === "" ||
-      phone.current.value.trim() === "" ||
+      phoneValid === "" ||
       !isValidPhone ||
       email.current.value === "" ||
       city.current.value.trim() === "" ||
@@ -38,10 +30,10 @@ export default function UserForm() {
     } else {
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
-      dispatch(guestActions.addInfo(data));
-    }  
-  }
 
+      dispatch(guestActions.addInfo(data));
+    }
+  }
 
   return (
     <>
@@ -57,7 +49,7 @@ export default function UserForm() {
           type="text"
           id="userName"
           name="userName"
-          defaultValue={info.length !== 0 ? info[0].userName : ""}
+          defaultValue={userInfo.userName || ""}
           ref={userName}
           required
           className=" bg-(--input) w-full rounded-md p-2  outline-0"
@@ -72,7 +64,7 @@ export default function UserForm() {
           pattern="[0-9]{10}"
           id="phone"
           name="phone"
-          defaultValue={info.length !== 0 ? info[0].phone : ""}
+          defaultValue={userInfo.phone || ""}
           ref={phone}
           required
           className=" bg-(--input) w-full rounded-md p-2  outline-0"
@@ -84,7 +76,7 @@ export default function UserForm() {
           type="email"
           id="email"
           name="email"
-          defaultValue={info.length !== 0 ? info[0].email : ""}
+          defaultValue={userInfo.email || ""}
           ref={email}
           required
           className=" bg-(--input) w-full rounded-md p-2  outline-0"
@@ -96,7 +88,7 @@ export default function UserForm() {
           type="text"
           id="city"
           name="city"
-          defaultValue={info.length !== 0 ? info[0].city : ""}
+          defaultValue={userInfo.city || ""}
           ref={city}
           required
           className="bg-(--input) w-full rounded-md p-2  outline-0"
@@ -108,7 +100,7 @@ export default function UserForm() {
           type="text"
           id="address"
           name="address"
-          defaultValue={info.length !== 0 ? info[0].address : ""}
+          defaultValue={userInfo.address || ""}
           ref={address}
           required
           className="bg-(--input) w-full rounded-md p-2  outline-0"
