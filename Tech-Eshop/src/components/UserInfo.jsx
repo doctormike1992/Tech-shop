@@ -1,27 +1,8 @@
-import { db, auth } from "../firebase/firebase";
-import { doc, setDoc } from "firebase/firestore";
 import UserForm from "./userForm";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
 export default function UserInfo({ handleToOrder, closeModal }) {
-  const userInfo = useSelector((state) => state.guest.info);
-
-  //ADDS THE INFOS OF THE USER FROM THE REDUX TO FIRESTORE WHEN THEY ARE CHANGED
-  useEffect(() => {
-    async function submitForm() {
-      if (!auth.currentUser) return;
-      if (Object.keys(userInfo).length === 0) return;
-      const uid = auth.currentUser.uid;
-      const infoDocRef = doc(db, `users/${uid}/info/main`);
-      await setDoc(infoDocRef, userInfo);
-    
-    }
-    submitForm();
-  }, [userInfo]);
-
   return (
     <>
       <div

@@ -5,11 +5,11 @@ import MainLayout from "./pages/MainLayout";
 import ErrorPage from "./pages/ErrorPage";
 import Products from "./pages/Products";
 import ProductDetail from "./components/ProductDetail";
-import { collection, onSnapshot, doc } from "firebase/firestore";
+import { collection, onSnapshot, doc, setDoc } from "firebase/firestore";
 import { productsActions } from "./store/productsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { db } from "./firebase/firebase";
+import { db, auth } from "./firebase/firebase";
 import Cart from "./pages/Cart";
 import Favorites from "./pages/Favorites";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
@@ -18,9 +18,11 @@ import { guestActions } from "./store/guestSlice";
 import Orders from "./pages/Orders";
 import Info from "./pages/Info";
 
+
 export default function App() {
   const dispatch = useDispatch();
   const uid = useSelector((state) => state.user.userUID);
+  const userInfo = useSelector((state) => state.guest.info);
 
   //ADDING THE USER ON REDUX
   useEffect(() => {
@@ -73,11 +75,11 @@ export default function App() {
           dispatch(guestActions.addToOrders());
           dispatch(guestActions.addToOrders(ordersData));
         },
-       (error) => {
+        (error) => {
           console.error("Error fetching orders: ", error);
         }
       );
- 
+
       const unsubscribeCart = onSnapshot(
         collection(db, `users/${uid}/cart`),
         (snapshot) => {
@@ -106,17 +108,17 @@ export default function App() {
         }
       );
 
-     const unsubscribeInfo = onSnapshot(
-       doc(db, `users/${uid}/info/main`),
-       (docSnap) => {
-         if (!docSnap.exists()) return;
+      const unsubscribeInfo = onSnapshot(
+        doc(db, `users/${uid}/info/main`),
+        (docSnap) => {
+          if (!docSnap.exists()) return;
 
-         dispatch(guestActions.addInfo(docSnap.data()));
-       },
-       (error) => {
-         console.error("Error fetching info:", error);
-       }
-     );
+          dispatch(guestActions.addInfo(docSnap.data()));
+        },
+        (error) => {
+          console.error("Error fetching info:", error);
+        }
+      );
 
       return () => {
         unsubscribe();
@@ -128,6 +130,18 @@ export default function App() {
       };
     }
   }, [dispatch, uid]);
+
+  //ADDS THE INFOS OF THE USER FROM THE REDUX TO FIRESTORE WHEN THEY ARE CHANGED
+  useEffect(() => {
+    async function submitForm() {
+      if (!auth.currentUser) return;
+      if (Object.keys(userInfo).length === 0) return;
+      const uid = auth.currentUser.uid;
+      const infoDocRef = doc(db, `users/${uid}/info/main`);
+      await setDoc(infoDocRef, userInfo);
+    }
+    submitForm();
+  }, [userInfo]);
 
   const router = createBrowserRouter([
     {

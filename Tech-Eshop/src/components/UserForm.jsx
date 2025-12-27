@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { guestActions } from "../store/guestSlice";
 
-export default function UserForm() {
+export default function UserForm({editForm}) {
   const userName = useRef();
   const phone = useRef();
   const email = useRef();
@@ -52,7 +52,8 @@ export default function UserForm() {
           defaultValue={userInfo.userName || ""}
           ref={userName}
           required
-          className=" bg-(--input) w-full rounded-md p-2  outline-0"
+          disabled={editForm && editForm === "close"}
+          className="disabled:opacity-50  bg-(--input) w-full rounded-md p-2  outline-0"
         />
 
         <label htmlFor="phone" className="font-medium">
@@ -67,7 +68,8 @@ export default function UserForm() {
           defaultValue={userInfo.phone || ""}
           ref={phone}
           required
-          className=" bg-(--input) w-full rounded-md p-2  outline-0"
+          disabled={editForm && editForm === "close"}
+          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0"
         />
         <label htmlFor="email" className="font-medium">
           Email
@@ -79,7 +81,8 @@ export default function UserForm() {
           defaultValue={userInfo.email || ""}
           ref={email}
           required
-          className=" bg-(--input) w-full rounded-md p-2  outline-0"
+          disabled={editForm && editForm === "close"}
+          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0"
         />
         <label htmlFor="city" className="font-medium">
           City
@@ -91,7 +94,8 @@ export default function UserForm() {
           defaultValue={userInfo.city || ""}
           ref={city}
           required
-          className="bg-(--input) w-full rounded-md p-2  outline-0"
+          disabled={editForm && editForm === "close"}
+          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0"
         />
         <label htmlFor="address" className="font-medium">
           Address
@@ -103,7 +107,8 @@ export default function UserForm() {
           defaultValue={userInfo.address || ""}
           ref={address}
           required
-          className="bg-(--input) w-full rounded-md p-2  outline-0"
+          disabled={editForm && editForm === "close"}
+          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0"
         />
       </form>
     </>
