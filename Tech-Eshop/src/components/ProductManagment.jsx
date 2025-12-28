@@ -87,16 +87,19 @@ export default function ProductManagment() {
                               <h1 className="text-lg font-medium">
                                 {product.name}
                               </h1>
-                              <p
-                                className="text-sm font-medium text-stone-500  max-w-90 max-h-9  line-clamp-2"
-                              >
+                              <p className="text-sm font-medium text-stone-500  max-w-90 max-h-9  line-clamp-2">
                                 {/* {product.summary} */}
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Qui rem porro molestiae voluptatum beatae, nemo odit similique. Ipsum earum quisquam nobis eius? Necessitatibus ex maiores sequi temporibus rerum consectetur similique?
+                                Lorem, ipsum dolor sit amet consectetur
+                                adipisicing elit. Qui rem porro molestiae
+                                voluptatum beatae, nemo odit similique. Ipsum
+                                earum quisquam nobis eius? Necessitatibus ex
+                                maiores sequi temporibus rerum consectetur
+                                similique?
                               </p>
                             </div>
                             <div className="flex flex-row  items-center justify-between">
                               <p className="text-lg font-medium">
-                                ${product.finalPrice.toFixed(2)}
+                                {product.finalPrice.toFixed(2)}<sup>$</sup>
                               </p>
                               <p className="text-sm  text-stone-400">
                                 Days tp Deliver: {product.deliveryTime}

@@ -61,7 +61,7 @@ export default function Cart() {
   }
 
   
-   const readableTime = dayjs().format("YYYY-MM-DD");
+   const readableTime = dayjs().format("DD-MM-YYYY");
 
   // REMOVE FROM CART BUTTON
   async function handleRemoveFromCart(item) {
@@ -103,10 +103,8 @@ export default function Cart() {
   return (
     <>
       <section
-        className={`flex flex-col max-w-full  ${
-          cartEmpty
-            ? "lg:max-w-full xl:max-w-full 2xl:max-w-full "
-            : "lg:max-w-[90%] xl:max-w-[65%] 2xl:max-w-[60%]"
+        className={`flex flex-col   ${
+          cartEmpty ? "w-full " : "w-full max-w-3/5"
         }  items-center justify-center px-3`}
       >
         <div className="w-full flex flex-row items-center justify-between py-15">
@@ -120,8 +118,8 @@ export default function Cart() {
             </button>
           )}
         </div>
-        <div className="w-full flex flex-col md:flex-row gap-5">
-          <ul className=" w-full flex gap-5 flex-col items-center justify-start text-center">
+        <div className="w-full flex flex-col py-10 md:flex-row gap-5">
+          <ul className=" w-full flex gap-5 flex-col items-center  justify-start text-center">
             {cartEmpty ? (
               <div className="flex flex-col w-full gap-2 items-center justify-center">
                 <FontAwesomeIcon
@@ -190,7 +188,10 @@ export default function Cart() {
                           </button>
                         </div>
 
-                        <p>${(item.finalPrice * item.quantity).toFixed(2)}</p>
+                        <p>
+                          {(item.finalPrice * item.quantity).toFixed(2)}
+                          <sup>$</sup>
+                        </p>
                       </div>
                     </div>
                   </li>
@@ -209,9 +210,18 @@ export default function Cart() {
                 </div>
 
                 <div className=" flex flex-col gap-2 justify-center items-end text-sm">
-                  <p>${subTotal.toFixed(2)}</p>
-                  <p>${shipping.toFixed(2)}</p>
-                  <p>${tax.toFixed(2)}</p>
+                  <p>
+                    {subTotal.toFixed(2)}
+                    <sup>$</sup>
+                  </p>
+                  <p>
+                    {shipping.toFixed(2)}
+                    <sup>$</sup>
+                  </p>
+                  <p>
+                    {tax.toFixed(2)}
+                    <sup>$</sup>
+                  </p>
                 </div>
               </div>
 
@@ -219,7 +229,10 @@ export default function Cart() {
               <br />
               <div className="flex py-10 flex-row justify-between">
                 <p className="text-lg">Total</p>
-                <p className="font-medium text-lg">${totalPrice.toFixed(2)}</p>
+                <p className="font-medium text-lg">
+                  {totalPrice.toFixed(2)}
+                  <sup>$</sup>
+                </p>
               </div>
               <button
                 onClick={() => dialog.current.open()}

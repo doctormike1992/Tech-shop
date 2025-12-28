@@ -216,7 +216,10 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
             className="w-full accent-black cursor-pointer"
             onChange={(e) => setPrice(e.target.value)}
           />
-          <span className="font-medium text-[#717182]">Up to ${price}</span>
+          <span className="font-medium text-[#717182]">
+            Up to {price}
+            <sup>$</sup>
+          </span>
         </div>
 
         <button

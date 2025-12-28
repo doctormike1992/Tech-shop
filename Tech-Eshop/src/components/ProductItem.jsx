@@ -75,7 +75,7 @@ export default function ProductItem({
                   item.sale && "text-red-600"
                 }`}
               >
-                {"$ " + item.finalPrice.toFixed(2)}
+                {item.finalPrice.toFixed(2)}<sup>$</sup>
               </p>
               {item.sale && (
                 <p className="bg-stone-200 rounded-sm font-semibold px-1 line-through">
