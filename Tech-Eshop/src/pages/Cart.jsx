@@ -190,7 +190,7 @@ export default function Cart() {
 
                         <p>
                           {(item.finalPrice * item.quantity).toFixed(2)}
-                          <sup>$</sup>
+                          <sup>€</sup>
                         </p>
                       </div>
                     </div>
@@ -212,15 +212,15 @@ export default function Cart() {
                 <div className=" flex flex-col gap-2 justify-center items-end text-sm">
                   <p>
                     {subTotal.toFixed(2)}
-                    <sup>$</sup>
+                    <sup>€</sup>
                   </p>
                   <p>
                     {shipping.toFixed(2)}
-                    <sup>$</sup>
+                    <sup>€</sup>
                   </p>
                   <p>
                     {tax.toFixed(2)}
-                    <sup>$</sup>
+                    <sup>€</sup>
                   </p>
                 </div>
               </div>
@@ -231,7 +231,7 @@ export default function Cart() {
                 <p className="text-lg">Total</p>
                 <p className="font-medium text-lg">
                   {totalPrice.toFixed(2)}
-                  <sup>$</sup>
+                  <sup>€</sup>
                 </p>
               </div>
               <button

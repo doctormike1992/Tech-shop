@@ -2,16 +2,33 @@ import { useSelector } from "react-redux";
 import UserForm from "../components/userForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { faBoxArchive } from "@fortawesome/free-solid-svg-icons";
-import dayjs from "dayjs";
+import { isOrderExpired, isOrderProcessing } from "../utils/finishedOrders";
 
 
 export default function Info() {
-  const [editForm, setEditForm] = useState('close');
   const orders = useSelector((state) => state.guest.orders);
-  console.log(orders)
-  // const day = dayjs().format("DD-MM-YYYY");
+  const [editForm, setEditForm] = useState('close');
+  const [orderStatus, setOrderStatus] = useState([]);
+  console.log(orderStatus)
+
+  // FUNCTION THAT LOOKS IF THE DAY OF THE DELIVERY HAS COME SO IT GIVES STATUS: DELIVERED 
+  // OR IF ITS ONE DAY BEFORE DELIVERY IT GIVES THAT STATUS: PROCECCING
+  useEffect(() => {
+    setOrderStatus(orders);
+    setOrderStatus(order => order.map(item => {
+      if (isOrderExpired(item.time, item.deliveryTime)){
+        return {...item, status: 'delivered' }
+      }
+      if (isOrderProcessing(item.time, item.deliveryTime)) {
+        return { ...item, status: "processing" };
+      }
+      return item;
+  }
+  ))
+  }, [orders]);
+
 
   return (
     <>
@@ -67,19 +84,19 @@ export default function Info() {
             </div>
 
             <section className="flex flex-col gap-7 p-4">
-              {orders.map((item) => (
+              {orderStatus.map((item) => (
                 <div
                   key={item.id}
-                  className="flex flex-col border border-(--secondary) rounded-lg"
+                  className="flex flex-col border gap-2 p-3 border-(--ordersBorder) rounded-lg"
                 >
-                  <div className="flex flex-row items-center justify-between">
+                  <div className="flex flex-row items-center pb-2 justify-between">
                     <p className="font-medium">
                       Order{" "}
                       <span className="text-(--secondText) font-normal pl-1">
                         #{item.id}
                       </span>
                     </p>
-                    <p className="font-medium text-(--secondText)">
+                    <p className="font-medium text-sm text-(--secondText)">
                       {item.time}
                     </p>
                   </div>
@@ -88,24 +105,36 @@ export default function Info() {
                   {item.items.map((order) => (
                     <div
                       key={order.id}
-                      className="flex flex-row items-center justify-between"
+                      className="flex flex-row items-center py-3 justify-between"
                     >
-                      <p className="font-medium text-(--secondText) text-sm">
+                      <p className="font-medium text-(--ordersName) text-sm">
                         {order.name} <span className="font-normal">x</span>
                         {order.quantity}
                       </p>
-                      <p>
-                        {order.finalPrice.toFixed(2)}
-                        <sup>$</sup>
-                      </p>
+                      <div className="flex flex-row gap-3">
+                        <span
+                          className={`${
+                            item.status === "pending" ||
+                            item.status === "processing"
+                              ? "shadow/20 "
+                              : "text-(--white) bg-(--primary)"
+                          } tracking-wide font-medium text-sm rounded-lg px-2`}
+                        >
+                          {item.status}
+                        </span>
+                        <p>
+                          {order.finalPrice.toFixed(2)}
+                          <sup>€</sup>
+                        </p>
+                      </div>
                     </div>
                   ))}
                   <hr className="text-(--secondary)" />
-                  <div className="flex flex-row justify-between items-center font-medium">
+                  <div className="flex flex-row justify-between pt-2 items-center font-medium">
                     <p>Total</p>
                     <p>
                       {item.total.toFixed(2)}
-                      <sup>$</sup>
+                      <sup>€</sup>
                     </p>
                   </div>
                 </div>

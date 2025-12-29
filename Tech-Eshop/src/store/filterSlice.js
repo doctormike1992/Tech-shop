@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
-const initialFilterState = { categoryFilter: null, subCategoryFilter: null, brandFilter: null, max: null, sale: false, search: ''};
+const initialFilterState = { categoryFilter: null, subCategoryFilter: null, brandFilter: null, max: null, biggestPrice: 5000, smallerPrice: 0, sale: false, search: ''};
 
 export const filterSlice = createSlice({
   name: "filter",
@@ -14,13 +14,19 @@ export const filterSlice = createSlice({
       state.subCategoryFilter = action.payload;
     },
     setBrand(state, action) {
-      state.brandFilter = action.payload
+      state.brandFilter = action.payload;
     },
     setMax(state, action) {
       state.max = action.payload;
     },
+    findBiggestPrice(state, action) {
+      state.biggestPrice = action.payload;
+    },
+    findSmallerPrice(state, action) {
+      state.smallerPrice = action.payload;
+    },
     onSale(state, action) {
-      state.sale = action.payload
+      state.sale = action.payload;
     },
     search(state, action) {
       state.search = action.payload;
@@ -31,9 +37,8 @@ export const filterSlice = createSlice({
       state.subCategoryFilter = null;
       state.brandFilter = null;
       state.sale = false;
-    }
+    },
   },
-  
 });
 
 

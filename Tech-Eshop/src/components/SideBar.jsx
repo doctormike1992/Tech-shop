@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { filterActions } from "../store/filterSlice";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { brands, subCategories, categories } from "../store/categories";
@@ -7,18 +7,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
 export default function SideBar({ dialog, isVisible, setIsVisible }) {
+  const products = useSelector((state) => state.products.products);
+  const biggestPrice = useSelector((state) => state.filter.biggestPrice);
+  const smallerPrice = useSelector((state) => state.filter.smallerPrice);
+  const price = useSelector((state) => state.filter.max);
   const dispatch = useDispatch();
   const [categorySelected, setCategorySelected] = useState(null);
   const [subCategorySelected, setSubCategorySelected] = useState(null);
   const [brandSelected, setBrandSelected] = useState(null);
   const [saleCheck, setSaleCheck] = useState(false);
-  const [price, setPrice] = useState(2000);
   const navRef = useRef();
 
-  //FILTER BY MAX PRICE ON SCROLLER
+  //FIND THE BIGGEST AND SMALLER PRICE FROM THE PRODUCTS
+  //AND ADD IT TO THE REDUX
   useEffect(() => {
-    dispatch(filterActions.setMax(price));
-  }, [price, dispatch]);
+   if (!products.length) return;
+   const max = products.reduce(
+     (max, item) => Math.max(max, item.finalPrice),
+     0
+   );
+    const min = products.reduce(
+      (min, item) => Math.min(min, item.finalPrice),
+      products[0].finalPrice
+   );
+   dispatch(filterActions.findBiggestPrice(max));
+   dispatch(filterActions.findSmallerPrice(min));
+ }, [products, dispatch]);
+
 
   //CLOSE SIDEBAR MODAL
   const closeSideBar = useCallback(() => {
@@ -35,7 +50,6 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
         closeSideBar();
       }
     }
-
     document.addEventListener("mousedown", clickOutside);
 
     return () => {
@@ -87,11 +101,10 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
   //CLEAR FILTERS
   function handleClearFilters() {
     dispatch(filterActions.clear());
-    setCategorySelected(null);
-    setSubCategorySelected(null);
-    setSaleCheck(false);
-    setPrice(2000);
-    setBrandSelected(null);
+    // setCategorySelected(null);
+    // setSubCategorySelected(null);
+    // setSaleCheck(false);
+    // setBrandSelected(null);
   }
 
   return (
@@ -209,16 +222,17 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
 
           <input
             type="range"
-            min="0"
-            max="2000"
-            value={price}
-            step="100"
+            min={smallerPrice}
+            max={biggestPrice}
+            value={price ?? biggestPrice}
             className="w-full accent-black cursor-pointer"
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) =>
+              dispatch(filterActions.setMax(Number(e.target.value)))
+            }
           />
           <span className="font-medium text-[#717182]">
-            Up to {price}
-            <sup>$</sup>
+            Up to {price ?? biggestPrice}
+            <sup>€</sup>
           </span>
         </div>
 

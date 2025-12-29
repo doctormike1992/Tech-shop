@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import { useState, useEffect, useRef } from "react";
 import ProductItem from "../components/ProductItem";
-import { discountOnFilter } from "../utils/discountOnFilter";
+// import { discountOnFilter } from "../utils/discountOnFilter";
 import { guestActions } from "../store/guestSlice";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,6 +29,7 @@ export default function Products() {
   const guestFavorites = useSelector((state) => state.guest.favorites);
   const dialog = useRef();
   const modalContent = useRef();
+ 
 
   //FILTERS
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function Products() {
     }
 
     if (max !== null) {
-      temp = temp.filter((item) => discountOnFilter(item) <= max);
+      temp = temp.filter((item) => item.finalPrice <= max);
     }
 
     if (sale) {
@@ -94,6 +95,7 @@ export default function Products() {
       await setDoc(itemDocRef, {
         ...item,
         quantity: 1,
+        status: 'pending'
       });
     }
   }

@@ -99,7 +99,7 @@ export default function ProductManagment() {
                             </div>
                             <div className="flex flex-row  items-center justify-between">
                               <p className="text-lg font-medium">
-                                {product.finalPrice.toFixed(2)}<sup>$</sup>
+                                {product.finalPrice.toFixed(2)}<sup>€</sup>
                               </p>
                               <p className="text-sm  text-stone-400">
                                 Days tp Deliver: {product.deliveryTime}
