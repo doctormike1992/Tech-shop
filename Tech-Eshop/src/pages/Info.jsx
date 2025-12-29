@@ -16,19 +16,26 @@ export default function Info() {
   // FUNCTION THAT LOOKS IF THE DAY OF THE DELIVERY HAS COME SO IT GIVES STATUS: DELIVERED 
   // OR IF ITS ONE DAY BEFORE DELIVERY IT GIVES THAT STATUS: PROCECCING
   useEffect(() => {
-    setOrderStatus(orders);
-    setOrderStatus(order => order.map(item => {
-      if (isOrderExpired(item.time, item.deliveryTime)){
-        return {...item, status: 'delivered' }
+    const updatedOrders = orders.map((item) => ({
+      ...item,
+       items: item.items.map((order) => {
+        if (isOrderExpired(order.time, order.deliveryTime)) {
+          return { ...order, status: "delivered" };
+        }
+
+      if (isOrderProcessing(order.time, order.deliveryTime)) {
+        return { ...order, status: "processing" };
       }
-      if (isOrderProcessing(item.time, item.deliveryTime)) {
-        return { ...item, status: "processing" };
-      }
-      return item;
-  }
-  ))
+
+      return order;
+      }) 
+    }       
+    ));
+
+    setOrderStatus(updatedOrders);
   }, [orders]);
 
+console.log(orderStatus)
 
   return (
     <>
@@ -114,13 +121,19 @@ export default function Info() {
                       <div className="flex flex-row gap-3">
                         <span
                           className={`${
-                            item.status === "pending" ||
-                            item.status === "processing"
-                              ? "shadow/20 "
-                              : "text-(--white) bg-(--primary)"
-                          } tracking-wide font-medium text-sm rounded-lg px-2`}
+                            order.status === "pending" && "shadow/40 "
+                          }
+                              ${
+                                order.status === "processing" &&
+                                "shadow/40 bg-lime-400"
+                              }
+                              ${
+                                order.status === "delivered" &&
+                                "text-(--white) shadow/40 bg-(--primary)"
+                              } 
+                          tracking-wide font-medium text-sm rounded-lg px-2`}
                         >
-                          {item.status}
+                          {order.status}
                         </span>
                         <p>
                           {order.finalPrice.toFixed(2)}

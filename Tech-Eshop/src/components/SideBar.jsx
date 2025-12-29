@@ -101,10 +101,10 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
   //CLEAR FILTERS
   function handleClearFilters() {
     dispatch(filterActions.clear());
-    // setCategorySelected(null);
-    // setSubCategorySelected(null);
-    // setSaleCheck(false);
-    // setBrandSelected(null);
+    setCategorySelected(null);
+    setSubCategorySelected(null);
+    setSaleCheck(false);
+    setBrandSelected(null);
   }
 
   return (

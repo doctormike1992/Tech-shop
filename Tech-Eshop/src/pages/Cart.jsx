@@ -83,7 +83,6 @@ export default function Cart() {
     batch.set(orderRef, {
       items: guestCart, 
       total: totalPrice,
-      status: "pending",
       time: readableTime,
     });
 
