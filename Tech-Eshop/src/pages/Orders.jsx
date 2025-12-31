@@ -18,63 +18,94 @@ export default function Orders() {
 
   return (
     <>
-      <div className="flex flex-col w-full items-center justify-center py-20">
-        <h3 className="text-2xl">YOUR ORDERS</h3>
+      <section className="flex flex-col w-full max-w-3/5 items-start justify-start px-3">
+        <h3 className="text-2xl font-semibold py-15">Ongoing Orders</h3>
 
-        <ul className="border-t-4 border-(--secondary) lg:w-[60%] md:w-[90%] w-full text-center">
+        <div className="w-full flex flex-col items-center gap-6 justify-center">
           {guestOrders.length === 0 && <h1>No Orders Have been made!!</h1>}
-          {orderInProgress.map((item) => {
-            
+          {orderInProgress.map((item) => (
+            <div
+              key={item.id}
+              className="flex flex-col w-full border gap-2 p-4 border-(--ordersBorder) rounded-lg"
+            >
+              <div className="flex flex-row items-center pb-10 pt-3 justify-between">
+                <p className="font-medium text-xl flex flex-col">
+                  Order{" "}
+                  <span className="text-(--secondText) font-medium text-sm pl-1">
+                    #{item.id}
+                  </span>
+                </p>
+                <p className="font- text-sm text-(--secondText)">
+                  Placed on: <span className="font-medium">{item.time}</span>
+                </p>
+              </div>
+              <hr className="text-(--secondary)" />
 
-            return (
-              <li key={item.id} className="w-full relative">
-                {item.items.map((order) => {
-                  const total = order.finalPrice * order.quantity;
-                  return (
-                    <div>
-                    <div className=" h-full w-full ">
-                      <img
-                        src={order.image}
-                        alt="image"
-                        className="w-full h-full aspect-square object-center"
-                      />
-                    </div>
-
-                    <div className="w-full h-full flex items-center justify-center border-l-2 border-stone-400 flex-nowrap">
-                      <h2 className="text-center">
-                        {order.name}
-                        {order.time}
-                      </h2>
-                    </div>
-                    <div className="w-full border-l-2 border-stone-400  h-full flex items-center justify-center ">
-                      {order.sale ? (
-                        <div>
-                          <p>{"$ " + order.finalPrice.toFixed(2)}</p>
-                          <p className="line-through text-stone-500">
-                            {"$ " + order.price.toFixed(2)}
-                          </p>
-                        </div>
-                      ) : (
-                        <p>{"$ " + order.price.toFixed(2)}</p>
-                      )}
-                    </div>
-                    <div className="w-full border-l-2 border-stone-400  h-full flex items-center justify-center ">
-                      {order.quantity && <p>{"x " + order.quantity}</p>}
-                    </div>
-                    <div className="w-full border-l-2 border-stone-400  h-full flex flex-col  items-center justify-center ">
-                      <p className="text-bold border-b-2 border-stone-900 ">
-                        Total
+              {item.items.map((order) => (
+                <div
+                  key={order.id}
+                  className="flex flex-col items-start gap-3 py-3 justify-between"
+                >
+                  <div className="flex flex-row w-full justify-between items-center">
+                    <div className="flex flex-row  items-center gap-4">
+                      <div className="rounded-lg overflow-hidden ">
+                        <img
+                          src={order.image}
+                          className="size-20 aspect-4/3 object-cover"
+                        />
+                      </div>
+                      <p className="font-medium text-(--ordersName) text-sm">
+                        {order.name} <span className="font-normal">x</span>
+                        {order.quantity}
                       </p>
-                      {"$ " + total.toFixed(2)}
+                    </div>
+
+                    <div className="flex flex-row gap-3">
+                      <span
+                        className={`${
+                          order.status === "pending" && "shadow/40 "
+                        }
+                              ${
+                                order.status === "processing" &&
+                                "shadow/40 bg-lime-400"
+                              }
+                              ${
+                                order.status === "delivered" &&
+                                "text-(--white) shadow/40 bg-(--primary)"
+                              } 
+                          tracking-wide font-medium text-sm rounded-lg px-2`}
+                      >
+                        {order.status}
+                      </span>
+                      <p>
+                        {(order.finalPrice * order.quantity).toFixed(2)}
+                        <sup>€</sup>
+                      </p>
                     </div>
                   </div>
-                  )              
-          })}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+                  <div className="w-full border border-(--ordersBorder) rounded-lg h-7 overflow-hidden">
+                    <div
+                      className={`h-full ${
+                        order.status === "pending" ? "w-[33%]" : "w-[66%]"
+                      } bg-lime-500 flex items-center text-(--white)  pl-3`}
+                    >
+                      Your order is <span className="font-medium pl-1">{order.status} </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <hr className="text-(--secondary)" />
+              <div className="flex flex-row justify-between pt-2 items-center font-medium">
+                <p>Total</p>
+                <p>
+                  {item.total.toFixed(2)}
+                  <sup>€</sup>
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
     </>
   );
 }

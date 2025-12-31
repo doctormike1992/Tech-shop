@@ -10,6 +10,7 @@ export default function Search({onModal, searchBarModal, searchButtonModal}) {
   const input = useRef();
   const navigate = useNavigate();
 
+  //NAVIGATE TO THE MAIN PAGE IN ENTER IS PRESSED ON SEARCH BAR
   function handleEnterKey(e) {
     if (e.key === "Enter") {
       navigate("/");

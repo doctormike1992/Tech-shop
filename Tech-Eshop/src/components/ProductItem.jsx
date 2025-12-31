@@ -42,7 +42,7 @@ export default function ProductItem({
       )}
 
       <div className="rounded-xl overflow-hidden border-stone-300 border group md:w-88 lg:w-90 w-65 ">
-        <div className="w-full -z-10">
+        <div className="w-full -z-10 overflow-hidden">
           <img
             src={item.image}
             alt="image"
@@ -51,7 +51,7 @@ export default function ProductItem({
         </div>
         <div className="px-4  py-1.5 min-w-0">
           <div className="flex flex-col justify-start w-full gap-1.5 items-start  md:h-31 min-w-0">
-            <p className="w-full tracking-wide font-medium">{item.name}</p>
+            <p className="w-full tracking-wide pt-3 font-medium">{item.name}</p>
 
             <div className="flex flex-row gap-2">
               <p className="text-[0.8rem] tracking-wider font-medium  bg-(--secondary) shadow/20 rounded-md py-1 px-1.5 ">
@@ -63,12 +63,12 @@ export default function ProductItem({
               </p>
             </div>
 
-            <p className="w-full font-normal wrap-break-word text-sm text-(--secondText) md:line-clamp-3 line-clamp-1">
+            <p className="w-full font-normal wrap-break-word text-sm text-(--secondText) md:line-clamp-2 line-clamp-1">
               {item.summary}
             </p>
           </div>
 
-          <div className="flex pt-8 flex-row pb-3 items-center justify-between">
+          <div className="flex pt-6 flex-row pb-3 items-center justify-between">
             <div className="flex gap-2 items-center">
               <p
                 className={`text-center  font-semibold ${
@@ -97,7 +97,7 @@ export default function ProductItem({
               Add
             </button>
           </div>
-          <p className="text-[0.8rem] font-normal text-stone-500">
+          <p className="text-xs  pb-2 text-(--secondText)">
             days to deliver: {item.deliveryTime}
           </p>
         </div>

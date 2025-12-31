@@ -136,7 +136,7 @@ console.log(orderStatus)
                           {order.status}
                         </span>
                         <p>
-                          {order.finalPrice.toFixed(2)}
+                          {(order.finalPrice * order.quantity).toFixed(2)}
                           <sup>€</sup>
                         </p>
                       </div>
