@@ -1,9 +1,7 @@
-import { discountOnFilter } from "../utils/discountOnFilter";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { isOrderExpired } from "../utils/finishedOrders";
 import { useEffect, useState } from "react";
-
 
 export default function Orders() {
   const guestOrders = useSelector((state) => state.guest.orders);
@@ -11,9 +9,11 @@ export default function Orders() {
 
   //after the order is delivered it removes the order from  orderInProgress array
   useEffect(() => {
-   setOrderInProgress(guestOrders.filter(item => {
-     return !isOrderExpired(item.time, item.deliveryTime)
-    }) ) 
+    setOrderInProgress(
+      guestOrders.filter((item) => {
+        return !isOrderExpired(item.time, item.deliveryTime);
+      })
+    );
   }, [guestOrders]);
 
   return (
@@ -24,50 +24,52 @@ export default function Orders() {
         <ul className="border-t-4 border-(--secondary) lg:w-[60%] md:w-[90%] w-full text-center">
           {guestOrders.length === 0 && <h1>No Orders Have been made!!</h1>}
           {orderInProgress.map((item) => {
-            const total = discountOnFilter(item) * item.quantity;
+            
 
             return (
               <li key={item.id} className="w-full relative">
-                <Link
-                  to={`/${item.id}`}
-                  className="flex flex-row items-center justify-between  border-b-2 border-stone-400 md:h-50 h-30 w-full md:text-xl text-sm "
-                >
-                  <div className=" h-full w-full ">
-                    <img
-                      src={item.image}
-                      alt="image"
-                      className="w-full h-full aspect-square object-center"
-                    />
-                  </div>
+                {item.items.map((order) => {
+                  const total = order.finalPrice * order.quantity;
+                  return (
+                    <div>
+                    <div className=" h-full w-full ">
+                      <img
+                        src={order.image}
+                        alt="image"
+                        className="w-full h-full aspect-square object-center"
+                      />
+                    </div>
 
-                  <div className="w-full h-full flex items-center justify-center border-l-2 border-stone-400 flex-nowrap">
-                    <h2 className="text-center">
-                      {item.name}
-                      {item.time}
-                    </h2>
+                    <div className="w-full h-full flex items-center justify-center border-l-2 border-stone-400 flex-nowrap">
+                      <h2 className="text-center">
+                        {order.name}
+                        {order.time}
+                      </h2>
+                    </div>
+                    <div className="w-full border-l-2 border-stone-400  h-full flex items-center justify-center ">
+                      {order.sale ? (
+                        <div>
+                          <p>{"$ " + order.finalPrice.toFixed(2)}</p>
+                          <p className="line-through text-stone-500">
+                            {"$ " + order.price.toFixed(2)}
+                          </p>
+                        </div>
+                      ) : (
+                        <p>{"$ " + order.price.toFixed(2)}</p>
+                      )}
+                    </div>
+                    <div className="w-full border-l-2 border-stone-400  h-full flex items-center justify-center ">
+                      {order.quantity && <p>{"x " + order.quantity}</p>}
+                    </div>
+                    <div className="w-full border-l-2 border-stone-400  h-full flex flex-col  items-center justify-center ">
+                      <p className="text-bold border-b-2 border-stone-900 ">
+                        Total
+                      </p>
+                      {"$ " + total.toFixed(2)}
+                    </div>
                   </div>
-                  <div className="w-full border-l-2 border-stone-400  h-full flex items-center justify-center ">
-                    {item.sale ? (
-                      <div>
-                        <p>{"$ " + discountOnFilter(item).toFixed(2)}</p>
-                        <p className="line-through text-stone-500">
-                          {"$ " + item.price.toFixed(2)}
-                        </p>
-                      </div>
-                    ) : (
-                      <p>{"$ " + item.price.toFixed(2)}</p>
-                    )}
-                  </div>
-                  <div className="w-full border-l-2 border-stone-400  h-full flex items-center justify-center ">
-                    {item.quantity && <p>{"x " + item.quantity}</p>}
-                  </div>
-                  <div className="w-full border-l-2 border-stone-400  h-full flex flex-col  items-center justify-center ">
-                    <p className="text-bold border-b-2 border-stone-900 ">
-                      Total
-                    </p>
-                    {"$ " + total.toFixed(2)}
-                  </div>
-                </Link>
+                  )              
+          })}
               </li>
             );
           })}

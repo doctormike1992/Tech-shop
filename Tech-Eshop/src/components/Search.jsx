@@ -3,12 +3,18 @@ import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 
 export default function Search({onModal, searchBarModal, searchButtonModal}) {
   const dispatch = useDispatch();
   const input = useRef();
+  const navigate = useNavigate();
 
+  function handleEnterKey(e) {
+    if (e.key === "Enter") {
+      navigate("/");
+    }
+  }
  
 
   return (
@@ -28,6 +34,7 @@ export default function Search({onModal, searchBarModal, searchButtonModal}) {
         type="text"
         placeholder="search products..."
         ref={input}
+        onKeyDown={handleEnterKey}
         onChange={() => dispatch(filterActions.search(input.current.value))}
       />
       <Link to="/">

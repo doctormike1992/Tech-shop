@@ -127,6 +127,7 @@ export default function Products() {
             />
           </div>
         </Modal>
+        
         <div className="flex py-15 gap-5 items-center flex-row w-full">
           <button
             className="w-fit border rounded-md px-2 py-1 border-stone-500 cursor-pointer hover:border-stone-900"
@@ -168,7 +169,6 @@ export default function Products() {
           </ul>
         </div>
       </section>
-    
     </>
   );
 }
