@@ -1,7 +1,10 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { isOrderExpired } from "../utils/finishedOrders";
+import { orderStatus } from "../utils/finishedOrders";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock, faTruck } from "@fortawesome/free-regular-svg-icons";
+import { faDolly } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function Orders() {
   const guestOrders = useSelector((state) => state.guest.orders);
@@ -11,7 +14,7 @@ export default function Orders() {
   useEffect(() => {
     setOrderInProgress(
       guestOrders.filter((item) => {
-        return !isOrderExpired(item.time, item.deliveryTime);
+        return orderStatus(item.time, item.deliveryTime) !== "delivered";
       })
     );
   }, [guestOrders]);
@@ -54,42 +57,71 @@ export default function Orders() {
                           className="size-20 aspect-4/3 object-cover"
                         />
                       </div>
-                      <p className="font-medium text-(--ordersName) text-sm">
-                        {order.name} <span className="font-normal">x</span>
-                        {order.quantity}
-                      </p>
+                      <div>
+                        <p className="font-medium text-(--primary) text-sm">
+                        {order.name}
+                        </p>
+                        <p className="text-sm text-(--secondText) font-medium">Quantity: {order.quantity}</p>
+                      </div>
+                      
                     </div>
 
                     <div className="flex flex-row gap-3">
-                      <span
-                        className={`${
-                          order.status === "pending" && "shadow/40 "
-                        }
-                              ${
-                                order.status === "processing" &&
-                                "shadow/40 bg-lime-400"
-                              }
-                              ${
-                                order.status === "delivered" &&
-                                "text-(--white) shadow/40 bg-(--primary)"
-                              } 
-                          tracking-wide font-medium text-sm rounded-lg px-2`}
-                      >
-                        {order.status}
-                      </span>
                       <p>
                         {(order.finalPrice * order.quantity).toFixed(2)}
                         <sup>€</sup>
                       </p>
                     </div>
                   </div>
-                  <div className="w-full border border-(--ordersBorder) rounded-lg h-7 overflow-hidden">
-                    <div
-                      className={`h-full ${
-                        order.status === "pending" ? "w-[33%]" : "w-[66%]"
-                      } bg-lime-500 flex items-center text-(--white)  pl-3`}
-                    >
-                      Your order is <span className="font-medium pl-1">{order.status} </span>
+
+                  <div className="flex flex-col w-full ">
+                    <div className="flex flex-row w-full items-center justify-between pb-1">
+                      <p className=" text-lg flex flex-row items-center gap-1">
+                        {orderStatus(order.time, order.deliveryTime) ===
+                          "arriving" && (
+                          <FontAwesomeIcon className="text-xl" icon={faTruck} />
+                        )}
+                        {orderStatus(order.time, order.deliveryTime) ===
+                          "processing" && <FontAwesomeIcon icon={faDolly} />}
+                        {orderStatus(order.time, order.deliveryTime) ===
+                          "pending" && (
+                          <FontAwesomeIcon className="text-xl" icon={faClock} />
+                        )}
+                        {orderStatus(order.time, order.deliveryTime)}
+                      </p>
+                      <p
+                        className={`text-sm font-medium  shadow/40 rounded-lg py-0.5 px-2 ${
+                          orderStatus(order.time, order.deliveryTime) ===
+                            "processing" && "bg-(--secondary)"
+                        } ${
+                          orderStatus(order.time, order.deliveryTime) ===
+                            "arriving" && "bg-(--secondText) text-(--white)"
+                        }`}
+                      >
+                        {orderStatus(order.time, order.deliveryTime)}
+                      </p>
+                    </div>
+
+                    <div className="w-full  rounded-lg h-2 bg-(--ordersBorder) overflow-hidden">
+                      <div
+                        className={`h-full ${
+                          orderStatus(order.time, order.deliveryTime) ===
+                            "pending" && "w-[25%]"
+                        }  ${
+                          orderStatus(order.time, order.deliveryTime) ===
+                            "processing" && "w-[50%]"
+                        }  ${
+                          orderStatus(order.time, order.deliveryTime) ===
+                            "arriving" && "w-[75%]"
+                        }  bg-(--primary) flex items-center pl-3`}
+                      ></div>
+                    </div>
+
+                    <div className="flex flex-row items-center justify-between text-sm">
+                      <p>Placed</p>
+                      <p>Processing</p>
+                      <p>Shipped</p>
+                      <p>Delivered</p>
                     </div>
                   </div>
                 </div>

@@ -61,7 +61,7 @@ export default function Cart() {
   }
 
   
-   const readableTime = dayjs().format("DD-MM-YYYY");
+   const readableTime = dayjs().format("YYYY-MM-DD");
 
   // REMOVE FROM CART BUTTON
   async function handleRemoveFromCart(item) {

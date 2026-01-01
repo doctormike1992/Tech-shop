@@ -2,40 +2,19 @@ import { useSelector } from "react-redux";
 import UserForm from "../components/userForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { faBoxArchive } from "@fortawesome/free-solid-svg-icons";
-import { isOrderExpired, isOrderProcessing } from "../utils/finishedOrders";
+import { orderStatus } from "../utils/finishedOrders";
 
 
 export default function Info() {
   const orders = useSelector((state) => state.guest.orders);
   const [editForm, setEditForm] = useState('close');
-  const [orderStatus, setOrderStatus] = useState([]);
-  console.log(orderStatus)
 
-  // FUNCTION THAT LOOKS IF THE DAY OF THE DELIVERY HAS COME SO IT GIVES STATUS: DELIVERED 
-  // OR IF ITS ONE DAY BEFORE DELIVERY IT GIVES THAT STATUS: PROCECCING
-  useEffect(() => {
-    const updatedOrders = orders.map((item) => ({
-      ...item,
-       items: item.items.map((order) => {
-        if (isOrderExpired(order.time, order.deliveryTime)) {
-          return { ...order, status: "delivered" };
-        }
 
-      if (isOrderProcessing(order.time, order.deliveryTime)) {
-        return { ...order, status: "processing" };
-      }
 
-      return order;
-      }) 
-    }       
-    ));
 
-    setOrderStatus(updatedOrders);
-  }, [orders]);
 
-console.log(orderStatus)
 
   return (
     <>
@@ -91,7 +70,7 @@ console.log(orderStatus)
             </div>
 
             <section className="flex flex-col gap-7 p-4">
-              {orderStatus.map((item) => (
+              {orders.map((item) => (
                 <div
                   key={item.id}
                   className="flex flex-col border gap-2 p-3 border-(--ordersBorder) rounded-lg"
@@ -119,21 +98,9 @@ console.log(orderStatus)
                         {order.quantity}
                       </p>
                       <div className="flex flex-row gap-3">
-                        <span
-                          className={`${
-                            order.status === "pending" && "shadow/40 "
-                          }
-                              ${
-                                order.status === "processing" &&
-                                "shadow/40 bg-lime-400"
-                              }
-                              ${
-                                order.status === "delivered" &&
-                                "text-(--white) shadow/40 bg-(--primary)"
-                              } 
-                          tracking-wide font-medium text-sm rounded-lg px-2`}
-                        >
-                          {order.status}
+                        <span>
+                          
+                          {orderStatus(order.time, order.deliveryTime)}
                         </span>
                         <p>
                           {(order.finalPrice * order.quantity).toFixed(2)}

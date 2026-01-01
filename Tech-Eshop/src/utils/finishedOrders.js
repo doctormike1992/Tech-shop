@@ -1,11 +1,18 @@
 import dayjs from "dayjs";
 
-export function isOrderExpired(orderDate, deliveryDate) {
-  return dayjs().diff(dayjs(orderDate, "DD-MM-YYYY"), "day") >= deliveryDate;
-}
 
-export function isOrderProcessing(orderDate, deliveryTime) {
-  const daysPassed = dayjs().diff(dayjs(orderDate, "DD-MM-YYYY"), "day");
+
+export function orderStatus(orderDate, deliveryTime) {
+  const daysPassed = dayjs().diff(dayjs(orderDate, "YYYY-MM-DD"), "day");
   const daysLeft = deliveryTime - daysPassed;
-  return daysLeft === 1;
-}
+  if (daysPassed >= deliveryTime) {
+    return 'delivered'
+  }
+  if (daysLeft === 2) {
+    return "processing";
+  }
+  if (daysLeft === 1) {
+    return 'arriving'
+  }
+  return 'pending';
+};

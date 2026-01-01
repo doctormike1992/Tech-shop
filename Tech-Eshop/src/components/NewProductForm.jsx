@@ -23,6 +23,7 @@ export default function NewProductForm() {
   const [width, setWidth] = useState(window.innerWidth);
   const dispatch = useDispatch();
 
+  //CHECKING IF THE WIDTH OF THE SCREEN IN SMALLER TO CHANGE THE ADD PRODUCT BUUTON POSITION
   useEffect(() => {
     const widthChange = () => setWidth(window.innerWidth);
 
