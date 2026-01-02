@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock, faTruck } from "@fortawesome/free-regular-svg-icons";
 import { faDolly } from "@fortawesome/free-solid-svg-icons";
-
+import { Link } from "react-router-dom";
 
 export default function Orders() {
   const guestOrders = useSelector((state) => state.guest.orders);
@@ -21,11 +21,25 @@ export default function Orders() {
 
   return (
     <>
-      <section className="flex flex-col w-full max-w-3/5 items-start justify-start px-3">
+      <section
+        className={`flex flex-col w-full ${
+          guestOrders.length !== 0 && "max-w-3/5"
+        } items-start justify-start px-3`}
+      >
         <h3 className="text-2xl font-semibold py-15">Ongoing Orders</h3>
 
         <div className="w-full flex flex-col items-center gap-6 justify-center">
-          {guestOrders.length === 0 && <h1>No Orders Have been made!!</h1>}
+          {guestOrders.length === 0 && (
+            <div className="flex flex-col items-center gap-3">
+              <FontAwesomeIcon className="text-6xl" icon={faTruck} />
+              <h1 className="text-lg font-medium">No Orders Have Been Made</h1>
+              <Link to={"/"}>
+                <button className="bg-(--primary) text-(--white) py-1 px-2 rounded-md font-medium cursor-pointer">
+                  continue shopping
+                </button>
+              </Link>
+            </div>
+          )}
           {orderInProgress.map((item) => (
             <div
               key={item.id}
@@ -44,91 +58,100 @@ export default function Orders() {
               </div>
               <hr className="text-(--secondary)" />
 
-              {item.items.map((order) => (
-                <div
-                  key={order.id}
-                  className="flex flex-col items-start gap-3 py-3 justify-between"
-                >
-                  <div className="flex flex-row w-full justify-between items-center">
-                    <div className="flex flex-row  items-center gap-4">
-                      <div className="rounded-lg overflow-hidden ">
-                        <img
-                          src={order.image}
-                          className="size-20 aspect-4/3 object-cover"
-                        />
+              {item.items.map((order) => {
+                const status = orderStatus(order.time, order.deliveryTime);
+
+                return (
+                  <div
+                    key={order.id}
+                    className="flex flex-col items-start gap-3 py-3 justify-between"
+                  >
+                    <div className="flex flex-row w-full justify-between items-center">
+                      <div className="flex flex-row  items-center gap-4">
+                        <div className="rounded-lg overflow-hidden ">
+                          <img
+                            src={order.image}
+                            className="size-20 aspect-4/3 object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p className="font-medium text-(--primary) text-sm">
+                            {order.name}
+                          </p>
+                          <p className="text-sm text-(--secondText) font-medium">
+                            Quantity: {order.quantity}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-medium text-(--primary) text-sm">
-                        {order.name}
+
+                      <div className="flex flex-row gap-3">
+                        <p>
+                          {(order.finalPrice * order.quantity).toFixed(2)}
+                          <sup>€</sup>
                         </p>
-                        <p className="text-sm text-(--secondText) font-medium">Quantity: {order.quantity}</p>
                       </div>
-                      
                     </div>
 
-                    <div className="flex flex-row gap-3">
-                      <p>
-                        {(order.finalPrice * order.quantity).toFixed(2)}
-                        <sup>€</sup>
-                      </p>
+                    <div className="flex flex-col w-full ">
+                      <div className="flex flex-row w-full items-center justify-start pt-1 pb-2 gap-2">
+                        <p className=" text-lg  items-center">
+                          {status === "shipping" && (
+                            <FontAwesomeIcon
+                              className="text-xl"
+                              icon={faTruck}
+                            />
+                          )}
+                          {status === "processing" && (
+                            <FontAwesomeIcon icon={faDolly} />
+                          )}
+                          {status === "pending" && (
+                            <FontAwesomeIcon
+                              className="text-xl"
+                              icon={faClock}
+                            />
+                          )}
+                        </p>
+                        <p
+                          className={`text-sm font-medium  shadow/40 rounded-lg py-0.5 px-2 ${
+                            status === "processing" && "bg-(--secondary)"
+                          } ${
+                            status === "shipping" &&
+                            "bg-(--secondText) text-(--white)"
+                          }`}
+                        >
+                          {status}
+                        </p>
+                      </div>
+
+                      <div className="w-full  rounded-lg h-2 bg-(--ordersBorder) overflow-hidden">
+                        <div
+                          className={`h-full ${
+                            status === "pending" && "w-[25%]"
+                          }  ${status === "processing" && "w-[50%]"}  ${
+                            status === "shipping" && "w-[75%]"
+                          }  bg-(--primary) flex items-center pl-3`}
+                        ></div>
+                      </div>
+
+                      <div className="flex flex-row items-center justify-between text-sm">
+                        <p>Placed</p>
+                        <p>Processing</p>
+                        <p>Shipped</p>
+                        <p>Delivered</p>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="flex flex-col w-full ">
-                    <div className="flex flex-row w-full items-center justify-between pb-1">
-                      <p className=" text-lg flex flex-row items-center gap-1">
-                        {orderStatus(order.time, order.deliveryTime) ===
-                          "arriving" && (
-                          <FontAwesomeIcon className="text-xl" icon={faTruck} />
-                        )}
-                        {orderStatus(order.time, order.deliveryTime) ===
-                          "processing" && <FontAwesomeIcon icon={faDolly} />}
-                        {orderStatus(order.time, order.deliveryTime) ===
-                          "pending" && (
-                          <FontAwesomeIcon className="text-xl" icon={faClock} />
-                        )}
-                        {orderStatus(order.time, order.deliveryTime)}
-                      </p>
-                      <p
-                        className={`text-sm font-medium  shadow/40 rounded-lg py-0.5 px-2 ${
-                          orderStatus(order.time, order.deliveryTime) ===
-                            "processing" && "bg-(--secondary)"
-                        } ${
-                          orderStatus(order.time, order.deliveryTime) ===
-                            "arriving" && "bg-(--secondText) text-(--white)"
-                        }`}
-                      >
-                        {orderStatus(order.time, order.deliveryTime)}
-                      </p>
-                    </div>
-
-                    <div className="w-full  rounded-lg h-2 bg-(--ordersBorder) overflow-hidden">
-                      <div
-                        className={`h-full ${
-                          orderStatus(order.time, order.deliveryTime) ===
-                            "pending" && "w-[25%]"
-                        }  ${
-                          orderStatus(order.time, order.deliveryTime) ===
-                            "processing" && "w-[50%]"
-                        }  ${
-                          orderStatus(order.time, order.deliveryTime) ===
-                            "arriving" && "w-[75%]"
-                        }  bg-(--primary) flex items-center pl-3`}
-                      ></div>
-                    </div>
-
-                    <div className="flex flex-row items-center justify-between text-sm">
-                      <p>Placed</p>
-                      <p>Processing</p>
-                      <p>Shipped</p>
-                      <p>Delivered</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
               <hr className="text-(--secondary)" />
-              <div className="flex flex-row justify-between pt-2 items-center font-medium">
-                <p>Total</p>
+              <div className="flex flex-row justify-between pt-6 items-center font-medium">
+                <p>
+                  Total Amount{" "}
+                  <span className="text-xs text-(--secondText) font-normal">
+                    {" "}
+                    (after shipping and tax)
+                  </span>
+                </p>
                 <p>
                   {item.total.toFixed(2)}
                   <sup>€</sup>

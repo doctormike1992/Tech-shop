@@ -174,7 +174,7 @@ export default function App() {
           element: <Orders />,
         },
         {
-          path: "/info",
+          path: "/My-Account",
           element: <Info />,
         },
       ],

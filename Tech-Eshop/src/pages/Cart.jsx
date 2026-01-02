@@ -130,7 +130,7 @@ export default function Cart() {
                   Add some products to get started
                 </p>
                 <Link
-                  className="bg-(--primary) text-(--white) py-1 px-2 rounded-md font-medium "
+                  className="bg-(--primary) text-(--white) py-1 px-2 rounded-md font-medium cursor-pointer"
                   to={"/"}
                 >
                   Browse Products

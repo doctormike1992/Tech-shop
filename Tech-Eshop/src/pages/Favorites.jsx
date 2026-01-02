@@ -67,7 +67,7 @@ export default function Favorites() {
                 />
                 <h1 className="text-xl font-semibold">No favorites yet</h1>
                 <p className="text-(--secondText) pb-2">Start adding products to your favorites</p>
-                <Link className="bg-(--primary) text-(--white) py-1 px-2 rounded-md font-medium " to={'/'}>Browse Products</Link>
+                <Link className="bg-(--primary) text-(--white) py-1 px-2 rounded-md font-medium cursor-pointer" to={'/'}>Browse Products</Link>
               </div>
             ) : (
               guestFavorites.map((item) => {

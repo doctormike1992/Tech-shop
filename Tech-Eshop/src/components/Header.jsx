@@ -183,7 +183,7 @@ export default function Header() {
                   )}
                 </li>
               </NavLink>
-              <NavLink to="/info">
+              <NavLink to="/My-Account">
                 <li
                   className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg"
                   title="User"

@@ -70,7 +70,13 @@ export default function Info() {
             </div>
 
             <section className="flex flex-col gap-7 p-4">
-              {orders.map((item) => (
+              {orders.length === 0 && (
+                <h1 className="w-full text-center text-lg font-medium">
+                  No Orders Have Been Made
+                </h1>
+              )}
+              {orders.map((item) => 
+              (
                 <div
                   key={item.id}
                   className="flex flex-col border gap-2 p-3 border-(--ordersBorder) rounded-lg"
@@ -88,27 +94,63 @@ export default function Info() {
                   </div>
                   <hr className="text-(--secondary)" />
 
-                  {item.items.map((order) => (
-                    <div
-                      key={order.id}
-                      className="flex flex-row items-center py-3 justify-between"
-                    >
-                      <p className="font-medium text-(--ordersName) text-sm">
-                        {order.name} <span className="font-normal">x</span>
-                        {order.quantity}
-                      </p>
-                      <div className="flex flex-row gap-3">
-                        <span>
-                          
-                          {orderStatus(order.time, order.deliveryTime)}
-                        </span>
-                        <p>
-                          {(order.finalPrice * order.quantity).toFixed(2)}
-                          <sup>€</sup>
-                        </p>
+                  {item.items.map((order) => {
+                    const status = orderStatus(order.time, order.deliveryTime);
+
+                    return (
+                      <div
+                        key={order.id}
+                        className="flex flex-col items-center py-3"
+                      >
+                        <div className="flex flex-row w-full items-center justify-between">
+                          <p className="font-medium text-(--ordersName) text-sm">
+                            {order.name} <span className="font-normal">x</span>
+                            {order.quantity}
+                          </p>
+                          <p>
+                            {(order.finalPrice * order.quantity).toFixed(2)}
+                            <sup>€</sup>
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col w-full pt-2 gap-1">
+                          <div className="flex flex-row justify-between w-full">
+                            <span
+                              className={`text-xs font-medium  shadow/40 rounded-lg py-0.5 px-2 ${
+                                status === "processing" && "bg-(--secondary)"
+                              } ${
+                                status === "shipping" &&
+                                "bg-(--secondText) text-(--white)"
+                              }  ${
+                                status === "delivered" &&
+                                "bg-(--primary) text-(--white)"
+                              } `}
+                            >
+                              {status}
+                            </span>
+                            <p className="text-sm text-(--secondText)">
+                              {status === "pending" && "25%"}
+                              {status === "processing" && "50%"}
+                              {status === "shipping" && "75%"}
+                              {status === "delivered" && "100%"}
+                            </p>
+                          </div>
+                          <div className="w-full  rounded-lg h-1.5 bg-(--ordersBorder) overflow-hidden">
+                            <div
+                              className={`h-full ${
+                                status === "pending" && "w-[25%]"
+                              }  ${status === "processing" && "w-[50%]"}  ${
+                                status === "shipping" && "w-[75%]"
+                              }  ${
+                                status === "delivered" && "w-100%"
+                              }  bg-(--primary) flex items-center pl-3`}
+                            ></div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  }
+                  )}
                   <hr className="text-(--secondary)" />
                   <div className="flex flex-row justify-between pt-2 items-center font-medium">
                     <p>Total</p>
