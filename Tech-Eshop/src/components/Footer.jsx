@@ -20,13 +20,13 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="w-full flex flex-col grow-0 bg-(--secondary) border-t border-t-(--ordersBorder) z-51">
-        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-start py-5">
-          <div className="flex flex-col items-center justify-start gap-1">
+      <footer className="w-full flex flex-col items-center grow-0 bg-(--secondary) border-t border-t-(--ordersBorder)">
+        <div className=" grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[repeat(4,300px)] items-start py-5">
+          <div className="flex flex-col items-center py-2 justify-start gap-1">
             <h1 className="text-xl font-medium">Tech-Eshop</h1>
             <p className="text-wrap text-sm text-center text-(--secondText)">
-              Your trusted destination for the latest tech <br /> products and
-              accessories. Quality guaranteed.
+              Your trusted destination <br /> for the latest tech products
+              <br /> and accessories. Quality guaranteed.
             </p>
             <div className="flex flex-row gap-1 text-xl">
               <FontAwesomeIcon
@@ -48,7 +48,7 @@ export default function Footer() {
               />
             </div>
           </div>
-          <div className="flex flex-col gap-1 items-center">
+          <div className="flex flex-col gap-1 py-2 items-center">
             <h1 className="text-xl font-medium">Quick Links</h1>
             <Link
               to={"/"}
@@ -75,7 +75,7 @@ export default function Footer() {
               My Acounts
             </Link>
           </div>
-          <div className="flex flex-col items-center gap-1">
+          <div className="flex flex-col py-2 items-center gap-1">
             <h1 className="text-xl font-medium">Customer Service</h1>
             <p className="text-sm cursor-pointer text-(--secondText) hover:text-(--primary)">
               Help Center
@@ -93,7 +93,7 @@ export default function Footer() {
               Privacy Policy
             </p>
           </div>
-          <div className="flex flex-col items-center gap-1">
+          <div className="flex flex-col py-2 items-center gap-1">
             <h1 className="text-xl font-medium">Contact Us</h1>
             <p className="text-sm text-wrap text-center  text-(--secondText) ">
               <FontAwesomeIcon icon={faLocationDot} />
@@ -108,7 +108,7 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <hr className="text-(--ordersBorder)" />
+        <hr className="text-(--ordersBorder) w-[80%] " />
         <div className="flex flex-row w-full flex-wrap justify-around  py-5">
           <p className="text-wrap text-sm text-center text-(--secondText)">
             © 2026 Tech E-Shop. All rights reserved.

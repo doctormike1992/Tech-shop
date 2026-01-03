@@ -10,26 +10,33 @@ export default function Orders() {
   const guestOrders = useSelector((state) => state.guest.orders);
   const [orderInProgress, setOrderInProgress] = useState([]);
 
-  //after the order is delivered it removes the order from  orderInProgress array
-  useEffect(() => {
-    setOrderInProgress(
-      guestOrders.filter((item) => {
-        return orderStatus(item.time, item.deliveryTime) !== "delivered";
-      })
-    );
-  }, [guestOrders]);
+  //AFTER AN ORDER IS DELIVERED IS REMOVED FORM THE ONGOING ORDERS PAGE
+ useEffect(() => {
+   const ongoingOrders = guestOrders
+     .map((item) => ({
+       ...item,
+       items: item.items.filter(
+         (order) => orderStatus(item.time, order.deliveryTime) !== "delivered"
+       )
+     }))
+     
+
+   setOrderInProgress(ongoingOrders);
+ }, [guestOrders]);
+
+  console.log(orderInProgress);
 
   return (
     <>
       <section
         className={`flex flex-col w-full ${
-          guestOrders.length !== 0 && "max-w-3/5"
+          orderInProgress.length !== 0 && "max-w-3/5"
         } items-start justify-start px-3`}
       >
         <h3 className="text-2xl font-semibold py-15">Ongoing Orders</h3>
 
         <div className="w-full flex flex-col items-center gap-6 justify-center">
-          {guestOrders.length === 0 && (
+          {orderInProgress.length === 0 && (
             <div className="flex flex-col items-center gap-3">
               <FontAwesomeIcon className="text-6xl" icon={faTruck} />
               <h1 className="text-lg font-medium">No Orders Have Been Made</h1>
@@ -59,7 +66,7 @@ export default function Orders() {
               <hr className="text-(--secondary)" />
 
               {item.items.map((order) => {
-                const status = orderStatus(order.time, order.deliveryTime);
+                const status = orderStatus(item.time, order.deliveryTime);
 
                 return (
                   <div

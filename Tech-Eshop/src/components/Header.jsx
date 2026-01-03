@@ -186,7 +186,7 @@ export default function Header() {
               <NavLink to="/My-Account">
                 <li
                   className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg"
-                  title="User"
+                  title="My account"
                 >
                   <FontAwesomeIcon icon={faUser} />
                 </li>

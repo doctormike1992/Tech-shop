@@ -11,7 +11,7 @@ export default function Info() {
   const orders = useSelector((state) => state.guest.orders);
   const [editForm, setEditForm] = useState('close');
 
-
+console.log(orders)
 
 
 
@@ -95,7 +95,7 @@ export default function Info() {
                   <hr className="text-(--secondary)" />
 
                   {item.items.map((order) => {
-                    const status = orderStatus(order.time, order.deliveryTime);
+                    const status = orderStatus(item.time, order.deliveryTime);
 
                     return (
                       <div
