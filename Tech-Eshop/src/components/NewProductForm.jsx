@@ -149,7 +149,6 @@ export default function NewProductForm() {
             <textarea
               name="summary"
               id="summary"
-              maxLength={100}
               required
               className="bg-(--input) w-full rounded-md p-2  outline-0"
             />

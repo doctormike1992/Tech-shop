@@ -119,7 +119,7 @@ console.log(orders)
                               className={`text-xs font-medium  shadow/40 rounded-lg py-0.5 px-2 ${
                                 status === "processing" && "bg-(--secondary)"
                               } ${
-                                status === "shipping" &&
+                                status === "shipped" &&
                                 "bg-(--secondText) text-(--white)"
                               }  ${
                                 status === "delivered" &&
@@ -131,7 +131,7 @@ console.log(orders)
                             <p className="text-sm text-(--secondText)">
                               {status === "pending" && "25%"}
                               {status === "processing" && "50%"}
-                              {status === "shipping" && "75%"}
+                              {status === "shipped" && "75%"}
                               {status === "delivered" && "100%"}
                             </p>
                           </div>
@@ -140,7 +140,7 @@ console.log(orders)
                               className={`h-full ${
                                 status === "pending" && "w-[25%]"
                               }  ${status === "processing" && "w-[50%]"}  ${
-                                status === "shipping" && "w-[75%]"
+                                status === "shipped" && "w-[75%]"
                               }  ${
                                 status === "delivered" && "w-100%"
                               }  bg-(--primary) flex items-center pl-3`}

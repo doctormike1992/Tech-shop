@@ -2,7 +2,9 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import Search from "./Search";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBasketShopping,
+} from "@fortawesome/free-solid-svg-icons";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "./Modal";
@@ -91,10 +93,6 @@ export default function Header() {
     setIsVisible(true);
   }
 
-  //NAVIGATE TO ORDERS PAGE FUNCTION
-  // function navigateToOrders() {
-  //   navigate("/orders");
-  // }
 
   return (
     <header
@@ -102,7 +100,7 @@ export default function Header() {
     py-3 md:px-3 px-1 text-stone-50 active:text-stone-200  md:gap-8 shadow-sm shadow-stone-900/10 gap-2  "
     >
       <div className="flex flex-row gap-6 text-nowrap items-center">
-        <h2 className=" text-stone-900 text-xl ">
+        <h2 className=" text-stone-900 text-xl">
           <Link to="/">Tech-Eshop</Link>
         </h2>
         {isMobile ? (

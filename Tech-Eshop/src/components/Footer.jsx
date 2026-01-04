@@ -23,7 +23,9 @@ export default function Footer() {
       <footer className="w-full flex flex-col items-center grow-0 bg-(--secondary) border-t border-t-(--ordersBorder)">
         <div className=" grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[repeat(4,300px)] items-start py-5">
           <div className="flex flex-col items-center py-2 justify-start gap-1">
-            <h1 className="text-xl font-medium">Tech-Eshop</h1>
+            <h1 className="text-xl font-medium">
+              Tech-Eshop
+            </h1>
             <p className="text-wrap text-sm text-center text-(--secondText)">
               Your trusted destination <br /> for the latest tech products
               <br /> and accessories. Quality guaranteed.

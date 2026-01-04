@@ -31,7 +31,7 @@ export default function Orders() {
       <section
         className={`flex flex-col w-full ${
           orderInProgress.length !== 0 && "max-w-3/5"
-        } items-start justify-start px-3`}
+        } items-start justify-start px-3 pb-20`}
       >
         <h3 className="text-2xl font-semibold py-15">Ongoing Orders</h3>
 
@@ -102,7 +102,7 @@ export default function Orders() {
                     <div className="flex flex-col w-full ">
                       <div className="flex flex-row w-full items-center justify-start pt-1 pb-2 gap-2">
                         <p className=" text-lg  items-center">
-                          {status === "shipping" && (
+                          {status === "shipped" && (
                             <FontAwesomeIcon
                               className="text-xl"
                               icon={faTruck}
@@ -122,7 +122,7 @@ export default function Orders() {
                           className={`text-sm font-medium  shadow/40 rounded-lg py-0.5 px-2 ${
                             status === "processing" && "bg-(--secondary)"
                           } ${
-                            status === "shipping" &&
+                            status === "shipped" &&
                             "bg-(--secondText) text-(--white)"
                           }`}
                         >
@@ -135,7 +135,7 @@ export default function Orders() {
                           className={`h-full ${
                             status === "pending" && "w-[25%]"
                           }  ${status === "processing" && "w-[50%]"}  ${
-                            status === "shipping" && "w-[75%]"
+                            status === "shipped" && "w-[75%]"
                           }  bg-(--primary) flex items-center pl-3`}
                         ></div>
                       </div>
@@ -156,7 +156,7 @@ export default function Orders() {
                   Total Amount{" "}
                   <span className="text-xs text-(--secondText) font-normal">
                     {" "}
-                    (after shipping and tax)
+                    (after shipped and tax)
                   </span>
                 </p>
                 <p>

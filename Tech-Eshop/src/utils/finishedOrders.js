@@ -12,7 +12,7 @@ export function orderStatus(orderDate, deliveryTime) {
     return "processing";
   }
   if (daysLeft === 1) {
-    return 'shipping'
+    return 'shipped'
   }
   return 'pending';
 };
