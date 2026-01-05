@@ -139,7 +139,7 @@ export default function Header() {
             >
               <li
                 title="Administrator"
-                className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg "
+                className="transition-all cursor-pointer hover:bg-(--blue) hover:text-(--white) py-1 px-2 rounded-lg "
               >
                 admin
               </li>
@@ -153,7 +153,7 @@ export default function Header() {
                 className={({ isActive }) => (isActive ? "active" : undefined)}
               >
                 <li
-                  className="transition-all cursor-pointer relative hover:bg-stone-200  py-1 px-2 rounded-lg "
+                  className="transition-all cursor-pointer relative hover:bg-(--blue) hover:text-(--white)  py-1 px-2 rounded-lg "
                   title="Favorites"
                 >
                   <FontAwesomeIcon icon={faHeart} />
@@ -170,7 +170,7 @@ export default function Header() {
                 className={({ isActive }) => (isActive ? "active" : undefined)}
               >
                 <li
-                  className="transition-all cursor-pointer hover:bg-stone-200 py-1 relative px-2 rounded-lg "
+                  className="transition-all cursor-pointer hover:bg-(--blue) hover:text-(--white) py-1 relative px-2 rounded-lg "
                   title="Cart"
                 >
                   <FontAwesomeIcon icon={faBasketShopping} />
@@ -183,7 +183,7 @@ export default function Header() {
               </NavLink>
               <NavLink to="/My-Account">
                 <li
-                  className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg"
+                  className="transition-all cursor-pointer hover:bg-(--blue) hover:text-(--white) py-1 px-2 rounded-lg"
                   title="My account"
                 >
                   <FontAwesomeIcon icon={faUser} />
@@ -191,7 +191,7 @@ export default function Header() {
               </NavLink>
 
               <button
-                className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2 rounded-lg "
+                className="transition-all cursor-pointer hover:bg-(--blue) hover:text-(--white) py-1 px-2 rounded-lg "
                 title="log out"
                 onClick={handleLogout}
               >
@@ -200,7 +200,7 @@ export default function Header() {
             </>
           ) : (
             <button
-              className="transition-all cursor-pointer hover:bg-stone-200 py-1 px-2  rounded-lg "
+              className="transition-all cursor-pointer hover:bg-(--blue) hover:text-(--white) py-1 px-2  rounded-lg "
               onClick={() => modal.current.open()}
             >
               <FontAwesomeIcon title="Log In" icon={faRightToBracket} />

@@ -130,7 +130,7 @@ export default function Products() {
         
         <div className="flex py-15 gap-5 items-center flex-row w-full">
           <button
-            className="w-fit border rounded-md px-2 py-1 border-stone-500 cursor-pointer hover:border-stone-900"
+            className="w-fit border rounded-md px-2 py-1 border-(--secondText) cursor-pointer hover:bg-(--blue) hover:text-(--white) hover:border-(--blue)"
             onClick={openSideBar}
           >
             <FontAwesomeIcon icon={faBars} />

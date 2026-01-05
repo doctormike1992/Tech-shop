@@ -69,7 +69,7 @@ export default function ProductManagment() {
                 <Fragment key={product.id}>
                   {product.category === item && (
                     <>
-                      <div className="flex flex-col  border min-w-110 w-130 max-w-130 max-h-90 border-stone-300 p-2  rounded-lg ">
+                      <div className="flex flex-col  bg-(--white) border min-w-110 w-130 max-w-130 max-h-90 border-stone-300 p-2  rounded-lg ">
                         <div className="flex flex-row items-start  justify-start h-full">
                           <div className="h-full flex items-start relative justify-start ">
                             {product.sale && (

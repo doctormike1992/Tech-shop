@@ -75,7 +75,7 @@ console.log(orders)
                   No Orders Have Been Made
                 </h1>
               )}
-              {orders.map((item) => 
+              {[...orders].reverse().map((item) => 
               (
                 <div
                   key={item.id}

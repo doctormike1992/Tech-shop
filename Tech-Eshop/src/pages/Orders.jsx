@@ -18,7 +18,7 @@ export default function Orders() {
        items: item.items.filter(
          (order) => orderStatus(item.time, order.deliveryTime) !== "delivered"
        )
-     }))
+     })).filter((item) => item.items.length !== 0);
      
 
    setOrderInProgress(ongoingOrders);

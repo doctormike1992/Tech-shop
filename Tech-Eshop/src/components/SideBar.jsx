@@ -141,7 +141,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
                   className="flex font-medium items-center gap-2 "
                 >
                   <input
-                    className="w-4 h-4  accent-stone-950"
+                    className="w-4 h-4  accent-(--deepBlue)"
                     type="checkbox"
                     id={`category-${item}`}
                     checked={categorySelected === item}
@@ -167,7 +167,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
                   className="flex font-medium items-center gap-2"
                 >
                   <input
-                    className="w-4 h-4  accent-stone-950"
+                    className="w-4 h-4  accent-(--deepBlue)"
                     id={`subCategory-${item}`}
                     type="checkbox"
                     value={item}
@@ -193,7 +193,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
                   className="flex font-medium items-center gap-2"
                 >
                   <input
-                    className="w-4 h-4  accent-stone-950"
+                    className="w-4 h-4  accent-(--deepBlue)"
                     id={`brand-${item}`}
                     type="checkbox"
                     value={item}
@@ -225,7 +225,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
             min={smallerPrice}
             max={biggestPrice}
             value={price ?? biggestPrice}
-            className="w-full accent-black cursor-pointer"
+            className="w-full accent-(--deepBlue) cursor-pointer"
             onChange={(e) =>
               dispatch(filterActions.setMax(Number(e.target.value)))
             }

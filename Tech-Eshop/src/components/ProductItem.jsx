@@ -13,10 +13,10 @@ export default function ProductItem({
   const uid = useSelector((state) => state.user.userUID);
 
   let heart =
-    "absolute top-2 right-2 py-1 z-1 px-2 bg-stone-300/60  cursor-pointer rounded-lg ";
+    "absolute top-2 right-2 py-1 z-1 px-2 bg-(--deepBlue)/40  cursor-pointer rounded-lg ";
 
   if (inFavorites) {
-    heart += "text-red-600";
+    heart += "text-(--deepBlue)";
   } else {
     heart += "text-stone-50";
   }
@@ -41,7 +41,7 @@ export default function ProductItem({
         </button>
       )}
 
-      <div className="rounded-xl overflow-hidden border-stone-300 border group md:w-88 lg:w-90 w-65 ">
+      <div className="rounded-xl bg-(--white) overflow-hidden border-(--secondary) border group md:w-88 lg:w-90 w-65 ">
         <div className="w-full -z-10 overflow-hidden">
           <img
             src={item.image}
@@ -54,7 +54,7 @@ export default function ProductItem({
             <p className="w-full tracking-wide pt-3 font-medium">{item.name}</p>
 
             <div className="flex flex-row gap-2">
-              <p className="text-[0.8rem] tracking-wider font-medium  bg-(--secondary) shadow/20 rounded-md py-1 px-1.5 ">
+              <p className="text-[0.7rem] text-center tracking-wide text-(--white) font-medium  bg-(--purple) shadow/20  rounded-md py-0.5 px-1.5 ">
                 {item.category}
               </p>
 
@@ -75,18 +75,21 @@ export default function ProductItem({
                   item.sale && "text-red-600"
                 }`}
               >
-                {item.finalPrice.toFixed(2)}<sup>€</sup>
+                {item.finalPrice.toFixed(2)}
+                <sup>€</sup>
               </p>
               {item.sale && (
-                <p className="bg-stone-200 rounded-sm font-semibold px-1 line-through">
-                  $ {item.price.toFixed(2)}
+                <p className=" text-(--secondText) text-sm font-semibold px-1">
+                  <span className="line-through">{item.price.toFixed(2)}</span>
+
+                  <sup>€</sup>
                 </p>
               )}
             </div>
 
             <button
               hidden={!userLoggedIn}
-              className="bg-stone-900 text-stone-50 text-sm font-medium px-3 py-2  cursor-pointer hover:bg-stone-700 rounded-lg"
+              className="bg-(--deepBlue) text-stone-50 text-sm font-medium px-3 py-2  cursor-pointer hover:bg-(--deepBlue)/90 rounded-lg"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
