@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import { useState, useEffect, useRef } from "react";
 import ProductItem from "../components/ProductItem";
-// import { discountOnFilter } from "../utils/discountOnFilter";
 import { guestActions } from "../store/guestSlice";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { collection, doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
 import { db, auth } from "../firebase/firebase";
@@ -29,6 +27,7 @@ export default function Products() {
   const guestFavorites = useSelector((state) => state.guest.favorites);
   const dialog = useRef();
   const modalContent = useRef();
+ 
  
 
   //FILTERS
@@ -71,6 +70,21 @@ export default function Products() {
     search,
   ]);
 
+  //FUNCTION TO ADD THE ADDED ITEMS ON THE ANIMATION ARRAY AND TO PUT A TIMEOUT ON EACH OF THEM
+ function addedAnimation(item) {
+   const effectId = crypto.randomUUID();
+   dispatch(
+     guestActions.addEffect({
+       ...item,
+       effectId,
+     })
+   );
+   setTimeout(() => {
+     dispatch(guestActions.clearEffect(effectId));
+   }, 10000);
+ }
+
+
  
 
   // OPEN SIDE BAR
@@ -98,7 +112,10 @@ export default function Products() {
         status: 'pending'
       });
     }
+    addedAnimation(item);
   }
+
+  
 
   //ADD TO FAVORITES FUNCTION
   async function handleFavorites(item) {

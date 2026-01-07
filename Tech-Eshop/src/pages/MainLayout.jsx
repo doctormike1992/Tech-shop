@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import AddProductEffect from "../components/AddProductEffect";
 
 
 export default function MainLayout() {
@@ -18,7 +19,7 @@ export default function MainLayout() {
             View Orders
           </button>
         </Link>}
-        
+        <AddProductEffect />
       </main>
       <Footer />
     </div>

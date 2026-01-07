@@ -5,6 +5,7 @@ const initialGuestState = {
   favorites: [],
   orders: [],
   info: {},
+  addedEffect: [],
 };
 
 export const cartSlice = createSlice({
@@ -50,6 +51,14 @@ export const cartSlice = createSlice({
     addInfo(state, action) {
       state.info = action.payload;
     },
+ addEffect(state, action) {
+  state.addedEffect.push(action.payload);
+},
+clearEffect(state, action) {
+  state.addedEffect = state.addedEffect.filter(
+    item => item.effectId !== action.payload
+  );
+}
   },
 });
 

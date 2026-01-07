@@ -60,4 +60,35 @@ li{
   list-style: none;
   cursor: pointer;
 }
+.animateAdd{
+  background-color: var(--white);
+  display: flex;
+  flex-direction: row;
+  padding: 10px 20px;
+  border-radius: 10px;
+  animation: animate ease-in-out 3s forwards;
+  border: 1px solid var(--secondary);
+  will-change: transform, opacity;
+}
 
+@keyframes animate {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
