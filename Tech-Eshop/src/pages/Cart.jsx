@@ -174,14 +174,14 @@ export default function Cart() {
                         <div className="w-full flex pt-2 flex-row gap-5 items-center">
                           <button
                             onClick={() => minusCartQuantity(item)}
-                            className="border border-stone-300 px-1 py-0.5 rounded-lg"
+                            className="border cursor-pointer hover:bg-(--blue) hover:text-white border-(--ordersBorder) px-1 py-0.5 rounded-lg"
                           >
                             <FontAwesomeIcon icon={faMinus} />
                           </button>
                           <span>{item.quantity}</span>
                           <button
                             onClick={() => plusCartQuantity(item)}
-                            className="border border-stone-300 px-1 py-0.5 rounded-lg"
+                            className="border cursor-pointer hover:bg-(--blue) hover:text-white border-(--ordersBorder) px-1 py-0.5 rounded-lg"
                           >
                             <FontAwesomeIcon icon={faPlus} />
                           </button>

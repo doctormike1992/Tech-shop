@@ -4,20 +4,20 @@ export default function SwitchButton({ enabled, setEnabled }) {
       role="switch"
       type="button"
       aria-checked={enabled}
-      onClick={() =>  setEnabled(!enabled)}
+      onClick={() => setEnabled(!enabled)}
       className={`
-        relative inline-flex h-4.5 w-8 items-center rounded-xl
+        relative inline-flex h-4.5 w-9 items-center rounded-lg
         focus:outline-none 
-        transition-colors duration-200
+        transition-colors duration-200 cursor-pointer
         
-        ${enabled ? "bg-stone-900" : "bg-gray-300"}
+        ${enabled ? "bg-(--deepBlue)" : "bg-(--deepBlue)/50"}
       `}
     >
       <span
         className={`
-          inline-block h-4 w-4 transform rounded-full bg-white
+          inline-block h-3.5 w-3.5 transform rounded-full bg-white
           transition-transform duration-200
-          ${enabled ? "translate-x-3.5" : "translate-x-0.5"}
+          ${enabled ? "translate-x-4.5" : "translate-x-1"}
         `}
       />
     </button>

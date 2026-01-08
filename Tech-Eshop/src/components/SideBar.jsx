@@ -111,7 +111,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
     <>
       <nav
         ref={navRef}
-        className={`2xl:w-[15%] xl:w-[22%] lg:w-[30%] md:w-[40%] w-[60%] h-full z-50 backdrop-blur-md  bg-white/80 
+        className={`2xl:w-[15%] xl:w-[22%] lg:w-[30%] md:w-[40%] w-[60%] h-full z-50 backdrop-blur-md  bg-(--background)/85 
           transform duration-500 ease-in-out sm:overflow-auto overflow-y-scroll transition-all ${
             isVisible
               ? "opacity-100 translate-0"
@@ -120,16 +120,19 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
           `}
       >
         <div className="flex flex-row justify-between items-end  w-full p-2">
-          <h2 className="text-lg  w-full">Filters</h2>
+          <h2 className="text-lg  text-(--primary) w-full">Filters</h2>
           <button
             onClick={closeSideBar}
-            className="flex items-center h-10 text-lg text-stone-700 hover:text-stone-950 cursor-pointer border-2 border-transparent active:border-black  px-1.5 rounded-md"
+            className="flex items-center h-10 text-lg text-stone-700 hover:text-stone-950 cursor-pointer "
           >
-            <FontAwesomeIcon className="text-sm" icon={faX} />
+            <FontAwesomeIcon
+              className="text-sm border-2 border-transparent rounded-lg p-1.5 active:border-(--deepBlue) text-(--primary)"
+              icon={faX}
+            />
           </button>
         </div>
 
-        <div className="w-full pl-3">
+        <div className="w-full pl-3 text-(--primary)">
           <label className="md:text-2xl font-semibold text-lg text-(--primary)">
             Category
           </label>
@@ -141,7 +144,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
                   className="flex font-medium items-center gap-2 "
                 >
                   <input
-                    className="w-4 h-4  accent-(--deepBlue)"
+                    className="w-4 h-4 cursor-pointer accent-(--deepBlue)"
                     type="checkbox"
                     id={`category-${item}`}
                     checked={categorySelected === item}
@@ -155,7 +158,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
           </div>
         </div>
 
-        <div className=" w-full pl-3">
+        <div className=" w-full pl-3 text-(--primary)">
           <label className="md:text-2xl font-semibold text-lg text-(--primary)">
             Type
           </label>
@@ -167,7 +170,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
                   className="flex font-medium items-center gap-2"
                 >
                   <input
-                    className="w-4 h-4  accent-(--deepBlue)"
+                    className="w-4 h-4 cursor-pointer accent-(--deepBlue)"
                     id={`subCategory-${item}`}
                     type="checkbox"
                     value={item}
@@ -181,7 +184,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
           </div>
         </div>
 
-        <div className="w-full pl-3">
+        <div className="w-full pl-3 text-(--primary)">
           <label className="md:text-2xl font-semibold text-lg text-(--primary)">
             Brand
           </label>
@@ -193,7 +196,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
                   className="flex font-medium items-center gap-2"
                 >
                   <input
-                    className="w-4 h-4  accent-(--deepBlue)"
+                    className="w-4 h-4 cursor-pointer accent-(--deepBlue)"
                     id={`brand-${item}`}
                     type="checkbox"
                     value={item}
@@ -230,7 +233,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
               dispatch(filterActions.setMax(Number(e.target.value)))
             }
           />
-          <span className="font-medium text-[#717182]">
+          <span className="font-medium text-(--secondText)">
             Up to {price ?? biggestPrice}
             <sup>€</sup>
           </span>
@@ -238,7 +241,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
 
         <button
           onClick={handleClearFilters}
-          className="w-full rounded-md border transition-all cursor-pointer hover:bg-stone-800 hover:text-stone-50 border-stone-300 font-medium text-sm py-1"
+          className="w-full rounded-md border transition-all cursor-pointer hover:bg-(--primary)/10 text-(--primary) border-(--primary)/10 font-medium text-sm py-1"
         >
           clear filters
         </button>

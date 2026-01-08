@@ -69,13 +69,13 @@ select,
 option::checkmark{
   display: none;
 }
+
 option:checked{
   background-color: var(--deepBlue);
-  color: var(--white);
 }
+
 li{
   list-style: none;
-  cursor: pointer;
 }
 .animateAdd{
   background-color: white;
