@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
+@custom-variant dark (&:where(.dark, .dark *));
 
 
 
@@ -11,6 +11,8 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+
 
 
 :root{
@@ -26,6 +28,21 @@
   --blue: #3b82f6;
   --purple: #8b5cf6;
   --background: #f8f9ff;
+}
+
+.dark{
+  --primary: white;
+  --secondary: #eceef2;
+  --third: #eceef2;
+  --secondText: #a1a1b5;
+  --ordersName: #717182;
+  --white: #1a1a2e;
+  --input: #f3f3f5;
+  --ordersBorder: #4d48487e;
+  --deepBlue: #6366F1;
+  --blue: #3b82f6;
+  --purple: #8b5cf6;
+  --background: #0f0f1a;
 }
 
 html,
@@ -61,7 +78,7 @@ li{
   cursor: pointer;
 }
 .animateAdd{
-  background-color: var(--white);
+  background-color: white;
   display: flex;
   flex-direction: row;
   padding: 10px 20px;

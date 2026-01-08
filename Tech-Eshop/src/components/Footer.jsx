@@ -20,12 +20,10 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="w-full flex flex-col items-center grow-0 bg-(--secondary) border-t border-t-(--ordersBorder)">
+      <footer className="w-full flex flex-col items-center grow-0 bg-(--secondary) dark:bg-(--white) border-t border-t-(--ordersBorder)">
         <div className=" grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[repeat(4,300px)] items-start py-5">
           <div className="flex flex-col items-center py-2 justify-start gap-1">
-            <h1 className="text-xl font-medium">
-              Tech-Eshop
-            </h1>
+            <h1 className="text-xl text-(--primary) font-medium">Tech-Eshop</h1>
             <p className="text-wrap text-sm text-center text-(--secondText)">
               Your trusted destination <br /> for the latest tech products
               <br /> and accessories. Quality guaranteed.
@@ -51,7 +49,9 @@ export default function Footer() {
             </div>
           </div>
           <div className="flex flex-col gap-1 py-2 items-center">
-            <h1 className="text-xl font-medium">Quick Links</h1>
+            <h1 className="text-xl text-(--primary) font-medium">
+              Quick Links
+            </h1>
             <Link
               to={"/"}
               className="text-sm text-(--secondText) hover:text-(--primary)"
@@ -78,7 +78,9 @@ export default function Footer() {
             </Link>
           </div>
           <div className="flex flex-col py-2 items-center gap-1">
-            <h1 className="text-xl font-medium">Customer Service</h1>
+            <h1 className="text-xl text-(--primary) font-medium">
+              Customer Service
+            </h1>
             <p className="text-sm cursor-pointer text-(--secondText) hover:text-(--primary)">
               Help Center
             </p>
@@ -96,7 +98,7 @@ export default function Footer() {
             </p>
           </div>
           <div className="flex flex-col py-2 items-center gap-1">
-            <h1 className="text-xl font-medium">Contact Us</h1>
+            <h1 className="text-xl text-(--primary) font-medium">Contact Us</h1>
             <p className="text-sm text-wrap text-center  text-(--secondText) ">
               <FontAwesomeIcon icon={faLocationDot} />
               123 Tech Street, Silicon Valley, CA 94000

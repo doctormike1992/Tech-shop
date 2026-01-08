@@ -26,11 +26,11 @@ export default function ProductItem({
             e.stopPropagation();
             handleFavorites();
           }}
-          className="absolute top-2 right-2 py-1.5 px-2 bg-(--deepBlue)/40 rounded-full cursor-pointer z-10"
+          className="absolute top-2 right-2 py-1.5 px-2 bg-white/40 rounded-full cursor-pointer z-10"
         >
           <FontAwesomeIcon
             icon={faHeart}
-            className={` ${inFavorites ? "text-(--white)" : "text-(--white)/20"}
+            className={` ${inFavorites ? "text-(--blue)" : "text-(--blue)/20"}
     
     transition-all
     active:scale-75
@@ -39,7 +39,7 @@ export default function ProductItem({
         </button>
       )}
 
-      <div className="rounded-xl bg-(--white) overflow-hidden border-(--secondary) border group md:w-88 lg:w-90 w-65 ">
+      <div className="rounded-xl bg-(--white) overflow-hidden border-(--secondary) dark:border-(--ordersBorder)  border group md:w-88 lg:w-90 w-65 ">
         <div className="w-full -z-10 overflow-hidden">
           <img
             src={item.image}
@@ -49,14 +49,16 @@ export default function ProductItem({
         </div>
         <div className="px-4  py-1.5 min-w-0">
           <div className="flex flex-col justify-start w-full gap-1.5 items-start  md:h-31 min-w-0">
-            <p className="w-full tracking-wide pt-3 font-medium">{item.name}</p>
+            <p className="w-full tracking-wide text-(--primary) pt-3 font-medium">
+              {item.name}
+            </p>
 
             <div className="flex  flex-row gap-2">
-              <p className="text-[0.7rem]  text-center tracking-wide text-(--white) font-medium  bg-(--purple) shadow/20  rounded-md px-1.5 py-0.5">
+              <p className="text-[0.7rem]  text-center tracking-wide text-white font-medium  bg-(--purple) shadow/20  rounded-lg px-1.5 py-0.5">
                 {item.category}
               </p>
 
-              <p className="text-[0.7rem] tracking-wider font-medium  shadow/20 rounded-md py-0.5 px-1.5 ">
+              <p className="text-[0.7rem] tracking-wide font-medium text-(--primary) border border-(--ordersBorder) rounded-lg py-0.5 px-1.5 ">
                 {item.brand}
               </p>
             </div>
@@ -70,7 +72,7 @@ export default function ProductItem({
             <div className="flex gap-2 items-center">
               <p
                 className={`text-center  font-semibold ${
-                  item.sale && "text-red-600"
+                  item.sale ? "text-red-600" : 'text-(--primary)'
                 }`}
               >
                 {item.finalPrice.toFixed(2)}

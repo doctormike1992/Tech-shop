@@ -2,9 +2,7 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import Search from "./Search";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import {
-  faBasketShopping,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "./Modal";
@@ -14,7 +12,7 @@ import Singin from "./Singin";
 import { getAuth, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../store/userSclice";
-
+// import { isAction } from "@reduxjs/toolkit";
 
 export default function Header() {
   const modal = useRef();
@@ -33,11 +31,17 @@ export default function Header() {
 
   //UPDATE THE CART QUANTITY POP UP
   useEffect(() => {
-    const cartTotalQuantity = cart.reduce((sum, item) => sum += item.quantity, 0);
+    const cartTotalQuantity = cart.reduce(
+      (sum, item) => (sum += item.quantity),
+      0
+    );
     setCartQuantity(cartTotalQuantity);
-  }, [cart])
-  
+  }, [cart]);
 
+  function toggleDark() {
+    const html = document.documentElement;
+    html.classList.toggle("dark");
+  }
 
   //LOGOUT
   const handleLogout = async () => {
@@ -93,14 +97,13 @@ export default function Header() {
     setIsVisible(true);
   }
 
-
   return (
     <header
-      className="flex sticky top-0 z-99 backdrop-blur-md  bg-white/60 flex-col md:flex-row w-full items-center justify-start  lg:py-4
+      className="flex sticky top-0 z-99 backdrop-blur-md   bg-white/60 flex-col md:flex-row w-full items-center justify-start  lg:py-4
     py-3 md:px-3 px-1 text-stone-50 active:text-stone-200  md:gap-8 shadow-sm shadow-stone-900/10 gap-2  "
     >
       <div className="flex flex-row gap-6 text-nowrap items-center">
-        <h2 className=" text-stone-900 text-xl">
+        <h2 className=" text-(--primary) text-xl">
           <Link to="/">Tech-Eshop</Link>
         </h2>
         {isMobile ? (
@@ -133,65 +136,77 @@ export default function Header() {
           }`}
         >
           {adminLogged === "WsPXtBodtbhmqPI8DLTvvufq46B2" && (
-            <NavLink
-              to="/admin"
-              className={({ isActive }) => (isActive ? "active" : undefined)}
-            >
-              <li
-                title="Administrator"
-                className="transition-all cursor-pointer hover:bg-(--blue) hover:text-(--white) py-1 px-2 rounded-lg "
-              >
-                admin
-              </li>
+            <NavLink to="/admin">
+              {({ isActive }) => (
+                <li
+                  title="Administrator"
+                  className={`transition-all cursor-pointer dark:hover:text-white hover:bg-(--blue) text-(--primary) hover:text-(--white) py-1 px-2 rounded-lg  ${
+                    isActive ? "text-white" : "text-(--primary)"
+                  } `}
+                >
+                  admin
+                </li>
+              )}
             </NavLink>
           )}
 
           {userLogState ? (
             <>
-              <NavLink
-                to="/favorites"
-                className={({ isActive }) => (isActive ? "active" : undefined)}
-              >
-                <li
-                  className="transition-all cursor-pointer relative hover:bg-(--blue) hover:text-(--white)  py-1 px-2 rounded-lg "
-                  title="Favorites"
-                >
-                  <FontAwesomeIcon icon={faHeart} />
-                  {favorites.length !== 0 && (
-                    <span className="py-0.5 px-1 w-6 text-center border-2 border-stone-50  rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
-                      {favorites.length}
-                    </span>
-                  )}
-                </li>
+              <NavLink to="/favorites">
+                {({ isActive }) => (
+                  <li
+                    className={`transition-all cursor-pointer dark:hover:text-white relative hover:bg-(--blue) text-(--primary) hover:text-(--white)  py-1 px-2 rounded-lg ${
+                      isActive ? "text-white" : "text-(--primary)"
+                    } `}
+                    title="Favorites"
+                  >
+                    <FontAwesomeIcon icon={faHeart} />
+                    {favorites.length !== 0 && (
+                      <span className="py-0.5 px-1 w-6 text-center border-2 border-stone-50  rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
+                        {favorites.length}
+                      </span>
+                    )}
+                  </li>
+                )}
               </NavLink>
 
-              <NavLink
-                to="/cart"
-                className={({ isActive }) => (isActive ? "active" : undefined)}
-              >
-                <li
-                  className="transition-all cursor-pointer hover:bg-(--blue) hover:text-(--white) py-1 relative px-2 rounded-lg "
-                  title="Cart"
-                >
-                  <FontAwesomeIcon icon={faBasketShopping} />
-                  {cart.length !== 0 && (
-                    <span className="py-0.5 px-1 w-6 text-center border-2 border-stone-50  rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
-                      {cartQuantity}
-                    </span>
-                  )}
-                </li>
+              <NavLink to="/cart">
+                {({ isActive }) => (
+                  <li
+                    className={`
+                  transition-all cursor-pointer
+                  py-1 px-2 rounded-lg relative
+                  hover:bg-(--blue) hover:text-(--white) dark:hover:text-white
+                  ${isActive ? "text-white" : "text-(--primary)"}
+                `}
+                    title="Cart"
+                  >
+                    <FontAwesomeIcon icon={faBasketShopping} />
+
+                    {cart.length !== 0 && (
+                      <span className="py-0.5 px-1 w-6 text-center border-2 border-stone-50 rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
+                        {cartQuantity}
+                      </span>
+                    )}
+                  </li>
+                )}
               </NavLink>
+
               <NavLink to="/My-Account">
-                <li
-                  className="transition-all cursor-pointer hover:bg-(--blue) hover:text-(--white) py-1 px-2 rounded-lg"
-                  title="My account"
-                >
-                  <FontAwesomeIcon icon={faUser} />
-                </li>
+                {({ isActive }) => (
+                  <li
+                    className={`transition-all cursor-pointer text-(--primary) hover:bg-(--blue) hover:text-(--white) dark:hover:text-white py-1 px-2 rounded-lg hover:rounded-lg"
+                  title="My account   ${
+                    isActive ? "text-white" : "text-(--primary)"
+                  }`}
+                  >
+                    <FontAwesomeIcon icon={faUser} />
+                  </li>
+                )}
               </NavLink>
 
               <button
-                className="transition-all cursor-pointer hover:bg-(--blue) hover:text-(--white) py-1 px-2 rounded-lg "
+                className="transition-all cursor-pointer dark:hover:text-white text-(--primary) hover:bg-(--blue) hover:text-(--white) py-1 px-2 rounded-lg "
                 title="log out"
                 onClick={handleLogout}
               >
@@ -200,13 +215,14 @@ export default function Header() {
             </>
           ) : (
             <button
-              className="transition-all cursor-pointer hover:bg-(--blue) hover:text-(--white) py-1 px-2  rounded-lg "
+              className="transition-all dark:hover:text-white cursor-pointer text-(--primary) hover:bg-(--blue) hover:text-(--white) py-1 px-2  rounded-lg "
               onClick={() => modal.current.open()}
             >
               <FontAwesomeIcon title="Log In" icon={faRightToBracket} />
             </button>
           )}
         </div>
+        <button onClick={toggleDark}>dark</button>
       </nav>
       <Modal
         ref={modal}

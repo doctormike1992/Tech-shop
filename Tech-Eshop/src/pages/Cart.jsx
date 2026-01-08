@@ -111,7 +111,7 @@ export default function Cart() {
           {!cartEmpty && (
             <button
               onClick={clearCartButton}
-              className="border text-sm font-medium border-stone-300 py-2 px-3 rounded-md cursor-pointer  hover:bg-stone-200 transition-all"
+              className="border text-sm font-medium border-stone-300 py-2 px-3 rounded-md cursor-pointer dark:bg-(--white) text-(--primary) dark:border-(--ordersBorder) dark:hover:bg-(--ordersBorder)/20 hover:bg-(--blue) hover:text-white transition-all"
             >
               Clear Cart
             </button>
@@ -130,7 +130,7 @@ export default function Cart() {
                   Add some products to get started
                 </p>
                 <Link
-                  className="bg-(--primary) text-(--white) py-1 px-2 rounded-md font-medium cursor-pointer"
+                  className="bg-(--deepBlue) text-white) py-1 px-2 rounded-md font-medium cursor-pointer"
                   to={"/"}
                 >
                   Browse Products
@@ -235,7 +235,7 @@ export default function Cart() {
               </div>
               <button
                 onClick={() => dialog.current.open()}
-                className="w-full hover:bg-stone-900 cursor-pointer text-(--white) bg-(--primary) py-2 rounded-lg text-sm font-medium"
+                className="w-full hover:bg-(--deepBlue)/90 cursor-pointer text-white bg-(--deepBlue) py-2 rounded-lg text-sm font-medium"
               >
                 Procced to Checkout
               </button>
