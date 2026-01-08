@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { brands, subCategories, categories } from "../store/categories";
 import SwitchButton from "./SwitchButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faX } from "@fortawesome/free-solid-svg-icons";
+import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default function SideBar({ dialog, isVisible, setIsVisible }) {
   const products = useSelector((state) => state.products.products);
@@ -111,7 +111,7 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
     <>
       <nav
         ref={navRef}
-        className={`2xl:w-[15%] xl:w-[22%] lg:w-[30%] md:w-[40%] w-[60%] h-full z-50 backdrop-blur-md  bg-(--background)/85 
+        className={`2xl:w-[15%] xl:w-[22%] lg:w-[30%] md:w-[40%] w-[60%] h-full z-50 backdrop-blur-md  bg-(--background)/70 dark:bg-(--background)/85
           transform duration-500 ease-in-out sm:overflow-auto overflow-y-scroll transition-all ${
             isVisible
               ? "opacity-100 translate-0"
@@ -143,14 +143,27 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
                   htmlFor={`category-${item}`}
                   className="flex font-medium items-center gap-2 "
                 >
-                  <input
-                    className="w-4 h-4 cursor-pointer accent-(--deepBlue)"
-                    type="checkbox"
+                  <button
                     id={`category-${item}`}
-                    checked={categorySelected === item}
-                    value={item}
-                    onChange={() => handleCategoryChange(item)}
-                  />
+                    onClick={() => {
+                      handleCategoryChange(item);
+                      categorySelected === item;
+                    }}
+                    className={`size-4 border border-(--primary)/30 flex  rounded-sm cursor-pointer ${
+                      categorySelected === item
+                        ? "bg-(--deepBlue)"
+                        : "bg-(--white)"
+                    }`}
+                  >
+                    <FontAwesomeIcon
+                      className={`text-xs ${
+                        categorySelected === item
+                          ? "text-white"
+                          : "text-transparent"
+                      }`}
+                      icon={faCheck}
+                    />
+                  </button>
                   {item}
                 </label>
               </p>
@@ -169,14 +182,27 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
                   htmlFor={`subCategory-${item}`}
                   className="flex font-medium items-center gap-2"
                 >
-                  <input
-                    className="w-4 h-4 cursor-pointer accent-(--deepBlue)"
+                  <button
                     id={`subCategory-${item}`}
-                    type="checkbox"
-                    value={item}
-                    checked={subCategorySelected === item}
-                    onChange={() => handleSubCategoryChange(item)}
-                  />
+                    onClick={() => {
+                      handleSubCategoryChange(item);
+                      subCategorySelected === item;
+                    }}
+                    className={`size-4 border border-(--primary)/30 flex  rounded-sm cursor-pointer ${
+                      subCategorySelected === item
+                        ? "bg-(--deepBlue)"
+                        : "bg-(--white)"
+                    }`}
+                  >
+                    <FontAwesomeIcon
+                      className={`text-xs ${
+                        subCategorySelected === item
+                          ? "text-white"
+                          : "text-transparent"
+                      }`}
+                      icon={faCheck}
+                    />
+                  </button>
                   {item}
                 </label>
               </p>
@@ -195,14 +221,27 @@ export default function SideBar({ dialog, isVisible, setIsVisible }) {
                   htmlFor={`brand-${item}`}
                   className="flex font-medium items-center gap-2"
                 >
-                  <input
-                    className="w-4 h-4 cursor-pointer accent-(--deepBlue)"
+                  <button
                     id={`brand-${item}`}
-                    type="checkbox"
-                    value={item}
-                    checked={brandSelected === item}
-                    onChange={() => handleBrandChange(item)}
-                  />
+                    onClick={() => {
+                      handleBrandChange(item);
+                      brandSelected === item;
+                    }}
+                    className={`size-4 border border-(--primary)/30 flex  rounded-sm cursor-pointer ${
+                      brandSelected === item
+                        ? "bg-(--deepBlue)"
+                        : "bg-(--white)"
+                    }`}
+                  >
+                    <FontAwesomeIcon
+                      className={`text-xs ${
+                        brandSelected === item
+                          ? "text-white"
+                          : "text-transparent"
+                      }`}
+                      icon={faCheck}
+                    />
+                  </button>
                   {item}
                 </label>
               </p>
