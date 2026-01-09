@@ -19,7 +19,9 @@ console.log(orders)
   return (
     <>
       <section className="flex flex-col justify-start  px-3 items-start w-full max-w-3/5">
-        <h1 className="text-2xl py-15 text-(--primary) font-medium">My account</h1>
+        <h1 className="text-2xl py-15 text-(--primary) font-medium">
+          My account
+        </h1>
 
         <div className="flex flex-row items-start gap-5 justify-start w-full">
           <div className="w-full border border-(--ordersBorder) bg-(--white) rounded-lg">
@@ -63,15 +65,15 @@ console.log(orders)
             <UserForm editForm={editForm} />
           </div>
 
-          <div className="flex flex-col border border-(--secondary) rounded-lg w-full">
-            <div className="flex flex-row items-center gap-2 text-lg font-medium p-4">
-              <FontAwesomeIcon icon={faBoxArchive} />
-              <h2 className="">Order History</h2>
+          <div className="flex flex-col border bg-(--white) border-(--ordersBorder) rounded-lg w-full">
+            <div className="flex flex-row items-center text-(--primary) gap-2 text-lg font-medium p-4">
+              <FontAwesomeIcon className="" icon={faBoxArchive} />
+              <h2>Order History</h2>
             </div>
 
             <section className="flex flex-col gap-7 p-4">
               {orders.length === 0 && (
-                <h1 className="w-full text-center text-lg font-medium">
+                <h1 className="w-full text-center text-(--primary) text-lg font-medium">
                   No Orders Have Been Made
                 </h1>
               )}
@@ -81,7 +83,7 @@ console.log(orders)
                   className="flex flex-col border gap-2 p-3 border-(--ordersBorder) rounded-lg"
                 >
                   <div className="flex flex-row items-center pb-2 justify-between">
-                    <p className="font-medium">
+                    <p className="font-medium text-(--primary)">
                       Order{" "}
                       <span className="text-(--secondText) font-normal pl-1">
                         #{item.id}
@@ -91,7 +93,7 @@ console.log(orders)
                       {item.time}
                     </p>
                   </div>
-                  <hr className="text-(--secondary)" />
+                  <hr className="text-(--ordersBorder)" />
 
                   {item.items.map((order) => {
                     const status = orderStatus(item.time, order.deliveryTime);
@@ -102,11 +104,11 @@ console.log(orders)
                         className="flex flex-col items-center py-3"
                       >
                         <div className="flex flex-row w-full items-center justify-between">
-                          <p className="font-medium text-(--ordersName) text-sm">
+                          <p className="font-medium text-(--ordersName) dark:text-(--secondText) text-sm">
                             {order.name} <span className="font-normal">x</span>
                             {order.quantity}
                           </p>
-                          <p>
+                          <p className="text-(--primary)">
                             {(order.finalPrice * order.quantity).toFixed(2)}
                             <sup>€</sup>
                           </p>
@@ -116,7 +118,8 @@ console.log(orders)
                           <div className="flex flex-row justify-between w-full">
                             <span
                               className={`text-xs font-medium  border border-(--ordersBorder) text-(--primary)  rounded-lg py-0.5 px-2 ${
-                                status === "processing" && "bg-(--purple)/30 "
+                                status === "processing" &&
+                                "bg-(--purple)/30 dark:text-white"
                               } ${
                                 status === "shipped" &&
                                 "bg-(--purple) text-white"
@@ -149,8 +152,8 @@ console.log(orders)
                       </div>
                     );
                   })}
-                  <hr className="text-(--secondary)" />
-                  <div className="flex flex-row justify-between pt-2 items-center font-medium">
+                  <hr className="text-(--ordersBorder)" />
+                  <div className="flex flex-row justify-between pt-2 items-center text-(--primary) font-medium">
                     <p>Total</p>
                     <p>
                       {item.total.toFixed(2)}

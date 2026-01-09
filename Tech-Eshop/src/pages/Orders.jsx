@@ -33,15 +33,19 @@ export default function Orders() {
           orderInProgress.length !== 0 && "max-w-3/5"
         } items-start justify-start px-3 pb-20`}
       >
-        <h3 className="text-2xl font-semibold py-15">Ongoing Orders</h3>
+        <h3 className="text-2xl font-semibold text-(--primary) py-15">
+          Ongoing Orders
+        </h3>
 
         <div className="w-full flex flex-col items-center gap-6 justify-center">
           {orderInProgress.length === 0 && (
             <div className="flex flex-col items-center gap-3">
               <FontAwesomeIcon className="text-6xl" icon={faTruck} />
-              <h1 className="text-lg font-medium">No Orders Have Been Made</h1>
+              <h1 className="text-lg text-(--primary) font-medium">
+                No Orders Have Been Made
+              </h1>
               <Link to={"/"}>
-                <button className="bg-(--primary) text-(--white) py-1 px-2 rounded-md font-medium cursor-pointer">
+                <button className="bg-(--deepBlue) text-white py-1 px-2 rounded-md font-medium cursor-pointer">
                   continue shopping
                 </button>
               </Link>
@@ -50,10 +54,10 @@ export default function Orders() {
           {orderInProgress.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col w-full border gap-2 p-4 border-(--ordersBorder) rounded-lg"
+              className="flex flex-col w-full bg-(--white) border gap-2 p-4 border-(--ordersBorder) rounded-lg"
             >
               <div className="flex flex-row items-center pb-10 pt-3 justify-between">
-                <p className="font-medium text-xl flex flex-col">
+                <p className="font-medium text-xl text-(--primary) flex flex-col">
                   Order{" "}
                   <span className="text-(--secondText) font-medium text-sm pl-1">
                     #{item.id}
@@ -63,7 +67,7 @@ export default function Orders() {
                   Placed on: <span className="font-medium">{item.time}</span>
                 </p>
               </div>
-              <hr className="text-(--secondary)" />
+              <hr className="text-(--ordersBorder)" />
 
               {item.items.map((order) => {
                 const status = orderStatus(item.time, order.deliveryTime);
@@ -91,7 +95,7 @@ export default function Orders() {
                         </div>
                       </div>
 
-                      <div className="flex flex-row gap-3">
+                      <div className="flex text-(--primary) flex-row gap-3">
                         <p>
                           {(order.finalPrice * order.quantity).toFixed(2)}
                           <sup>€</sup>
@@ -104,43 +108,46 @@ export default function Orders() {
                         <p className=" text-lg  items-center">
                           {status === "shipped" && (
                             <FontAwesomeIcon
-                              className="text-xl"
+                              className="text-xl text-(--primary)"
                               icon={faTruck}
                             />
                           )}
                           {status === "processing" && (
-                            <FontAwesomeIcon icon={faDolly} />
+                            <FontAwesomeIcon
+                              className="text-(--primary)"
+                              icon={faDolly}
+                            />
                           )}
                           {status === "pending" && (
                             <FontAwesomeIcon
-                              className="text-xl"
+                              className="text-xl text-(--primary)"
                               icon={faClock}
                             />
                           )}
                         </p>
                         <p
-                          className={`text-sm font-medium  shadow/40 rounded-lg py-0.5 px-2 ${
-                            status === "processing" && "bg-(--secondary)"
+                          className={`text-sm font-medium border border-(--ordersBorder) text-(--primary) rounded-lg py-0.5 px-2 ${
+                            status === "processing" &&
+                            "bg-(--purple)/30 dark:text-white"
                           } ${
-                            status === "shipped" &&
-                            "bg-(--secondText) text-(--white)"
+                            status === "shipped" && "bg-(--purple) text-white"
                           }`}
                         >
                           {status}
                         </p>
                       </div>
 
-                      <div className="w-full  rounded-lg h-2 bg-(--ordersBorder) overflow-hidden">
+                      <div className="w-full  rounded-lg h-2 bg-(--deepBlue)/20 overflow-hidden">
                         <div
                           className={`h-full ${
                             status === "pending" && "w-[25%]"
                           }  ${status === "processing" && "w-[50%]"}  ${
                             status === "shipped" && "w-[75%]"
-                          }  bg-(--primary) flex items-center pl-3`}
+                          }  bg-(--deepBlue) flex items-center pl-3`}
                         ></div>
                       </div>
 
-                      <div className="flex flex-row items-center justify-between text-sm">
+                      <div className="flex flex-row items-center text-(--primary) justify-between text-sm">
                         <p>Placed</p>
                         <p>Processing</p>
                         <p>Shipped</p>
@@ -150,8 +157,8 @@ export default function Orders() {
                   </div>
                 );
               })}
-              <hr className="text-(--secondary)" />
-              <div className="flex flex-row justify-between pt-6 items-center font-medium">
+              <hr className="text-(--ordersBorder)" />
+              <div className="flex flex-row justify-between pt-6 text-(--primary) items-center font-medium">
                 <p>
                   Total Amount{" "}
                   <span className="text-xs text-(--secondText) font-normal">

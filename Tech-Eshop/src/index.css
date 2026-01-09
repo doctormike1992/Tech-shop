@@ -72,6 +72,7 @@ option::checkmark{
 
 option:checked{
   background-color: var(--deepBlue);
+  color: white;
 }
 
 li{
