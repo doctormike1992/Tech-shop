@@ -19,12 +19,12 @@ console.log(orders)
   return (
     <>
       <section className="flex flex-col justify-start  px-3 items-start w-full max-w-3/5">
-        <h1 className="text-2xl py-15 font-medium">My account</h1>
+        <h1 className="text-2xl py-15 text-(--primary) font-medium">My account</h1>
 
         <div className="flex flex-row items-start gap-5 justify-start w-full">
-          <div className="w-full border border-(--secondary) rounded-lg">
+          <div className="w-full border border-(--ordersBorder) bg-(--white) rounded-lg">
             <div className="flex flex-row justify-between items-center p-5">
-              <div className="flex flex-row  items-center gap-1 text-lg font-medium">
+              <div className="flex flex-row text-(--primary) items-center gap-1 text-lg font-medium">
                 <FontAwesomeIcon icon={faUser} />
                 <h1>Profile Information</h1>
               </div>
@@ -34,7 +34,7 @@ console.log(orders)
                   type="reset"
                   form="user-form"
                   onClick={() => setEditForm("close")}
-                  className={`border text-sm font-medium border-stone-300 py-2 px-3 rounded-md cursor-pointer  hover:bg-stone-200 transition-all ${
+                  className={`border text-sm font-medium border-(--ordersBorder) py-2 px-3 rounded-md cursor-pointer  hover:bg-(--blue) bg-(--white) text-(--primary) hover:text-white transition-all hover:border-transparent  ${
                     editForm === "close" && "opacity-0 pointer-events-none"
                   }`}
                 >
@@ -46,14 +46,14 @@ console.log(orders)
                     form="user-form"
                     onClick={() => setEditForm("close")}
                     hidden={editForm === "close"}
-                    className="border text-sm font-medium border-(--primary) py-2 px-3 rounded-md cursor-pointer min-w-16.25 hover:bg-stone-900 bg-(--primary) text-(--white) transition-all"
+                    className="border text-sm font-medium  py-2 px-3 rounded-md cursor-pointer min-w-16.25 border-transparent hover:bg-(--deepBlue)/80 bg-(--deepBlue) text-white transition-all"
                   >
                     save
                   </button>
                 ) : (
                   <button
                     onClick={() => setEditForm("open")}
-                    className="border text-sm font-medium border-stone-300 py-2 px-3 rounded-md cursor-pointer min-w-16.25 hover:bg-stone-200 transition-all"
+                    className="border text-sm font-medium border-(--ordersBorder) py-2 px-3 rounded-md cursor-pointer min-w-16.25 hover:bg-(--blue) hover:text-white text-(--primary)  bg-(--white) transition-all hover:border-transparent  "
                   >
                     edit
                   </button>
@@ -75,8 +75,7 @@ console.log(orders)
                   No Orders Have Been Made
                 </h1>
               )}
-              {[...orders].reverse().map((item) => 
-              (
+              {[...orders].reverse().map((item) => (
                 <div
                   key={item.id}
                   className="flex flex-col border gap-2 p-3 border-(--ordersBorder) rounded-lg"
@@ -116,14 +115,14 @@ console.log(orders)
                         <div className="flex flex-col w-full pt-2 gap-1">
                           <div className="flex flex-row justify-between w-full">
                             <span
-                              className={`text-xs font-medium  shadow/40 rounded-lg py-0.5 px-2 ${
-                                status === "processing" && "bg-(--secondary)"
+                              className={`text-xs font-medium  border border-(--ordersBorder) text-(--primary)  rounded-lg py-0.5 px-2 ${
+                                status === "processing" && "bg-(--purple)/30 "
                               } ${
                                 status === "shipped" &&
-                                "bg-(--secondText) text-(--white)"
+                                "bg-(--purple) text-white"
                               }  ${
                                 status === "delivered" &&
-                                "bg-(--primary) text-(--white)"
+                                "bg-(--deepBlue) text-white"
                               } `}
                             >
                               {status}
@@ -135,7 +134,7 @@ console.log(orders)
                               {status === "delivered" && "100%"}
                             </p>
                           </div>
-                          <div className="w-full  rounded-lg h-1.5 bg-(--ordersBorder) overflow-hidden">
+                          <div className="w-full  rounded-lg h-1.5 bg-(--deepBlue)/20 overflow-hidden">
                             <div
                               className={`h-full ${
                                 status === "pending" && "w-[25%]"
@@ -143,14 +142,13 @@ console.log(orders)
                                 status === "shipped" && "w-[75%]"
                               }  ${
                                 status === "delivered" && "w-100%"
-                              }  bg-(--primary) flex items-center pl-3`}
+                              }  bg-(--deepBlue) flex items-center pl-3`}
                             ></div>
                           </div>
                         </div>
                       </div>
                     );
-                  }
-                  )}
+                  })}
                   <hr className="text-(--secondary)" />
                   <div className="flex flex-row justify-between pt-2 items-center font-medium">
                     <p>Total</p>

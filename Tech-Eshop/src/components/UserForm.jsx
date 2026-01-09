@@ -42,7 +42,7 @@ export default function UserForm({editForm}) {
         id="user-form"
         className="bg-(--white) h-full w-full flex flex-col justify-center p-5 items-start rounded-md"
       >
-        <label htmlFor="userName" className="font-medium">
+        <label htmlFor="userName" className="font-medium text-(--primary)">
           Name
         </label>
         <input
@@ -53,10 +53,10 @@ export default function UserForm({editForm}) {
           ref={userName}
           required
           disabled={editForm && editForm === "close"}
-          className="disabled:opacity-50  bg-(--input) w-full rounded-md p-2  outline-0"
+          className="disabled:opacity-50  bg-(--input)  w-full rounded-md p-2 text-(--primary) outline-0"
         />
 
-        <label htmlFor="phone" className="font-medium">
+        <label htmlFor="phone" className="font-medium text-(--primary)">
           Phone
         </label>
         <input
@@ -69,9 +69,9 @@ export default function UserForm({editForm}) {
           ref={phone}
           required
           disabled={editForm && editForm === "close"}
-          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0"
+          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2 text-(--primary)  outline-0"
         />
-        <label htmlFor="email" className="font-medium">
+        <label htmlFor="email" className="font-medium text-(--primary)">
           Email
         </label>
         <input
@@ -82,9 +82,9 @@ export default function UserForm({editForm}) {
           ref={email}
           required
           disabled={editForm && editForm === "close"}
-          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0"
+          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0 text-(--primary)"
         />
-        <label htmlFor="city" className="font-medium">
+        <label htmlFor="city" className="font-medium text-(--primary)">
           City
         </label>
         <input
@@ -95,9 +95,9 @@ export default function UserForm({editForm}) {
           ref={city}
           required
           disabled={editForm && editForm === "close"}
-          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0"
+          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0 text-(--primary)"
         />
-        <label htmlFor="address" className="font-medium">
+        <label htmlFor="address" className="font-medium text-(--primary)">
           Address
         </label>
         <input
@@ -108,7 +108,7 @@ export default function UserForm({editForm}) {
           ref={address}
           required
           disabled={editForm && editForm === "close"}
-          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0"
+          className="disabled:opacity-50 bg-(--input) w-full rounded-md p-2  outline-0 text-(--primary)"
         />
       </form>
     </>

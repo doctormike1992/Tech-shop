@@ -51,7 +51,9 @@ export default function Favorites() {
       <section className="flex px-3 flex-col">
         <div className="w-full flex flex-col ">
           <div className="py-15 flex flex-row items-center justify-start gap-2">
-            <h1 className="font-semibold text-2xl pl-2 ">Favorites</h1>
+            <h1 className="font-semibold text-(--primary) text-2xl pl-2 ">
+              Favorites
+            </h1>
             {guestFavorites.length !== 0 && (
               <span className="font-semibold text-2xl">
                 ({guestFavorites.length})
@@ -65,7 +67,9 @@ export default function Favorites() {
                   className="text-white drop-shadow-[0_0_1px_rgba(0,0,0,2)] text-8xl"
                   icon={faHeart}
                 />
-                <h1 className="text-xl font-semibold">No favorites yet</h1>
+                <h1 className="text-xl text-(--primary) font-semibold">
+                  No favorites yet
+                </h1>
                 <p className="text-(--secondText) pb-2">
                   Start adding products to your favorites
                 </p>

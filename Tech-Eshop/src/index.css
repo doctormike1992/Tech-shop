@@ -37,7 +37,7 @@
   --secondText: #a1a1b5;
   --ordersName: #717182;
   --white: #1a1a2e;
-  --input: #f3f3f5;
+  --input: #2a2a3e;
   --ordersBorder: #4d48487e;
   --deepBlue: #6366F1;
   --blue: #3b82f6;
@@ -83,7 +83,7 @@ li{
   flex-direction: row;
   padding: 10px 20px;
   border-radius: 10px;
-  animation: animate ease-in-out 3s forwards;
+  animation: animate ease-in-out 1.5s forwards;
   border: 1px solid var(--secondary);
   will-change: transform, opacity;
 }

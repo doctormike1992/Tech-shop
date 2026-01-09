@@ -107,7 +107,9 @@ export default function Cart() {
         }  items-center justify-center px-3`}
       >
         <div className="w-full flex flex-row items-center justify-between py-15">
-          <h1 className="font-semibold text-2xl">Shopping Cart</h1>
+          <h1 className="font-semibold text-(--primary) text-2xl">
+            Shopping Cart
+          </h1>
           {!cartEmpty && (
             <button
               onClick={clearCartButton}
@@ -125,12 +127,14 @@ export default function Cart() {
                   className="text-white drop-shadow-[0_0_1px_rgba(0,0,0,2)] text-8xl"
                   icon={faBasketShopping}
                 />
-                <h1 className="text-xl font-semibold">Your cart is empty</h1>
+                <h1 className="text-xl text-(--primary) font-semibold">
+                  Your cart is empty
+                </h1>
                 <p className="text-(--secondText) pb-2">
                   Add some products to get started
                 </p>
                 <Link
-                  className="bg-(--deepBlue) text-white) py-1 px-2 rounded-md font-medium cursor-pointer"
+                  className="bg-(--deepBlue) text-white py-1 px-2 rounded-md font-medium cursor-pointer"
                   to={"/"}
                 >
                   Browse Products
@@ -141,7 +145,7 @@ export default function Cart() {
                 return (
                   <li
                     key={item.id}
-                    className="w-full border p-4 gap-4 flex flex-row items-center  rounded-xl border-stone-200"
+                    className="w-full border p-4 gap-4 flex flex-row items-center bg-(--white) rounded-xl border-(--ordersBorder)"
                   >
                     <div className="w-24 h-24 shrink-0 content-center ">
                       <img
@@ -153,7 +157,9 @@ export default function Cart() {
                     <div className="w-full min-w-o px-1 flex flex-col justify-between">
                       <div className="flex  flex-row justify-between items-start">
                         <div className="flex flex-col items-start">
-                          <p className="font-medium">{item.name} </p>
+                          <p className="font-medium text-(--primary)">
+                            {item.name}{" "}
+                          </p>
                           <p className="text-(--secondText)  text-sm">
                             {item.category}{" "}
                           </p>
@@ -174,20 +180,22 @@ export default function Cart() {
                         <div className="w-full flex pt-2 flex-row gap-5 items-center">
                           <button
                             onClick={() => minusCartQuantity(item)}
-                            className="border cursor-pointer hover:bg-(--blue) hover:text-white border-(--ordersBorder) px-1 py-0.5 rounded-lg"
+                            className="border cursor-pointer hover:bg-(--blue) text-(--primary) hover:text-white border-(--ordersBorder) px-1 py-0.5 rounded-lg"
                           >
                             <FontAwesomeIcon icon={faMinus} />
                           </button>
-                          <span>{item.quantity}</span>
+                          <span className="text-(--primary)">
+                            {item.quantity}
+                          </span>
                           <button
                             onClick={() => plusCartQuantity(item)}
-                            className="border cursor-pointer hover:bg-(--blue) hover:text-white border-(--ordersBorder) px-1 py-0.5 rounded-lg"
+                            className="border cursor-pointer hover:bg-(--blue) text-(--primary) hover:text-white border-(--ordersBorder) px-1 py-0.5 rounded-lg"
                           >
                             <FontAwesomeIcon icon={faPlus} />
                           </button>
                         </div>
 
-                        <p>
+                        <p className="text-(--primary)">
                           {(item.finalPrice * item.quantity).toFixed(2)}
                           <sup>€</sup>
                         </p>
@@ -199,8 +207,10 @@ export default function Cart() {
             )}
           </ul>
           {!cartEmpty && (
-            <div className="flex flex-col  border p-6 h-fit min-w-[35%] 2xl:min-w-[30%]  border-stone-300 rounded-2xl">
-              <h1 className="font-medium text-lg pb-10 ">Order Summary</h1>
+            <div className="flex flex-col  border p-6 h-fit min-w-[35%] 2xl:min-w-[30%]  border-(--ordersBorder) bg-(--white) rounded-2xl">
+              <h1 className="font-medium text-(--primary) text-lg pb-10 ">
+                Order Summary
+              </h1>
               <div className="flex justify-between pb-15  flex-row">
                 <div className="flex justify-start items-start flex-col text-(--secondText) font-medium text-sm gap-2">
                   <p>Subtotal</p>
@@ -208,7 +218,7 @@ export default function Cart() {
                   <p>Tax</p>
                 </div>
 
-                <div className=" flex flex-col gap-2 justify-center items-end text-sm">
+                <div className=" flex flex-col gap-2 text-(--primary) justify-center items-end text-sm">
                   <p>
                     {subTotal.toFixed(2)}
                     <sup>€</sup>
@@ -226,7 +236,7 @@ export default function Cart() {
 
               <hr className="text-stone-300" />
               <br />
-              <div className="flex py-10 flex-row justify-between">
+              <div className="flex py-10 flex-row text-(--primary) justify-between">
                 <p className="text-lg">Total</p>
                 <p className="font-medium text-lg">
                   {totalPrice.toFixed(2)}
