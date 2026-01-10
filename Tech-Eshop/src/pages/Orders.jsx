@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import { orderStatus } from "../utils/finishedOrders";
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock, faTruck } from "@fortawesome/free-regular-svg-icons";
-import { faDolly } from "@fortawesome/free-solid-svg-icons";
+import ClockIcon from "../icons/clock.svg?react";
+import BoxIcon from "../icons/box.svg?react";
+import TruckIcon from "../icons/truck.svg?react";
 import { Link } from "react-router-dom";
 
 export default function Orders() {
@@ -40,7 +40,7 @@ export default function Orders() {
         <div className="w-full flex flex-col items-center gap-6 justify-center">
           {orderInProgress.length === 0 && (
             <div className="flex flex-col items-center gap-3">
-              <FontAwesomeIcon className="text-6xl" icon={faTruck} />
+              <BoxIcon className='w-20 h-20 text-(--primary)' />
               <h1 className="text-lg text-(--primary) font-medium">
                 No Orders Have Been Made
               </h1>
@@ -107,22 +107,13 @@ export default function Orders() {
                       <div className="flex flex-row w-full items-center justify-start pt-1 pb-2 gap-2">
                         <p className=" text-lg  items-center">
                           {status === "shipped" && (
-                            <FontAwesomeIcon
-                              className="text-xl text-(--primary)"
-                              icon={faTruck}
-                            />
+                            <TruckIcon className="w-7 h-7 text-(--primary)" />
                           )}
                           {status === "processing" && (
-                            <FontAwesomeIcon
-                              className="text-(--primary)"
-                              icon={faDolly}
-                            />
+                            <BoxIcon className="w-7 h-7 text-(--primary)" />
                           )}
                           {status === "pending" && (
-                            <FontAwesomeIcon
-                              className="text-xl text-(--primary)"
-                              icon={faClock}
-                            />
+                            <ClockIcon className="w-7 h-7 text-(--primary)" />
                           )}
                         </p>
                         <p

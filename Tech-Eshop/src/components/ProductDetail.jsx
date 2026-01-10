@@ -95,7 +95,7 @@ export default function ProductDetail() {
   return (
     <section className="flex flex-col w-full max-w-3/5 items-start justify-start px-3 py-5">
       <Link className="pb-10" to={"/"}>
-        <button className="flex flex-row items-center gap-2 hover:bg-(--secondary) pr-4 pl-1 py-2 rounded-md transition-all font-medium text-sm">
+        <button className="flex flex-row items-center gap-2 hover:bg-(--blue) hover:text-white text-(--primary) pr-4 pl-1 py-2 rounded-md transition-all font-medium text-sm">
           <FontAwesomeIcon icon={faArrowLeft} />
           Back
         </button>
@@ -108,24 +108,24 @@ export default function ProductDetail() {
 
         <div className="flex flex-col gap-5 w-full items-start grow">
           <div className="flex flex-row gap-3 items-center justify-start">
-            <p className="text-(--white)  bg-(--deepBlue) px-2 py-0.5 text-xs font-medium rounded-lg">
+            <p className="text-white  bg-(--deepBlue) px-2 py-0.5 text-xs font-medium rounded-lg">
               {category}
             </p>
-            <p className="text-(--white) bg-(--purple) px-2 py-0.5 text-xs font-medium rounded-lg">
+            <p className="text-white bg-(--purple) px-2 py-0.5 text-xs font-medium rounded-lg">
               {subCategory}
             </p>
-            <p className="text-(--primary) bg-(--white) px-2 py-0.5 text-xs border border-(--secondary) font-medium rounded-lg">
+            <p className="text-(--primary) bg-(--white) px-2 py-0.5 text-xs border border-(--ordersBorder) font-medium rounded-lg">
               {brand}
             </p>
             {sale && (
-              <p className="text-(--white) bg-red-600 px-2 py-0.5 text-xs font-medium rounded-lg">
+              <p className="text-white bg-red-600 px-2 py-0.5 text-xs font-medium rounded-lg">
                 -{percentage}% OFF
               </p>
             )}
           </div>
 
           <div className="text-start">
-            <h1 className="font-semibold text-xl">{name}</h1>
+            <h1 className="font-semibold text-(--primary) text-xl">{name}</h1>
           </div>
 
           <div className="text-start">
@@ -135,7 +135,9 @@ export default function ProductDetail() {
           </div>
 
           <div className="flex flex-row items-end justify-center gap-3">
-            <p className={`text-4xl ${sale && "text-red-600"}`}>
+            <p
+              className={`text-4xl text-(--primary) ${sale && "text-red-600"}`}
+            >
               {finalPrice?.toFixed(2)}
               <sup>€</sup>
             </p>
@@ -151,16 +153,16 @@ export default function ProductDetail() {
 
           <div className="w-full gap-2 flex flex-col">
             <button
-              className="flex flex-row items-center justify-center gap-1 bg-(--deepBlue) rounded-lg py-2 text-(--white) text-sm font-medium hover:bg-(--deepBlue)/90 transition-all cursor-pointer"
+              className="flex flex-row items-center justify-center gap-1 bg-(--deepBlue) rounded-lg py-2 text-white text-sm font-medium hover:bg-(--deepBlue)/90 transition-all cursor-pointer"
               onClick={handleAddToCart}
             >
               <FontAwesomeIcon icon={faCartShopping} />
               Add to Cart
             </button>
             <button
-              className={`flex flex-row items-center justify-center gap-1  rounded-lg py-2 text-(--primary) border border-(--secondary)  text-sm font-medium hover:bg-(--blue) hover:text-(--white)  transition-all cursor-pointer ${
+              className={`flex flex-row items-center justify-center gap-1  rounded-lg py-2 text-(--primary) border border-(--ordersBorder)  text-sm font-medium hover:bg-(--blue) hover:text-(--white) dark:hover:text-white  transition-all cursor-pointer ${
                 isFavorite &&
-                "bg-(--deepBlue) text-(--white) hover:bg-(--deepBlue)/90"
+                "bg-(--deepBlue) text-(--white) dark:text-white hover:bg-(--deepBlue)/90"
               }`}
               onClick={handleFavorites}
             >
@@ -177,7 +179,7 @@ export default function ProductDetail() {
                 className="text-(--deepBlue) bg-(--deepBlue)/10 px-3 py-3.5 rounded-full"
                 icon={faTruck}
               />
-              <div className="flex flex-col text-start">
+              <div className="flex flex-col text-(--primary) text-start">
                 <p>Delivery in {deliveryTime} Days</p>
                 <p className="text-sm text-(--secondText)">
                   Fast and reliable shipping
@@ -190,7 +192,7 @@ export default function ProductDetail() {
                 className="text-(--deepBlue) bg-(--deepBlue)/10 px-3 py-3.5 rounded-full"
                 icon={faShieldHalved}
               />
-              <div className="flex flex-col text-start">
+              <div className="flex flex-col text-(--primary) text-start">
                 <p>2 Year Warranty</p>
                 <p className="text-sm text-(--secondText)">
                   Full coverage included
@@ -203,7 +205,7 @@ export default function ProductDetail() {
                 className="text-(--deepBlue) bg-(--deepBlue)/10 px-3 py-3.5 rounded-full"
                 icon={faBoxArchive}
               />
-              <div className="flex flex-col text-start">
+              <div className="flex flex-col text-(--primary) text-start">
                 <p>Easy Returns</p>
                 <p className="text-sm text-(--secondText)">
                   30-day return policy
@@ -215,7 +217,7 @@ export default function ProductDetail() {
       </main>
 
       <div className="flex flex-col border border-(--secondary) bg-(--white) rounded-xl w-full p-5">
-        <div className="bg-(--secondary) flex flex-row p-1.5 rounded-2xl">
+        <div className="bg-(--secondary) dark:bg-(--background) text-white flex flex-row p-1.5 rounded-2xl">
           <button
             className={`w-full py-0.5 font-medium rounded-xl ${
               desc && "bg-(--white)"
@@ -236,7 +238,9 @@ export default function ProductDetail() {
         <div className="w-full flex flex-col items-start py-5 justify-start">
           {desc ? (
             <>
-              <h1 className="text-lg font-medium pb-3">Product Description</h1>
+              <h1 className="text-lg text-(--primary) font-medium pb-3">
+                Product Description
+              </h1>
               <p className=" tracking-wide  text-(--secondText) wrap-break-word">
                 {description}
               </p>
@@ -248,7 +252,7 @@ export default function ProductDetail() {
                   <p>Brand</p>
                   <p>Category</p>
                 </div>
-                <div className="flex flex-row justify-between font-medium">
+                <div className="flex text-(--primary) flex-row justify-between font-medium">
                   <p>{brand}</p>
                   <p>{category}</p>
                 </div>
@@ -256,12 +260,12 @@ export default function ProductDetail() {
                   <p>Type</p>
                   <p>Delivery Time</p>
                 </div>
-                <div className="flex flex-row justify-between font-medium pb-3">
+                <div className="flex flex-row text-(--primary) justify-between font-medium pb-3">
                   <p>{subCategory}</p>
                   <p>{deliveryTime} Days</p>
                 </div>
               </div>
-              <hr className="text-(--secondary)" />
+              <hr className="text-(--ordersBorder)" />
               <div className="flex flex-col gap-2 w-full pt-3">
                 {specifications.map((item) => (
                   <div
@@ -269,7 +273,7 @@ export default function ProductDetail() {
                     key={item.id}
                   >
                     <p className="text-(--secondText)">{item.name}</p>
-                    <p>{item.value}</p>
+                    <p className="text-(--primary)">{item.value}</p>
                   </div>
                 ))}
               </div>

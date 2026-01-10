@@ -11,7 +11,7 @@ export default function Search({onModal, searchBarModal, searchButtonModal}) {
   const [inputEmpty, setInputEmpty] = useState('');
   const navigate = useNavigate();
 
-  //NAVIGATE TO THE MAIN PAGE IN ENTER IS PRESSED ON SEARCH BAR
+  //NAVIGATE TO THE MAIN PAGE IF ENTER IS PRESSED ON SEARCH BAR
   function handleEnterKey(e) {
     if (e.key === "Enter") {
       navigate("/");
@@ -29,7 +29,7 @@ export default function Search({onModal, searchBarModal, searchButtonModal}) {
         className={
           searchBarModal
             ? searchBarModal
-            : "bg-[#f0f1fa] text-(--secondText) dark:text-(--white) md:h-10 h-full  rounded-lg text-md font-medium outline-0 p-1 text-nowrap md:pr-11  md:pl-12 md:w-full"
+            : "bg-(--input) text-(--secondText)  md:h-10 h-full  rounded-lg text-md font-medium outline-0 p-1 text-nowrap md:pr-11  md:pl-12 md:w-full"
         }
         type="text"
         placeholder="search products..."
@@ -43,13 +43,13 @@ export default function Search({onModal, searchBarModal, searchButtonModal}) {
           className={
             searchButtonModal
               ? searchButtonModal
-              : "absolute left-0 top-0 bottom-0 text-(--secondText)/30 text-2xl bg-[#f0f1fa] md:px-2 rounded-lg "
+              : "absolute left-0 top-0 bottom-0 text-(--secondText)/30 text-2xl bg-(--input) md:px-2 rounded-lg "
           }
         >
           <FontAwesomeIcon icon={faSearch} />
         </button>
       </Link>
-      <button onClick={() => { setInputEmpty(''); dispatch(filterActions.search('')); input.current.focus(); }} className={`absolute right-0 top-0 bottom-0 text-black pr-3 text-xs cursor-pointer hidden md:block ${!inputEmpty ? 'md:hidden' : 'md:block'}`}>
+      <button onClick={() => { setInputEmpty(''); dispatch(filterActions.search('')); input.current.focus(); }} className={`absolute right-0 top-0 bottom-0 text-black pr-3 text-xs cursor-pointer  ${!inputEmpty ? 'hidden' : 'block'}`}>
         <FontAwesomeIcon className="text-(--deepBlue)" icon={faX}/>
       </button>
     </div>

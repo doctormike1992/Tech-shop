@@ -6,8 +6,8 @@
 
 
 *,
-*::after,
-*::before {
+*::before,
+*::after {
   margin: 0;
   box-sizing: border-box;
 }
@@ -22,12 +22,13 @@
   --secondText: #5a5a6e;
   --ordersName: #717182;
   --white: white;
-  --input: #f3f3f5;
+  --input: #f0f1fa;
   --ordersBorder: #d6d3d1;
   --deepBlue: #6366F1;
   --blue: #3b82f6;
   --purple: #8b5cf6;
   --background: #f8f9ff;
+  --darkButton: #3b82f6;
 }
 
 .dark{
@@ -43,6 +44,8 @@
   --blue: #3b82f6;
   --purple: #8b5cf6;
   --background: #0f0f1a;
+  --darkButton: #eceef2;
+
 }
 
 html,
@@ -59,7 +62,7 @@ html{
 .active {
   color: white;
   background-color: var(--deepBlue);
-  border-radius: .6rem;
+  border-radius: 6px;
   pointer-events: none;
 }
 select,
@@ -109,4 +112,8 @@ li{
     opacity: 0;
     transform: translateY(40px);
   }
+}
+
+.darkButton{
+  box-shadow:  0px 0px 5px 3px var(--darkButton);
 }

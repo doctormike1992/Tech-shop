@@ -1,9 +1,8 @@
 import { useSelector } from "react-redux";
 import UserForm from "../components/userForm";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import {  useState } from "react";
-import { faBoxArchive } from "@fortawesome/free-solid-svg-icons";
+import UserIcon from "../icons/users.svg?react";
+import BoxIcon from "../icons/box.svg?react";
 import { orderStatus } from "../utils/finishedOrders";
 
 
@@ -18,7 +17,7 @@ console.log(orders)
 
   return (
     <>
-      <section className="flex flex-col justify-start  px-3 items-start w-full max-w-3/5">
+      <section className="flex flex-col justify-start pb-5 px-3 items-start w-full max-w-3/5">
         <h1 className="text-2xl py-15 text-(--primary) font-medium">
           My account
         </h1>
@@ -27,7 +26,7 @@ console.log(orders)
           <div className="w-full border border-(--ordersBorder) bg-(--white) rounded-lg">
             <div className="flex flex-row justify-between items-center p-5">
               <div className="flex flex-row text-(--primary) items-center gap-1 text-lg font-medium">
-                <FontAwesomeIcon icon={faUser} />
+                <UserIcon className='w-5 h-5' />
                 <h1>Profile Information</h1>
               </div>
 
@@ -36,7 +35,7 @@ console.log(orders)
                   type="reset"
                   form="user-form"
                   onClick={() => setEditForm("close")}
-                  className={`border text-sm font-medium border-(--ordersBorder) py-2 px-3 rounded-md cursor-pointer  hover:bg-(--blue) bg-(--white) text-(--primary) hover:text-white transition-all hover:border-transparent  ${
+                  className={`border text-sm font-medium border-(--ordersBorder) py-2 px-3 rounded-md cursor-pointer  hover:bg-(--blue) bg-(--white) text-(--primary) dark:hover:bg-(--background)/40 hover:text-white transition-all   ${
                     editForm === "close" && "opacity-0 pointer-events-none"
                   }`}
                 >
@@ -65,9 +64,9 @@ console.log(orders)
             <UserForm editForm={editForm} />
           </div>
 
-          <div className="flex flex-col border bg-(--white) border-(--ordersBorder) rounded-lg w-full">
+          <div className="flex flex-col border bg-(--white)  border-(--ordersBorder) rounded-lg w-full">
             <div className="flex flex-row items-center text-(--primary) gap-2 text-lg font-medium p-4">
-              <FontAwesomeIcon className="" icon={faBoxArchive} />
+              <BoxIcon className='w-5 h-5'/>
               <h2>Order History</h2>
             </div>
 

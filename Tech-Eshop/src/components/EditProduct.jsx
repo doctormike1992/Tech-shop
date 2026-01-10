@@ -9,7 +9,7 @@ import {
 import { db, storage } from "../firebase/firebase";
 import { categories, subCategories, brands } from "../store/categories";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faX } from "@fortawesome/free-solid-svg-icons";
 import SwitchButton from "./SwitchButton";
 import Input from "./Input";
 
@@ -93,7 +93,7 @@ export default function EditProduct({ product, modal }) {
 
   //DISABLE FORM UNTIL ITS SUBMITED
   let formClass =
-    "flex items-center justify-center  flex-col md:gap-2 gap-0.5 bg-stone-50 h-fit w-[40%] border-1 rounded-md border-stone-200";
+    "flex items-center justify-center  flex-col md:gap-2 gap-0.5 bg-(--white) h-fit w-[40%] border rounded-md border-(--ordersBorder)";
   if (isLoading) {
     formClass += "pointer-events-none";
   }
@@ -116,7 +116,10 @@ export default function EditProduct({ product, modal }) {
       <div className="flex flex-row">
         <div className="flex flex-col w-full justify-center h-full">
           <div className="flex flex-col  items-start  p-2 ">
-            <label className="text-sm font-semibold" htmlFor="name">
+            <label
+              className="text-sm font-semibold text-(--primary)"
+              htmlFor="name"
+            >
               Product Name
             </label>
             <input
@@ -127,12 +130,15 @@ export default function EditProduct({ product, modal }) {
               onChange={(e) =>
                 setEditedProduct({ ...editedProduct, name: e.target.value })
               }
-              className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+              className="bg-(--input) text-(--primary) w-full rounded-md p-2  outline-0"
             />
           </div>
 
           <div className="flex flex-col justify-center items-start p-2 ">
-            <label htmlFor="summary" className="text-sm font-semibold">
+            <label
+              htmlFor="summary"
+              className="text-sm font-semibold text-(--primary)"
+            >
               Summary
             </label>
             <textarea
@@ -143,12 +149,15 @@ export default function EditProduct({ product, modal }) {
               onChange={(e) =>
                 setEditedProduct({ ...editedProduct, summary: e.target.value })
               }
-              className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+              className="bg-(--input) w-full rounded-md p-2 text-(--primary) outline-0"
             />
           </div>
 
           <div className="flex flex-col  justify-center items-start  p-2  ">
-            <label htmlFor="description" className="text-sm font-semibold">
+            <label
+              htmlFor="description"
+              className="text-sm text-(--primary) font-semibold"
+            >
               Description
             </label>
             <textarea
@@ -161,13 +170,16 @@ export default function EditProduct({ product, modal }) {
                   description: e.target.value,
                 })
               }
-              className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+              className="bg-(--input) text-(--primary) w-full rounded-md p-2  outline-0"
             />
           </div>
 
           <div className="flex flex-row justify-around gap-2 items-start p-2 ">
             <div className="w-full">
-              <label htmlFor="price" className="text-sm font-semibold">
+              <label
+                htmlFor="price"
+                className="text-sm text-(--primary) font-semibold"
+              >
                 Price
               </label>
               <input
@@ -182,11 +194,14 @@ export default function EditProduct({ product, modal }) {
                     price: e.target.value,
                   })
                 }
-                className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                className="bg-(--input) text-(--primary) w-full rounded-md p-2  outline-0"
               />
             </div>
             <div className="w-full">
-              <label htmlFor="delivery" className="text-sm font-semibold">
+              <label
+                htmlFor="delivery"
+                className="text-sm text-(--primary) font-semibold"
+              >
                 Delivery Days
               </label>
               <input
@@ -200,19 +215,22 @@ export default function EditProduct({ product, modal }) {
                     deliveryTime: e.target.value,
                   })
                 }
-                className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                className="bg-(--input) text-(--primary) w-full rounded-md p-2  outline-0"
               />
             </div>
           </div>
 
           <div className="flex flex-row justify-start gap-2 items-center p-2">
-            <SwitchButton enabled={ischeck}  setEnabled={setIscheck} />
-            <p className="text-sm font-semibold">On Sale</p>
+            <SwitchButton enabled={ischeck} setEnabled={setIscheck} />
+            <p className="text-sm font-semibold text-(--primary)">On Sale</p>
           </div>
 
           {ischeck && (
             <div className="w-full p-2">
-              <label htmlFor="percentage" className="text-sm font-semibold">
+              <label
+                htmlFor="percentage"
+                className="text-sm text-(--primary) font-semibold"
+              >
                 Sale Percentage
               </label>
               <input
@@ -220,26 +238,29 @@ export default function EditProduct({ product, modal }) {
                 type="number"
                 id="percentage"
                 required
-                value={editedProduct.percentage || ''}
+                value={editedProduct.percentage || ""}
                 onChange={(e) =>
                   setEditedProduct({
                     ...editedProduct,
                     percentage: e.target.value,
                   })
                 }
-                className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                className="bg-(--input) text-(--primary) w-full rounded-md p-2  outline-0"
               />
             </div>
           )}
 
           <div className="w-full flex flex-col p-2 ">
-            <label htmlFor="category" className="text-sm font-semibold">
+            <label
+              htmlFor="category"
+              className="text-sm text-(--primary) font-semibold"
+            >
               Category
             </label>
             <div className="relative">
               <button
                 type="button"
-                className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium`}
+                className={`bg-(--input) text-(--primary) w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium`}
               >
                 <span>{editedProduct.category}</span>
                 <FontAwesomeIcon
@@ -273,13 +294,16 @@ export default function EditProduct({ product, modal }) {
           </div>
 
           <div className="w-full flex flex-col p-2 ">
-            <label htmlFor="subCategory" className="text-sm font-semibold">
+            <label
+              htmlFor="subCategory"
+              className="text-sm text-(--primary) font-semibold"
+            >
               Sub Category
             </label>
             <div className="relative">
               <button
                 type="button"
-                className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium `}
+                className={`bg-(--input) text-(--primary) w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium `}
               >
                 <span>{editedProduct.subCategory}</span>
                 <FontAwesomeIcon
@@ -313,13 +337,16 @@ export default function EditProduct({ product, modal }) {
           </div>
 
           <div className="w-full flex flex-col p-2 ">
-            <label htmlFor="brand" className="text-sm font-semibold">
+            <label
+              htmlFor="brand"
+              className="text-sm text-(--primary) font-semibold"
+            >
               Brand
             </label>
             <div className="relative">
               <button
                 type="button"
-                className={`bg-[#f3f3f5] w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium`}
+                className={`bg-(--input) text-(--primary) w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium`}
               >
                 <span>{editedProduct.brand}</span>
                 <FontAwesomeIcon
@@ -351,11 +378,13 @@ export default function EditProduct({ product, modal }) {
 
           <div className="w-full flex justify-between items-center flex-col p-2">
             <div className="flex flex-row justify-between w-full">
-              <p className="text-sm font-semibold">Specifications</p>
+              <p className="text-sm text-(--primary) font-semibold">
+                Specifications
+              </p>
               <button
                 type="button"
                 onClick={addSpecs}
-                className="border transition-all cursor-pointer border-stone-300 hover:bg-stone-200 text-sm font-medium px-2 py-1 rounded-sm"
+                className="border text-(--primary) transition-all cursor-pointer border-(--ordersBorder) dark:hover:bg-(--background)/50 hover:text-white hover:bg-(--blue) text-sm font-medium px-2 py-1 rounded-md"
               >
                 + Add Spec
               </button>
@@ -367,7 +396,7 @@ export default function EditProduct({ product, modal }) {
                 key={spec.id}
               >
                 <input
-                  className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                  className="bg-(--input) text-(--primary) w-full rounded-md p-2  outline-0"
                   type="text"
                   placeholder="expample (battery life)"
                   id={`specName${spec.id}`}
@@ -382,7 +411,7 @@ export default function EditProduct({ product, modal }) {
                 <input
                   type="text"
                   placeholder="example (8 hours)"
-                  className="bg-[#f3f3f5] w-full rounded-md p-2  outline-0"
+                  className="bg-(--input) w-full text-(--primary) rounded-md p-2  outline-0"
                   id={`specValue${spec.id}`}
                   value={spec.value}
                   onChange={(e) => {
@@ -395,9 +424,9 @@ export default function EditProduct({ product, modal }) {
                 <button
                   onClick={() => handleDeleteSpec(spec.id)}
                   type="button"
-                  className="transition-all  text-md py-2 px-3 rounded-md hover:bg-[#f3f3f5]"
+                  className="transition-all  text-md  px-2.5 text-(--primary) hover:bg-(--blue) hover:text-white dark:hover:bg-(--background)/50 rounded-md "
                 >
-                  X
+                  <FontAwesomeIcon icon={faX} />
                 </button>
               </div>
             ))}
@@ -418,7 +447,7 @@ export default function EditProduct({ product, modal }) {
             accept="image/*"
             onChange={handleImageChange}
             label="select image"
-            labelClass="p-1  text-md font-medium rounded-md active:scale-75 bg-stone-900 text-amber-50 px-2 text-center cursor-pointer"
+            labelClass="p-1  text-md font-medium rounded-md active:scale-75 text-white bg-(--deepBlue) px-2 hover:bg-(--deepBlue)/90 text-center cursor-pointer"
             hidden
           />
           {isLoading && (
@@ -433,12 +462,12 @@ export default function EditProduct({ product, modal }) {
       <div className="flex justify-center gap-2 pb-2 flex-row w-full">
         <button
           type="button"
-          className="font-medium px-20 text-center border py-1.5 border-stone-400 rounded-md cursor-pointer hover:bg-[#f3f3f5]"
+          className="font-medium px-20 text-center border py-1.5 border-(--ordersBorder) rounded-md cursor-pointer hover:bg-(--blue) hover:text-white transition-colors dark:hover:bg-(--background)/40 text-(--primary)"
           onClick={closeModal}
         >
           Cancel
         </button>
-        <button className="font-medium px-20 text-center py-1.5  text-stone-50 bg-stone-950 border-stone-400 rounded-md cursor-pointer hover:bg-gray-900">
+        <button className="font-medium px-20 text-center py-1.5  text-white bg-(--deepBlue) border-stone-400 rounded-md cursor-pointer hover:bg-(--deepBlue)/90">
           save
         </button>
       </div>

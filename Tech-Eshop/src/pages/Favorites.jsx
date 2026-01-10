@@ -5,8 +5,8 @@ import { guestActions } from "../store/guestSlice";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db, auth } from "../firebase/firebase";
 import { collection, getDoc, setDoc } from "firebase/firestore";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import HeartIcon from "../icons/heart.svg?react";
+
 
 
 
@@ -55,7 +55,7 @@ export default function Favorites() {
               Favorites
             </h1>
             {guestFavorites.length !== 0 && (
-              <span className="font-semibold text-2xl">
+              <span className="font-semibold text-(--primary) text-2xl">
                 ({guestFavorites.length})
               </span>
             )}
@@ -63,9 +63,7 @@ export default function Favorites() {
           <ul className="flex w-full flex-row items-center justify-start flex-wrap gap-6  py-10  pl-2 ">
             {guestFavorites.length === 0 ? (
               <div className="flex flex-col w-full gap-2 items-center justify-center">
-                <FontAwesomeIcon
-                  className="text-white drop-shadow-[0_0_1px_rgba(0,0,0,2)] text-8xl"
-                  icon={faHeart}
+                <HeartIcon className='w-20 h-20 text-(--primary)'
                 />
                 <h1 className="text-xl text-(--primary) font-semibold">
                   No favorites yet

@@ -7,7 +7,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { db, storage } from "../firebase/firebase";
 import SwitchButton from "./SwitchButton";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function NewProductForm() {
@@ -106,7 +106,7 @@ export default function NewProductForm() {
 
   //DISABLE FORM UNTIL ITS SUBMITED
   let formClass =
-    "flex items-start justify-center md:flex-row flex-col md:gap-2 gap-0.5  h-full w-full border-1 rounded-md border-stone-200";
+    "flex items-start justify-center md:flex-row flex-col md:gap-2 gap-0.5  h-full w-full border-1 rounded-md border-(--ordersBorder) bg-(--white)";
   if (isLoading) {
     formClass += "pointer-events-none";
   }
@@ -132,43 +132,52 @@ export default function NewProductForm() {
           <div className="flex flex-col  items-start  p-2 ">
             <Input
               label="Product Name"
-              labelClass="text-sm font-semibold"
+              labelClass="text-sm font-semibold text-(--primary)"
               htmlFor="name"
               type="text"
               id="name"
               name="name"
               required
-              inputClass="bg-(--input) w-full rounded-md p-2  outline-0"
+              inputClass="bg-(--input) w-full rounded-md p-2 text-(--primary) outline-0"
             />
           </div>
 
           <div className="flex flex-col justify-center items-start p-2 ">
-            <label htmlFor="summary" className="text-sm font-semibold">
+            <label
+              htmlFor="summary"
+              className="text-sm font-semibold text-(--primary)"
+            >
               Summary
             </label>
             <textarea
               name="summary"
               id="summary"
               required
-              className="bg-(--input) w-full rounded-md p-2  outline-0"
+              className="bg-(--input) w-full rounded-md p-2  text-(--primary) outline-0"
             />
           </div>
 
           <div className="flex flex-col  justify-center items-start  p-2  ">
-            <label htmlFor="description" className="text-sm font-semibold">
+            <label
+              htmlFor="description"
+              className="text-sm font-semibold text-(--primary)"
+            >
               Description
             </label>
             <textarea
               name="description"
               id="description"
               required
-              className="bg-(--input) w-full rounded-md p-2  outline-0"
+              className="bg-(--input) w-full rounded-md p-2 text-(--primary) outline-0"
             />
           </div>
 
           <div className="flex flex-row justify-around gap-2 items-start p-2 ">
             <div className="w-full">
-              <label htmlFor="price" className="text-sm font-semibold">
+              <label
+                htmlFor="price"
+                className="text-sm font-semibold text-(--primary)"
+              >
                 Price
               </label>
               <input
@@ -176,50 +185,59 @@ export default function NewProductForm() {
                 id="price"
                 step="0.01"
                 name="price"
-                className="bg-(--input) w-full rounded-md p-2  outline-0"
+                className="bg-(--input) w-full rounded-md p-2 text-(--primary) outline-0"
               />
             </div>
             <div className="w-full">
-              <label htmlFor="delivery" className="text-sm font-semibold">
+              <label
+                htmlFor="delivery"
+                className="text-sm text-(--primary) font-semibold"
+              >
                 Delivery Days
               </label>
               <input
                 type="number"
                 id="delivery"
                 name="deliveryTime"
-                className="bg-(--input) w-full rounded-md p-2  outline-0"
+                className="bg-(--input) w-full rounded-md p-2 text-(--primary) outline-0"
               />
             </div>
           </div>
 
           <div className="flex flex-row justify-start gap-2 items-center p-2">
             <SwitchButton enabled={ischeck} setEnabled={setIscheck} />
-            <p className="text-sm font-semibold">On Sale</p>
+            <p className="text-sm text-(--primary) font-semibold">On Sale</p>
           </div>
 
           {ischeck && (
             <div className="w-full p-2">
-              <label htmlFor="percentage" className="text-sm font-semibold">
+              <label
+                htmlFor="percentage"
+                className="text-sm font-semibold text-(--primary)"
+              >
                 Sale Percentage
               </label>
               <input
                 name="percentage"
                 type="number"
                 id="percentage"
-                className="bg-(--input) w-full rounded-md p-2  outline-0"
+                className="bg-(--input) w-full rounded-md p-2 text-(--primary) outline-0"
               />
             </div>
           )}
 
           <div className="w-full flex flex-col p-2 ">
-            <label htmlFor="category" className="text-sm font-semibold">
+            <label
+              htmlFor="category"
+              className="text-sm text-(--primary) font-semibold"
+            >
               Category
             </label>
             <div className="relative">
               <button
                 type="button"
-                className={`bg-(--input) w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
-                  categoryValue === "choose one..." && "text-stone-400"
+                className={`bg-(--input) w-full rounded-md text-(--primary) pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
+                  categoryValue === "choose one..." && "text-(--secondText)"
                 }`}
               >
                 <span>{categoryValue}</span>
@@ -249,14 +267,17 @@ export default function NewProductForm() {
           </div>
 
           <div className="w-full flex flex-col p-2 ">
-            <label htmlFor="subCategory" className="text-sm font-semibold">
+            <label
+              htmlFor="subCategory"
+              className="text-sm text-(--primary) font-semibold"
+            >
               Sub Category
             </label>
             <div className="relative">
               <button
                 type="button"
-                className={`bg-(--input) w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
-                  subCategoryValue === "choose one..." && "text-stone-400"
+                className={`bg-(--input) w-full rounded-md text-(--primary) pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
+                  subCategoryValue === "choose one..." && "text-(--secondText)"
                 }`}
               >
                 <span>{subCategoryValue}</span>
@@ -286,14 +307,17 @@ export default function NewProductForm() {
           </div>
 
           <div className="w-full flex flex-col p-2 ">
-            <label htmlFor="brand" className="text-sm font-semibold">
+            <label
+              htmlFor="brand"
+              className="text-sm text-(--primary) font-semibold"
+            >
               Brand
             </label>
             <div className="relative">
               <button
                 type="button"
-                className={`bg-(--input) w-full rounded-md  pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
-                  brandValue === "choose one..." && "text-stone-400"
+                className={`bg-(--input) w-full rounded-md text-(--primary) pointer-events-none p-2 z-2 outline-0 flex justify-between items-center font-medium ${
+                  brandValue === "choose one..." && "text-(--secondText)"
                 }`}
               >
                 <span>{brandValue}</span>
@@ -324,11 +348,13 @@ export default function NewProductForm() {
 
           <div className="w-full flex justify-between items-center flex-col p-2">
             <div className="flex flex-row justify-between w-full">
-              <p className="text-sm font-semibold">Specifications</p>
+              <p className="text-sm text-(--primary) font-semibold">
+                Specifications
+              </p>
               <button
                 type="button"
                 onClick={addSpecs}
-                className="border transition-all cursor-pointer border-stone-300 hover:bg-stone-200 text-sm font-medium px-2 py-1 rounded-sm"
+                className="border transition-all cursor-pointer border-(--ordersBorder) hover:bg-(--blue) hover:text-white text-sm font-medium px-2 py-1 rounded-md dark:text-white  dark:hover:bg-(--background)/50"
               >
                 + Add Spec
               </button>
@@ -340,7 +366,7 @@ export default function NewProductForm() {
                 key={spec.id}
               >
                 <input
-                  className="bg-(--input) w-full rounded-md p-2  outline-0"
+                  className="bg-(--input) w-full rounded-md p-2 text-(--primary) outline-0"
                   type="text"
                   placeholder="expample (battery life)"
                   id={`specName${spec.id}`}
@@ -355,7 +381,7 @@ export default function NewProductForm() {
                 <input
                   type="text"
                   placeholder="example (8 hours)"
-                  className="bg-(--input) w-full rounded-md p-2  outline-0"
+                  className="bg-(--input) w-full  text-(--primary) rounded-md p-2  outline-0"
                   id={`specValue${spec.id}`}
                   value={spec.value}
                   onChange={(e) => {
@@ -368,9 +394,9 @@ export default function NewProductForm() {
                 <button
                   onClick={() => handleDeleteSpec(spec.id)}
                   type="button"
-                  className="transition-all  text-md py-2 px-3 rounded-md hover:bg-(--input)"
+                  className="transition-all   text-md  px-2.5 rounded-lg  dark:text-white  dark:hover:bg-(--background)/50 hover:bg-(--blue) hover:text-white"
                 >
-                  X
+                  <FontAwesomeIcon icon={faX} />
                 </button>
               </div>
             ))}
@@ -378,7 +404,7 @@ export default function NewProductForm() {
 
           {width > 766 && (
             <div className="flex justify-center items-center w-full p-2 ">
-              <button className=" text-sm bg-stone-900 font-medium text-stone-50 py-1.5  w-full rounded-md  cursor-pointer ">
+              <button className=" text-sm bg-(--deepBlue) hover:bg-(--deepBlue)/90 font-medium text-stone-50 py-1.5  w-full rounded-md  cursor-pointer ">
                 Add Product
               </button>
             </div>
@@ -402,7 +428,7 @@ export default function NewProductForm() {
             accept="image/*"
             onChange={handleImageChange}
             label="select image"
-            labelClass="p-1  text-md font-medium rounded-md active:scale-75 bg-stone-900 text-amber-50 px-2 text-center cursor-pointer"
+            labelClass="p-1  text-md font-medium rounded-md hover:bg-(--deepBlue)/90 active:scale-75 bg-(--deepBlue) text-white px-2 text-center cursor-pointer"
             hidden
           />
           {isLoading && (
@@ -415,7 +441,7 @@ export default function NewProductForm() {
 
         {width < 767 && (
           <div className="flex justify-center items-center w-full p-2 ">
-            <button className=" text-sm bg-stone-900 font-medium text-stone-50 py-1.5  w-full rounded-md  cursor-pointer ">
+            <button className=" text-sm bg-(--deepBlue) hover:bg-(--deepBlue)/90 font-medium text-stone-50 py-1.5  w-full rounded-md  cursor-pointer ">
               Add Product
             </button>
           </div>

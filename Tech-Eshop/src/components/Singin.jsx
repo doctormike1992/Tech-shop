@@ -97,17 +97,17 @@ export default function Singin() {
       <div className=" flex items-center justify-center g px-4">
         <form
           onSubmit={islogin ? handleSubmit : handleSignUp}
-          className="bg-white shadow-md rounded-lg p-8 h-full flex flex-col gap-10  md:w-120 "
+          className="bg-(--white) border border-(--ordersBorder) shadow-md rounded-lg p-8 h-full flex flex-col gap-10  md:w-120 "
         >
           {error && <p className="text-red-500">{error}</p>}
-          <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
+          <h2 className="text-2xl font-bold mb-6 text-(--primary) text-center">
             {islogin ? "Sing in" : "Register"}
           </h2>
           <div className="space-y-6 m-3">
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-(--primary)"
               >
                 Email address
               </label>
@@ -116,13 +116,13 @@ export default function Singin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
+                className=" block w-full text-(--primary) px-4 py-2 border border-(--ordersBorder) rounded  focus:border-(--deepBlue)"
               />
             </div>
             <div className="relative">
               <label
                 htmlFor="text"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-(--primary)"
               >
                 Password
               </label>
@@ -131,7 +131,7 @@ export default function Singin() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded focus:ring-indigo-500 focus:border-indigo-500"
+                className=" block w-full text-(--primary) px-4 py-2 border border-(--ordersBorder) rounded  focus:border-(--deepBlue)"
               />
               <button
                 type="button"
@@ -139,20 +139,23 @@ export default function Singin() {
                 onClick={() => setShowPass((prev) => !prev)}
               >
                 {showPass ? (
-                  <FontAwesomeIcon icon={faEye} />
+                  <FontAwesomeIcon className="text-(--primary)" icon={faEye} />
                 ) : (
-                  <FontAwesomeIcon icon={faEyeSlash} />
+                  <FontAwesomeIcon
+                    className="text-(--primary)"
+                    icon={faEyeSlash}
+                  />
                 )}
               </button>
             </div>
           </div>
           <button
             type="submit"
-            className=" w-full bg-(--primary) text-white py-2 rounded-lg hover:bg-stone-800 transition"
+            className=" w-full bg-(--deepBlue) text-white py-2 rounded-lg hover:bg-(--deepBlue)/90 cursor-pointer transition"
           >
             {islogin ? "Sing in" : "Create new Account"}
           </button>
-          <p className="text-sm text-center text-stone-600">
+          <p className="text-sm text-center text-(--secondText)">
             {islogin
               ? "Don’t have an account? "
               : "You already have an account? "}
@@ -160,7 +163,7 @@ export default function Singin() {
             <button
               onClick={() => setIsLogin((prev) => !prev)}
               type="button"
-              className="text-indigo-600 hover:underline cursor-pointer"
+              className="text-(--purple) hover:underline cursor-pointer"
             >
               {islogin ? "Register" : "Log in"}
             </button>

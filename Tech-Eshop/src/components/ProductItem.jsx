@@ -1,7 +1,7 @@
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import CartIcon from "../icons/cart.svg?react";
+import HeartIcon from "../icons/heart.svg?react";
+
 
 export default function ProductItem({
   item,
@@ -26,15 +26,16 @@ export default function ProductItem({
             e.stopPropagation();
             handleFavorites();
           }}
-          className="absolute top-2 right-2 py-1.5 px-2 bg-white/40 rounded-full cursor-pointer z-10"
+          className="absolute top-2 right-2 py-1.5 px-2 bg-(--purple)/50 rounded-full cursor-pointer z-10"
         >
-          <FontAwesomeIcon
-            icon={faHeart}
-            className={` ${inFavorites ? "text-(--blue)" : "text-(--blue)/20"}
-    
-    transition-all
-    active:scale-75
-    z-50`}
+          <HeartIcon
+            className={` ${
+              inFavorites ? "text-white fill-current" : "text-white  "
+            }
+            transition-all
+            w-5 h-5.5
+            active:scale-75
+            z-50`}
           />
         </button>
       )}
@@ -72,7 +73,7 @@ export default function ProductItem({
             <div className="flex gap-2 items-center">
               <p
                 className={`text-center  font-semibold ${
-                  item.sale ? "text-red-600" : 'text-(--primary)'
+                  item.sale ? "text-red-600" : "text-(--primary)"
                 }`}
               >
                 {item.finalPrice.toFixed(2)}
@@ -89,14 +90,14 @@ export default function ProductItem({
 
             <button
               hidden={!userLoggedIn}
-              className="bg-(--deepBlue) text-stone-50 text-sm font-medium px-3 py-2  cursor-pointer hover:bg-(--deepBlue)/90 rounded-lg"
+              className="bg-(--deepBlue) flex flex-row gap-0.5 text-stone-50 text-sm font-medium px-3 py-2  cursor-pointer hover:bg-(--deepBlue)/90 rounded-lg"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 handleAddToCart(item);
               }}
             >
-              <FontAwesomeIcon className="pr-2" icon={faCartShopping} />
+              <CartIcon className='w-4 h-4' />
               Add
             </button>
           </div>

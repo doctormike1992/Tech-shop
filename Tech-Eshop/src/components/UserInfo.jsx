@@ -11,16 +11,18 @@ export default function UserInfo({ handleToOrder, closeModal }) {
        gap-2 rounded-xl bg-(--white) justify-center"
       >
         <div className="flex flex-row items-center justify-between w-full p-5">
-          <h1 className="text-lg font-medium ">Check your Informations</h1>
+          <h1 className="text-lg text-(--primary) font-medium ">
+            Check your Informations
+          </h1>
           <button onClick={closeModal}>
-            <FontAwesomeIcon className="text-sm" icon={faX} />
+            <FontAwesomeIcon className="text-sm text-(--primary) cursor-pointer" icon={faX} />
           </button>
         </div>
 
         <UserForm />
         <div className="flex w-full itmes-center py-3 justify-center">
           <button
-            className="border bg-(--primary) rounded-md text-(--white) py-2 px-5 text-sm font-medium"
+            className=" hover:bg-(--deepBlue)/90 cursor-pointer bg-(--deepBlue) rounded-md text-white py-2 px-5 text-sm font-medium"
             type="submit"
             form="user-form"
             onClick={handleToOrder}

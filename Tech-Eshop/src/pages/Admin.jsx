@@ -8,9 +8,10 @@ export default function Admin() {
    
 
   // CSS CLASSES
-  const buttonClass = "text-sm font-medium py-1 px-2";
+  const buttonClass = "text-sm text-(--primary)  font-medium py-1 px-2";
 
-  const activeButton = "text-sm font-medium bg-stone-50 py-1 px-2 rounded-2xl";
+  const activeButton =
+    "text-sm text-(--primary) font-medium bg-(--white) dark:bg-(--background)/70 py-1 px-2 rounded-2xl";
 
   //COMONENT DISPLAY BASED ON BUTTON PRESSED
   let show;
@@ -34,11 +35,13 @@ export default function Admin() {
 
   return (
     <>
-      <main className="pt-10 w-full md:gap-5 gap-0.5 px-2 flex justify-center items-start  flex-col ">
+      <main className="pt-10 w-full md:gap-5 gap-0.5 px-2 flex justify-center items-start pb-15 flex-col ">
         <div className=" flex  flex-col w-full items-start justify-start md:gap-3">
-          <h1 className="font-semibold text-2xl">Admin Dashboard</h1>
+          <h1 className="font-semibold text-(--primary) text-2xl">
+            Admin Dashboard
+          </h1>
           <div
-            className="bg-[#ececf0]
+            className="bg-(--secondText)/10
            flex gap-0.5 px-1.5 py-1 rounded-2xl"
           >
             <button
@@ -58,7 +61,9 @@ export default function Admin() {
           </div>
         </div>
         <div
-          className={`${buttonClick === "Products" ? "xl:w-[80%]" : 'w-full'} pr-1`}
+          className={`${
+            buttonClick === "Products" ? "xl:w-[80%]" : "w-full"
+          } pr-1`}
         >
           {show}
         </div>

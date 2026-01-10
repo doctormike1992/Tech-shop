@@ -1,9 +1,11 @@
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import CartIcon from "../icons/cart.svg?react";
+import AdminIcon from "../icons/admin.svg?react";
+import HeartIcon from "../icons/heart.svg?react";
+import UserIcon from "../icons/users.svg?react";
+import LogoutIcon from "../icons/logouts.svg?react";
+import LoginIcon from "../icons/logins.svg?react";
 import Search from "./Search";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
-import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "./Modal";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -12,10 +14,10 @@ import Singin from "./Singin";
 import { getAuth, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../store/userSclice";
-// import { isAction } from "@reduxjs/toolkit";
 
 export default function Header() {
   const modal = useRef();
+  const [darkIcon, setDarkIcon] = useState('/sun.svg');
   const modalContainerRef = useRef(null);
   const searchContainerRef = useRef();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
@@ -38,9 +40,16 @@ export default function Header() {
     setCartQuantity(cartTotalQuantity);
   }, [cart]);
 
+  //TOGGLE THE DARK MODE IN THE SITE AND THE ICONS FOR IT
   function toggleDark() {
     const html = document.documentElement;
     html.classList.toggle("dark");
+    if (html.classList.contains("dark")) {
+      setDarkIcon('/moon.svg');
+    } else {
+      setDarkIcon('/sun.svg');
+      
+    }
   }
 
   //LOGOUT
@@ -118,7 +127,7 @@ export default function Header() {
                   onModal={`w-full flex flex-row transition-transform transition-all duration-300 ease-in-out ${
                     isVisible ? "translate-y-0.5" : "translate-y-10"
                   } `}
-                  searchBarModal="bg-stone-50   h-full w-full text-2xl outline-0 py-1 px-5 text-nowrap pr-2  md:w-full relative rounded-lg border-2 border-stone-600"
+                  searchBarModal="bg-stone-50   h-full w-full text-2xl outline-0 py-1 px-5 text-nowrap pr-9  md:w-full relative rounded-lg border-2 border-stone-600"
                   searchButtonModal=" hidden"
                 />
               </div>
@@ -131,7 +140,7 @@ export default function Header() {
 
       <nav className="flex justify-start text-md font-medium  items-center  w-full">
         <div
-          className={`w-full md:gap-10 flex text-stone-900 justify-start ${
+          className={`w-full md:gap-10 flex text-stone-900 items-center justify-start ${
             userLogState ? "xl:justify-start " : "justify-start"
           }`}
         >
@@ -140,11 +149,11 @@ export default function Header() {
               {({ isActive }) => (
                 <li
                   title="Administrator"
-                  className={`transition-all cursor-pointer dark:hover:text-white hover:bg-(--blue) text-(--primary) hover:text-(--white) py-1 px-2 rounded-lg  ${
+                  className={`transition-all cursor-pointer dark:hover:text-white hover:bg-(--blue) text-(--primary) hover:text-(--white) py-1 px-2 rounded-md  ${
                     isActive ? "text-white" : "text-(--primary)"
                   } `}
                 >
-                  admin
+                  <AdminIcon className="w-5 h-5" />
                 </li>
               )}
             </NavLink>
@@ -155,14 +164,14 @@ export default function Header() {
               <NavLink to="/favorites">
                 {({ isActive }) => (
                   <li
-                    className={`transition-all cursor-pointer dark:hover:text-white relative hover:bg-(--blue) text-(--primary) hover:text-(--white)  py-1 px-2 rounded-lg ${
+                    className={`transition-all cursor-pointer dark:hover:text-white relative hover:bg-(--blue) text-(--primary) hover:text-(--white)  py-1 px-2 rounded-md ${
                       isActive ? "text-white" : "text-(--primary)"
                     } `}
                     title="Favorites"
                   >
-                    <FontAwesomeIcon icon={faHeart} />
+                    <HeartIcon className="w-5 h-5 " />
                     {favorites.length !== 0 && (
-                      <span className="py-0.5 px-1 w-6 text-center border-2 border-stone-50  rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
+                      <span className="py-0.5 px-1 min-w-6 text-center border-2 border-stone-50  rounded-lg bg-red-600 text-white  font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
                         {favorites.length}
                       </span>
                     )}
@@ -175,16 +184,16 @@ export default function Header() {
                   <li
                     className={`
                   transition-all cursor-pointer
-                  py-1 px-2 rounded-lg relative
+                  py-1 px-2 rounded-md relative text-(--primary)
                   hover:bg-(--blue) hover:text-(--white) dark:hover:text-white
                   ${isActive ? "text-white" : "text-(--primary)"}
                 `}
                     title="Cart"
                   >
-                    <FontAwesomeIcon icon={faBasketShopping} />
+                    <CartIcon className="w-5 h-5 " />
 
                     {cart.length !== 0 && (
-                      <span className="py-0.5 px-1 w-6 text-center border-2 border-stone-50 rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
+                      <span className="py-0.5 px-1 min-w-6 text-center border-2 border-stone-50 rounded-lg bg-red-600 text-white font-semibold text-[12px] absolute top-[-25%] right-[-27%]">
                         {cartQuantity}
                       </span>
                     )}
@@ -195,34 +204,41 @@ export default function Header() {
               <NavLink to="/My-Account">
                 {({ isActive }) => (
                   <li
-                    className={`transition-all cursor-pointer text-(--primary) hover:bg-(--blue) hover:text-(--white) dark:hover:text-white py-1 px-2 rounded-lg hover:rounded-lg"
-                  title="My account   ${
-                    isActive ? "text-white" : "text-(--primary)"
-                  }`}
+                    className={`transition-all cursor-pointer  hover:bg-(--blue) hover:text-(--white) dark:hover:text-white py-1 px-2 rounded-md  text-white"
+                    ${isActive ? "text-white" : "text-(--primary)"}`}
+                    title="My account"
                   >
-                    <FontAwesomeIcon icon={faUser} />
+                    <UserIcon className="w-5 h-5 " />
                   </li>
                 )}
               </NavLink>
 
               <button
-                className="transition-all cursor-pointer dark:hover:text-white text-(--primary) hover:bg-(--blue) hover:text-(--white) py-1 px-2 rounded-lg "
+                className="transition-all cursor-pointer dark:hover:text-white text-(--primary) hover:bg-(--blue) hover:text-(--white) py-1 px-2 rounded-md "
                 title="log out"
                 onClick={handleLogout}
               >
-                <FontAwesomeIcon icon={faRightToBracket} />
+                <LogoutIcon className="w-5 h-5  " />
               </button>
             </>
           ) : (
             <button
-              className="transition-all dark:hover:text-white cursor-pointer text-(--primary) hover:bg-(--blue) hover:text-(--white) py-1 px-2  rounded-lg "
+              className="transition-all dark:hover:text-white cursor-pointer text-(--primary) hover:bg-(--blue) hover:text-(--white) py-1 px-2  rounded-md "
               onClick={() => modal.current.open()}
             >
-              <FontAwesomeIcon title="Log In" icon={faRightToBracket} />
+              <LoginIcon className="w-5 h-5 " />
             </button>
           )}
         </div>
-        <button onClick={toggleDark}>dark</button>
+        <button
+          className={
+            " border border-(--ordersBorder) cursor-pointer w-fit bg-white px-1 py-1 rounded-full"
+          }
+          onClick={toggleDark}
+          title="Dark mode"
+        >
+          <img src={darkIcon} className="w-6 " />
+        </button>
       </nav>
       <Modal
         ref={modal}

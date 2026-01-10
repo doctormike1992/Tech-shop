@@ -15,9 +15,10 @@ import {
 import UserInfo from "../components/UserInfo";
 import dayjs from "dayjs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import CartIcon from "../icons/cart.svg?react";
+
 
 export default function Cart() {
   const [subTotal, setSubTotal] = useState(0);
@@ -123,10 +124,7 @@ export default function Cart() {
           <ul className=" w-full flex gap-5 flex-col items-center  justify-start text-center">
             {cartEmpty ? (
               <div className="flex flex-col w-full gap-2 items-center justify-center">
-                <FontAwesomeIcon
-                  className="text-white drop-shadow-[0_0_1px_rgba(0,0,0,2)] text-8xl"
-                  icon={faBasketShopping}
-                />
+                <CartIcon className="w-20 h-20 text-(--primary)" />
                 <h1 className="text-xl text-(--primary) font-semibold">
                   Your cart is empty
                 </h1>
