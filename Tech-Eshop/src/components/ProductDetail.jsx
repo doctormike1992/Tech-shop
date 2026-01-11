@@ -14,6 +14,7 @@ import { collection, doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
 import { db, auth } from "../firebase/firebase";
 import { guestActions } from "../store/guestSlice";
 import { useEffect, useState } from "react";
+import ProductItem from "./ProductItem";
 
 export default function ProductDetail() {
   const { productId } = useParams();
@@ -21,6 +22,7 @@ export default function ProductDetail() {
   const [desc, setDesc] = useState(true);
   const products = useSelector((state) => state.products.products);
   const guestFavorites = useSelector((state) => state.guest.favorites);
+  const userLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
 
   //CHECKS IF THE PRODUCT IS ALREADY IN FAVORITES OR NOT
@@ -92,6 +94,9 @@ export default function ProductDetail() {
     }
   }
 
+  //ARRAY FOR RELATED PRODUCTS BASED ON PRODUCT TYPE
+  const relatedProducts = products.filter(item => (item.subCategory === subCategory && item.id !== productId));
+
   return (
     <section className="flex flex-col w-full max-w-3/5 items-start justify-start px-3 py-5">
       <Link className="pb-10" to={"/"}>
@@ -149,29 +154,31 @@ export default function ProductDetail() {
             )}
           </div>
 
-          <hr className="w-full text-(--secondary)" />
+          <hr className="w-full text-(--ordersBorder)" />
 
-          <div className="w-full gap-2 flex flex-col">
-            <button
-              className="flex flex-row items-center justify-center gap-1 bg-(--deepBlue) rounded-lg py-2 text-white text-sm font-medium hover:bg-(--deepBlue)/90 transition-all cursor-pointer"
-              onClick={handleAddToCart}
-            >
-              <FontAwesomeIcon icon={faCartShopping} />
-              Add to Cart
-            </button>
-            <button
-              className={`flex flex-row items-center justify-center gap-1  rounded-lg py-2 text-(--primary) border border-(--ordersBorder)  text-sm font-medium hover:bg-(--blue) hover:text-(--white) dark:hover:text-white  transition-all cursor-pointer ${
-                isFavorite &&
-                "bg-(--deepBlue) text-(--white) dark:text-white hover:bg-(--deepBlue)/90"
-              }`}
-              onClick={handleFavorites}
-            >
-              <FontAwesomeIcon icon={faHeart} />
-              {isFavorite ? "Remove from" : "Add to"} Favorites
-            </button>
-          </div>
+          {userLoggedIn && (
+            <div className="w-full gap-2 flex flex-col">
+              <button
+                className="flex flex-row items-center justify-center gap-1 bg-(--deepBlue) rounded-lg py-2 text-white text-sm font-medium hover:bg-(--deepBlue)/90 transition-all cursor-pointer"
+                onClick={handleAddToCart}
+              >
+                <FontAwesomeIcon icon={faCartShopping} />
+                Add to Cart
+              </button>
+              <button
+                className={`flex flex-row items-center justify-center gap-1  rounded-lg py-2 text-(--primary) border border-(--ordersBorder)  text-sm font-medium hover:bg-(--blue) hover:text-(--white) dark:hover:text-white  transition-all cursor-pointer ${
+                  isFavorite &&
+                  "bg-(--deepBlue) text-(--white) dark:text-white hover:bg-(--deepBlue)/90"
+                }`}
+                onClick={handleFavorites}
+              >
+                <FontAwesomeIcon icon={faHeart} />
+                {isFavorite ? "Remove from" : "Add to"} Favorites
+              </button>
+            </div>
+          )}
 
-          <hr className="w-full text-(--secondary)" />
+          <hr className="w-full text-(--ordersBorder)" />
 
           <div className="flex flex-col gap-5 justify-start">
             <div className="flex flex-row gap-3 items-center justify-start">
@@ -216,10 +223,10 @@ export default function ProductDetail() {
         </div>
       </main>
 
-      <div className="flex flex-col border border-(--secondary) bg-(--white) rounded-xl w-full p-5">
+      <div className="flex flex-col border border-(--ordersBorder) bg-(--white) rounded-xl w-full p-5">
         <div className="bg-(--secondary) dark:bg-(--background) text-white flex flex-row p-1.5 rounded-2xl">
           <button
-            className={`w-full py-0.5 font-medium rounded-xl ${
+            className={`w-full py-0.5 text-(--primary) font-medium rounded-xl ${
               desc && "bg-(--white)"
             }`}
             onClick={() => setDesc(true)}
@@ -227,7 +234,7 @@ export default function ProductDetail() {
             Description
           </button>
           <button
-            className={`w-full py-0.5 font-medium rounded-xl ${
+            className={`w-full py-0.5 text-(--primary) font-medium rounded-xl ${
               !desc && "bg-(--white)"
             } `}
             onClick={() => setDesc(false)}
@@ -279,6 +286,22 @@ export default function ProductDetail() {
               </div>
             </div>
           )}
+        </div>
+      </div>
+
+      <div className="flex flex-col items-start  py-10 gap-2 px-3 w-full">
+        <hr className="w-full  text-(--ordersBorder)" />
+        <h1 className="text-xl text-(--primary) font-medium">
+          Related Products
+        </h1>
+        <div className="flex flex-row gap-4 flex-wrap w-full">
+          {relatedProducts.map((item) => (
+            <li key={item.id} className="relative">
+              <Link to={`/${item.id}`}>
+                <ProductItem item={item} hideHeart />
+              </Link>
+            </li>
+          ))}
         </div>
       </div>
     </section>

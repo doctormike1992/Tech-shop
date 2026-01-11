@@ -28,7 +28,7 @@ export default function Footer() {
               Your trusted destination <br /> for the latest tech products
               <br /> and accessories. Quality guaranteed.
             </p>
-            <div className="flex flex-row gap-1 text-xl">
+            <div className="flex flex-row items-center gap-1 text-xl">
               <FontAwesomeIcon
                 className="cursor-pointer text-blue-700 transition-all hover:scale-120"
                 icon={faFacebook}

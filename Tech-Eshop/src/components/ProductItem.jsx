@@ -9,6 +9,7 @@ export default function ProductItem({
   inFavorites,
   userLoggedIn,
   handleAddToCart,
+  hideHeart
 }) {
   const uid = useSelector((state) => state.user.userUID);
 
@@ -19,7 +20,7 @@ export default function ProductItem({
           -{item.percentage}% OFF
         </div>
       )}
-      {uid && (
+      {uid && !hideHeart && (
         <button
           onClick={(e) => {
             e.preventDefault();
