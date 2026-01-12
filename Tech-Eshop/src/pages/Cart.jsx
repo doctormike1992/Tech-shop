@@ -104,7 +104,7 @@ export default function Cart() {
     <>
       <section
         className={`flex flex-col   ${
-          cartEmpty ? "w-full " : "w-full max-w-3/5"
+          cartEmpty ? "w-full " : "w-full xl:max-w-3/5"
         }  items-center justify-center px-3`}
       >
         <div className="w-full flex flex-row items-center justify-between py-15">
@@ -175,21 +175,27 @@ export default function Cart() {
                       </div>
 
                       <div className="flex flex-row items-end justify-between">
-                        <div className="w-full flex pt-2 flex-row gap-5 items-center">
+                        <div className="w-full flex pt-2 flex-row gap-2 lg:gap-5 items-center">
                           <button
                             onClick={() => minusCartQuantity(item)}
-                            className="border cursor-pointer hover:bg-(--blue) text-(--primary) hover:text-white border-(--ordersBorder) px-1 py-0.5 rounded-lg"
+                            className="border cursor-pointer hover:bg-(--blue) text-(--primary) hover:text-white border-(--ordersBorder) px-0.5 md:px-1 md:py-0.5 rounded-lg"
                           >
-                            <FontAwesomeIcon icon={faMinus} />
+                            <FontAwesomeIcon
+                              
+                              icon={faMinus}
+                            />
                           </button>
                           <span className="text-(--primary)">
                             {item.quantity}
                           </span>
                           <button
                             onClick={() => plusCartQuantity(item)}
-                            className="border cursor-pointer hover:bg-(--blue) text-(--primary) hover:text-white border-(--ordersBorder) px-1 py-0.5 rounded-lg"
+                            className="border cursor-pointer hover:bg-(--blue) text-(--primary) hover:text-white border-(--ordersBorder) px-0.5 md:px-1 md:py-0.5 rounded-lg"
                           >
-                            <FontAwesomeIcon icon={faPlus} />
+                            <FontAwesomeIcon
+                              
+                              icon={faPlus}
+                            />
                           </button>
                         </div>
 

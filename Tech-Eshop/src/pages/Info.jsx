@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import UserForm from "../components/userForm";
+import UserForm from "../components/UserForm";
 import {  useState } from "react";
 import UserIcon from "../icons/users.svg?react";
 import BoxIcon from "../icons/box.svg?react";
@@ -17,16 +17,16 @@ console.log(orders)
 
   return (
     <>
-      <section className="flex flex-col justify-start pb-5 px-3 items-start w-full max-w-3/5">
+      <section className="flex flex-col justify-start pb-5 px-3 items-start w-full xl:max-w-3/5">
         <h1 className="text-2xl py-15 text-(--primary) font-medium">
           My account
         </h1>
 
-        <div className="flex flex-row items-start gap-5 justify-start w-full">
+        <div className="flex flex-col lg:flex-row items-start gap-5 justify-start w-full">
           <div className="w-full border border-(--ordersBorder) bg-(--white) rounded-lg">
             <div className="flex flex-row justify-between items-center p-5">
-              <div className="flex flex-row text-(--primary) items-center gap-1 text-lg font-medium">
-                <UserIcon className='w-5 h-5' />
+              <div className="flex flex-row text-(--primary) items-center gap-1 md:text-lg font-medium">
+                <UserIcon className="w-5 h-5" />
                 <h1>Profile Information</h1>
               </div>
 
@@ -65,14 +65,14 @@ console.log(orders)
           </div>
 
           <div className="flex flex-col border bg-(--white)  border-(--ordersBorder) rounded-lg w-full">
-            <div className="flex flex-row items-center text-(--primary) gap-2 text-lg font-medium p-4">
-              <BoxIcon className='w-5 h-5'/>
+            <div className="flex flex-row items-center text-(--primary) gap-2 md:text-lg font-medium p-4">
+              <BoxIcon className="w-5 h-5" />
               <h2>Order History</h2>
             </div>
 
             <section className="flex flex-col gap-7 p-4">
               {orders.length === 0 && (
-                <h1 className="w-full text-center text-(--primary) text-lg font-medium">
+                <h1 className="w-full text-center text-(--primary) md:text-lg font-medium">
                   No Orders Have Been Made
                 </h1>
               )}
@@ -84,11 +84,11 @@ console.log(orders)
                   <div className="flex flex-row items-center pb-2 justify-between">
                     <p className="font-medium text-(--primary)">
                       Order{" "}
-                      <span className="text-(--secondText) font-normal pl-1">
+                      <span className="text-(--secondText) text-xs md:text-md font-normal md:pl-1">
                         #{item.id}
                       </span>
                     </p>
-                    <p className="font-medium text-sm text-(--secondText)">
+                    <p className="font-medium text-xs md:text-sm text-(--secondText)">
                       {item.time}
                     </p>
                   </div>
@@ -103,7 +103,7 @@ console.log(orders)
                         className="flex flex-col items-center py-3"
                       >
                         <div className="flex flex-row w-full items-center justify-between">
-                          <p className="font-medium text-(--ordersName) dark:text-(--secondText) text-sm">
+                          <p className="font-medium text-(--ordersName) dark:text-(--secondText) text-xs md:text-sm">
                             {order.name} <span className="font-normal">x</span>
                             {order.quantity}
                           </p>

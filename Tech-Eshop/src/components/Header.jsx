@@ -108,8 +108,8 @@ export default function Header() {
 
   return (
     <header
-      className="flex sticky top-0 z-99 backdrop-blur-md   bg-(--background)/50 flex-col md:flex-row w-full items-center justify-start  lg:py-4
-    py-3 md:px-3 px-1 text-stone-50 active:text-stone-200  md:gap-8  border-b border-b-(--primary)/10 gap-2  "
+      className="flex sticky top-0 z-99 backdrop-blur-md  bg-(--background)/50 flex-col md:flex-row w-full items-center justify-start  lg:py-4
+    py-3 md:px-3 px-1 text-stone-50 active:text-stone-200  md:gap-6  border-b border-b-(--primary)/10 gap-2  "
     >
       <div className="flex flex-row gap-6 text-nowrap items-center">
         <h2 className=" text-(--primary) text-xl">
@@ -118,7 +118,7 @@ export default function Header() {
         {isMobile ? (
           <div>
             <div ref={searchContainerRef}>
-              <FontAwesomeIcon icon={faSearch} onClick={openModal} />
+              <FontAwesomeIcon className="text-(--secondText)" icon={faSearch} onClick={openModal} />
             </div>
 
             <Modal ref={modal} modalClass="w-full">
@@ -140,7 +140,7 @@ export default function Header() {
 
       <nav className="flex justify-start text-md font-medium  items-center  w-full">
         <div
-          className={`w-full md:gap-10 flex text-stone-900 items-center justify-start ${
+          className={`w-full gap-5 md:gap-6 lg:gap-8 xl:gap-10 flex text-stone-900 items-center justify-start ${
             userLogState ? "xl:justify-start " : "justify-start"
           }`}
         >

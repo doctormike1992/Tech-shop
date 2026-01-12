@@ -30,8 +30,8 @@ export default function Orders() {
     <>
       <section
         className={`flex flex-col w-full ${
-          orderInProgress.length !== 0 && "max-w-3/5"
-        } items-start justify-start px-3 pb-20`}
+          orderInProgress.length !== 0 && "md:max-w-3/5"
+        } items-start justify-start px-0.5 md:px-3 pb-20`}
       >
         <h3 className="text-2xl font-semibold text-(--primary) py-15">
           Ongoing Orders
@@ -54,16 +54,16 @@ export default function Orders() {
           {orderInProgress.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col w-full bg-(--white) border gap-2 p-4 border-(--ordersBorder) rounded-lg"
+              className="flex flex-col w-full bg-(--white) border md:gap-2 p-4 border-(--ordersBorder) rounded-lg"
             >
-              <div className="flex flex-row items-center pb-10 pt-3 justify-between">
-                <p className="font-medium text-xl text-(--primary) flex flex-col">
+              <div className="flex flex-row items-center pb-5 md:pb-10 md:pt-3 justify-between">
+                <p className="font-medium text-lg md:text-xl text-(--primary) flex flex-col">
                   Order{" "}
-                  <span className="text-(--secondText) font-medium text-sm pl-1">
+                  <span className="text-(--secondText) font-medium text-xs md:text-sm md:pl-1">
                     #{item.id}
                   </span>
                 </p>
-                <p className="font- text-sm text-(--secondText)">
+                <p className=" text-xs md:text-sm text-(--secondText)">
                   Placed on: <span className="font-medium">{item.time}</span>
                 </p>
               </div>
@@ -89,13 +89,13 @@ export default function Orders() {
                           <p className="font-medium text-(--primary) text-sm">
                             {order.name}
                           </p>
-                          <p className="text-sm text-(--secondText) font-medium">
+                          <p className="text-xs md:text-sm text-(--secondText) font-medium">
                             Quantity: {order.quantity}
                           </p>
                         </div>
                       </div>
 
-                      <div className="flex text-(--primary) flex-row gap-3">
+                      <div className="flex text-sm md:text-md text-(--primary) flex-row gap-3">
                         <p>
                           {(order.finalPrice * order.quantity).toFixed(2)}
                           <sup>€</sup>
@@ -117,7 +117,7 @@ export default function Orders() {
                           )}
                         </p>
                         <p
-                          className={`text-sm font-medium border border-(--ordersBorder) text-(--primary) rounded-lg py-0.5 px-2 ${
+                          className={`text-xs md:text-sm font-medium border border-(--ordersBorder) text-(--primary) rounded-lg py-0.5 px-2 ${
                             status === "processing" &&
                             "bg-(--purple)/30 dark:text-white"
                           } ${
@@ -138,7 +138,7 @@ export default function Orders() {
                         ></div>
                       </div>
 
-                      <div className="flex flex-row items-center text-(--primary) justify-between text-sm">
+                      <div className="flex flex-row items-center text-(--primary) justify-between md:text-sm text-xs">
                         <p>Placed</p>
                         <p>Processing</p>
                         <p>Shipped</p>
@@ -149,7 +149,7 @@ export default function Orders() {
                 );
               })}
               <hr className="text-(--ordersBorder)" />
-              <div className="flex flex-row justify-between pt-6 text-(--primary) items-center font-medium">
+              <div className="flex text-sm md:text-md flex-row justify-between pt-6 text-(--primary) items-center font-medium">
                 <p>
                   Total Amount{" "}
                   <span className="text-xs text-(--secondText) font-normal">

@@ -134,7 +134,7 @@ export default function Products() {
 
   return (
     <>
-      <section className="flex px-3 flex-col">
+      <section className="flex px-3 flex-col pb-5">
         <Modal ref={dialog}>
           <div className="h-full" ref={modalContent}>
             <SideBar
@@ -156,7 +156,7 @@ export default function Products() {
         </div>
 
         <div className="w-full  flex flex-col ">
-          <ul className="flex w-full flex-row items-center justify-start flex-wrap gap-6  py-10  pl-2 ">
+          <ul className="flex w-full flex-row items-center justify-start flex-wrap gap-6  md:py-10  lg:pl-2 ">
             {filteredProducts.length === 0 ? (
               <div
                 className="w-12 h-12 border-4 border-stone-900 border-t-transparent

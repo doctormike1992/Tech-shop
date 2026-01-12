@@ -58,7 +58,7 @@ export default function ProductManagment() {
             key={item}
           >
             <div className="flex flex-row pb-2 justify-center text-(--primary) items-center gap-2">
-              <BoxIcon className='w-5 h-5' />
+              <BoxIcon className="w-5 h-5" />
               <h1 className="text-xl font-medium">{item} </h1>
               <p className=" inline-flex items-center justify-center py-0.5 text-xs font-medium bg-(--purple) text-white px-2 rounded-md">
                 {productsNum.length}
@@ -70,7 +70,7 @@ export default function ProductManagment() {
                 <Fragment key={product.id}>
                   {product.category === item && (
                     <>
-                      <div className="flex flex-col  bg-(--white) border min-w-110 w-130 max-w-130 max-h-90 border-(--ordersBorder) p-2  rounded-lg ">
+                      <div className="flex flex-col  bg-(--white) w-full border md:min-w-110 md:w-130 max-w-130 max-h-90 border-(--ordersBorder) p-2  rounded-lg ">
                         <div className="flex flex-row items-start  justify-start h-full">
                           <div className="h-full flex items-start aspect-square relative justify-start ">
                             {product.sale && (
@@ -80,24 +80,24 @@ export default function ProductManagment() {
                             )}
                             <img
                               src={product.image}
-                              className="w-30 h-30  object-cover rounded-lg shrink-0"
+                              className="w-25 h-25 md:w-30 md:h-30  object-cover rounded-lg shrink-0"
                             />
                           </div>
-                          <div className="flex flex-col px-4 gap-5 w-full justify-center min-w-0">
+                          <div className="flex flex-col px-1.5 md:px-4 gap-5 w-full justify-center min-w-0">
                             <div className="flex flex-col justify-start gap-1  items-start">
-                              <h1 className="text-lg text-(--primary) font-medium">
+                              <h1 className="text-md md:text-lg text-(--primary) font-medium">
                                 {product.name}
                               </h1>
-                              <p className="text-sm font-medium text-(--secondText)  max-w-90 max-h-9  line-clamp-2">
+                              <p className="text-xs md:text-sm font-medium text-(--secondText)  max-w-90 max-h-9   line-clamp-2 ">
                                 {product.summary}
                               </p>
                             </div>
-                            <div className="flex flex-row text-(--primary) items-center justify-between">
+                            <div className="flex  flex-row text-(--primary) items-center  justify-between">
                               <p className="text-lg font-medium">
                                 {product.finalPrice.toFixed(2)}
                                 <sup>€</sup>
                               </p>
-                              <p className="text-sm  text-(--secondText)">
+                              <p className="text-xs md:text-sm  text-(--secondText)">
                                 Days tp Deliver: {product.deliveryTime}
                               </p>
                             </div>
@@ -105,7 +105,7 @@ export default function ProductManagment() {
                         </div>
                         <div className="flex flex-row justify-around pt-4  items-center">
                           <button
-                            className="flex gap-1 transition-all text-(--primary) hover:text-white hover:bg-(--blue) items-center border dark:hover:bg-(--background)/40 font-medium border-(--ordersBorder) rounded-md px-22 py-0.5 cursor-pointer"
+                            className="flex gap-1 transition-all text-(--primary) hover:text-white hover:bg-(--blue) items-center border dark:hover:bg-(--background)/40 font-medium border-(--ordersBorder) text-sm md:text-md rounded-md px-10 md:px-22 py-0.5 cursor-pointer bg-(--secondary) dark:bg-(--white)"
                             onClick={() => {
                               setSelectedProduct(product);
                               modal.current.open();
@@ -118,7 +118,7 @@ export default function ProductManagment() {
                             Edit
                           </button>
                           <button
-                            className="flex gap-1 items-center border border-red-600 font-medium  rounded-md px-22 py-0.5 z-10 text-stone-50 bg-red-600 hover:bg-red-600/80 cursor-pointer"
+                            className="flex gap-1 items-center border border-red-600 font-medium  rounded-md px-10 md:px-22 text-sm md:text-md py-0.5 z-10 text-stone-50 bg-red-600 hover:bg-red-600/80 cursor-pointer"
                             onClick={() => {
                               handleDeleteProduct(product);
                             }}

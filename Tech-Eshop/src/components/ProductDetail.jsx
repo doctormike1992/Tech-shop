@@ -15,6 +15,7 @@ import { db, auth } from "../firebase/firebase";
 import { guestActions } from "../store/guestSlice";
 import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
+import { filterActions } from "../store/filterSlice";
 
 export default function ProductDetail() {
   const { productId } = useParams();
@@ -98,9 +99,12 @@ export default function ProductDetail() {
   const relatedProducts = products.filter(item => (item.subCategory === subCategory && item.id !== productId));
 
   return (
-    <section className="flex flex-col w-full max-w-3/5 items-start justify-start px-3 py-5">
+    <section className="flex flex-col w-full xl:max-w-3/5 items-start justify-start px-3 py-5">
       <Link className="pb-10" to={"/"}>
-        <button className="flex flex-row items-center gap-2 hover:bg-(--blue) hover:text-white text-(--primary) pr-4 pl-1 py-2 rounded-md transition-all font-medium text-sm">
+        <button
+          className="flex flex-row items-center gap-2 hover:bg-(--blue) hover:text-white text-(--primary) pr-4 pl-1 py-2 rounded-md transition-all font-medium text-sm"
+          onClick={() => dispatch(filterActions.clear())}
+        >
           <FontAwesomeIcon icon={faArrowLeft} />
           Back
         </button>
@@ -111,7 +115,7 @@ export default function ProductDetail() {
           <img src={image} className="rounded-lg object-cover h-full w-full" />
         </div>
 
-        <div className="flex flex-col gap-5 w-full items-start grow">
+        <div className="flex flex-col gap-2 md:gap-5 w-full items-start grow">
           <div className="flex flex-row gap-3 items-center justify-start">
             <p className="text-white  bg-(--deepBlue) px-2 py-0.5 text-xs font-medium rounded-lg">
               {category}
@@ -226,7 +230,7 @@ export default function ProductDetail() {
       <div className="flex flex-col border border-(--ordersBorder) bg-(--white) rounded-xl w-full p-5">
         <div className="bg-(--secondary) dark:bg-(--background) text-white flex flex-row p-1.5 rounded-2xl">
           <button
-            className={`w-full py-0.5 text-(--primary) font-medium rounded-xl ${
+            className={`w-full py-0.5 text-(--primary) text-sm md:text-md font-medium rounded-xl ${
               desc && "bg-(--white)"
             }`}
             onClick={() => setDesc(true)}
@@ -234,7 +238,7 @@ export default function ProductDetail() {
             Description
           </button>
           <button
-            className={`w-full py-0.5 text-(--primary) font-medium rounded-xl ${
+            className={`w-full py-0.5 text-(--primary) text-sm md:text-md font-medium rounded-xl ${
               !desc && "bg-(--white)"
             } `}
             onClick={() => setDesc(false)}
@@ -245,7 +249,7 @@ export default function ProductDetail() {
         <div className="w-full flex flex-col items-start py-5 justify-start">
           {desc ? (
             <>
-              <h1 className="text-lg text-(--primary) font-medium pb-3">
+              <h1 className="md:text-lg text-(--primary) font-medium pb-3">
                 Product Description
               </h1>
               <p className=" tracking-wide  text-(--secondText) wrap-break-word">
@@ -289,7 +293,7 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      <div className="flex flex-col items-start  py-10 gap-2 px-3 w-full">
+      <div className="flex flex-col items-start  py-10 gap-2 md:px-3 w-full">
         <hr className="w-full  text-(--ordersBorder)" />
         <h1 className="text-xl text-(--primary) font-medium">
           Related Products

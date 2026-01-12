@@ -93,7 +93,7 @@ export default function EditProduct({ product, modal }) {
 
   //DISABLE FORM UNTIL ITS SUBMITED
   let formClass =
-    "flex items-center justify-center  flex-col md:gap-2 gap-0.5 bg-(--white) h-fit w-[40%] border rounded-md border-(--ordersBorder)";
+    "flex items-center justify-center  flex-col md:gap-2 gap-0.5 bg-(--white) h-fit w-xs  md:w-md lg:w-4xl xl:w-4xl border rounded-md border-(--ordersBorder)";
   if (isLoading) {
     formClass += "pointer-events-none";
   }
@@ -113,7 +113,7 @@ export default function EditProduct({ product, modal }) {
 
   return (
     <form onSubmit={handleSave} className={formClass}>
-      <div className="flex flex-row">
+      <div className="flex flex-col lg:flex-row">
         <div className="flex flex-col w-full justify-center h-full">
           <div className="flex flex-col  items-start  p-2 ">
             <label
@@ -462,12 +462,12 @@ export default function EditProduct({ product, modal }) {
       <div className="flex justify-center gap-2 pb-2 flex-row w-full">
         <button
           type="button"
-          className="font-medium px-20 text-center border py-1.5 border-(--ordersBorder) rounded-md cursor-pointer hover:bg-(--blue) hover:text-white transition-colors dark:hover:bg-(--background)/40 text-(--primary)"
+          className="font-medium px-12 md:px-20 text-center border py-1.5 border-(--ordersBorder) rounded-md cursor-pointer hover:bg-(--blue) hover:text-white transition-colors dark:hover:bg-(--background)/40 text-(--primary)"
           onClick={closeModal}
         >
           Cancel
         </button>
-        <button className="font-medium px-20 text-center py-1.5  text-white bg-(--deepBlue) border-stone-400 rounded-md cursor-pointer hover:bg-(--deepBlue)/90">
+        <button className="font-medium px-12 md:px-20 text-center py-1.5  text-white bg-(--deepBlue) border-stone-400 rounded-md cursor-pointer hover:bg-(--deepBlue)/90">
           save
         </button>
       </div>

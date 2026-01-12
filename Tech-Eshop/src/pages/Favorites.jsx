@@ -60,7 +60,7 @@ export default function Favorites() {
               </span>
             )}
           </div>
-          <ul className="flex w-full flex-row items-center justify-start flex-wrap gap-6  py-10  pl-2 ">
+          <ul className="flex w-full flex-row items-center justify-start flex-wrap gap-6 pb-10 md:pt-10  pl-2 ">
             {guestFavorites.length === 0 ? (
               <div className="flex flex-col w-full gap-2 items-center justify-center">
                 <HeartIcon className='w-20 h-20 text-(--primary)'
