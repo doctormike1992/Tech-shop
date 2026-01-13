@@ -56,12 +56,10 @@ export default function NewProductForm() {
     setNoImage(false);
 
     try {
-      // Upload image to Firebase Storage
       const storageRef = ref(storage, `product-images/${selectedFile.name}`);
       await uploadBytes(storageRef, selectedFile);
       const downloadURL = await getDownloadURL(storageRef);
 
-      // Prepare product data
       const formData = new FormData(event.target);
       const data = Object.fromEntries(formData.entries());
       const originalPrice = Number(data.price);
@@ -83,10 +81,8 @@ export default function NewProductForm() {
         percentage: ischeck ? data.percentage : 0,
       };
 
-      // Add product to Firestore
       const docRef = await addDoc(collection(db, "products"), productData);
 
-      // Optionally, dispatch to Redux store
       dispatch(productsActions.setProducts({ ...productData, id: docRef.id }));
 
       // RESET FORM

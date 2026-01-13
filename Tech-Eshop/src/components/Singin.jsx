@@ -23,7 +23,6 @@ export default function Singin() {
     e.preventDefault();
     setError("");
 
-    // Client-side validation
     if (password.length < 6) {
       setError("Password must be at least 6 characters.");
       return;
@@ -37,8 +36,6 @@ export default function Singin() {
       );
       const user = userCredential.user;
 
-      
-      // Update Redux on sign-up
       dispatch(userActions.userLoggedIn(true));
       dispatch(userActions.userId(user.uid));
       setEmail('')

@@ -78,7 +78,6 @@ export default function Cart() {
     const uid = auth.currentUser.uid;
     const batch = writeBatch(db);
 
-    // 1️⃣ Create ONE order document
     const orderRef = doc(collection(db, `users/${uid}/orders`));
 
     batch.set(orderRef, {
@@ -87,13 +86,11 @@ export default function Cart() {
       time: readableTime,
     });
 
-    // 2️⃣ Clear cart (still batch-safe)
     guestCart.forEach((item) => {
       const cartRef = doc(db, `users/${uid}/cart/${item.id}`);
       batch.delete(cartRef);
     });
 
-    // 3️⃣ Commit everything atomically
     await batch.commit();
 
     clearCartButton();

@@ -50,14 +50,12 @@ export default function EditProduct({ product, modal }) {
       setIsLoading(true);
       let imageURL = editedProduct.image;
 
-      // Upload new image if a file is selected
       if (selectedFile) {
         const imageRef = ref(storage, `product-images/${selectedFile.name}`);
         await uploadBytes(imageRef, selectedFile);
         imageURL = await getDownloadURL(imageRef);
         setImageSrc(imageURL);
 
-        // Delete old image from storage
         const oldImageRef = ref(storage, editedProduct.image);
         await deleteObject(oldImageRef).catch((error) => {
           console.warn("Old image deletion failed:", error);

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import UserForm from "../components/UserForm";
+import UserForm from "../components/userForm";
 import {  useState } from "react";
 import UserIcon from "../icons/users.svg?react";
 import BoxIcon from "../icons/box.svg?react";

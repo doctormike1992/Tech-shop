@@ -17,7 +17,7 @@ import { userActions } from "../store/userSclice";
 
 export default function Header() {
   const modal = useRef();
-  const [darkIcon, setDarkIcon] = useState('/sun.svg');
+  const [darkIcon, setDarkIcon] = useState('/moon.svg');
   const modalContainerRef = useRef(null);
   const searchContainerRef = useRef();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
@@ -45,9 +45,9 @@ export default function Header() {
     const html = document.documentElement;
     html.classList.toggle("dark");
     if (html.classList.contains("dark")) {
-      setDarkIcon('/moon.svg');
-    } else {
       setDarkIcon('/sun.svg');
+    } else {
+      setDarkIcon('/moon.svg');
       
     }
   }
