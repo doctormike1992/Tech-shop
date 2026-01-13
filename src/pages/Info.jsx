@@ -1,19 +1,15 @@
 import { useSelector } from "react-redux";
-import UserForm from "../components/userForm";
-import {  useState } from "react";
+import UserForm from "../components/UserForm.jsx";
+import { useState } from "react";
 import UserIcon from "../icons/users.svg?react";
 import BoxIcon from "../icons/box.svg?react";
 import { orderStatus } from "../utils/finishedOrders";
 
-
 export default function Info() {
   const orders = useSelector((state) => state.guest.orders);
-  const [editForm, setEditForm] = useState('close');
+  const [editForm, setEditForm] = useState("close");
 
-console.log(orders)
-
-
-
+  console.log(orders);
 
   return (
     <>

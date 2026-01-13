@@ -1,4 +1,4 @@
-import UserForm from "./userForm";
+import UserForm from "./UserForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,7 +15,10 @@ export default function UserInfo({ handleToOrder, closeModal }) {
             Check your Informations
           </h1>
           <button onClick={closeModal}>
-            <FontAwesomeIcon className="text-sm text-(--primary) cursor-pointer" icon={faX} />
+            <FontAwesomeIcon
+              className="text-sm text-(--primary) cursor-pointer"
+              icon={faX}
+            />
           </button>
         </div>
 
