@@ -9,7 +9,7 @@
 export const subCategories = [
   "Headphones",
   "Speakers",
-  "Laptos",
+  "Laptops",
   "Desktops",
   "Tablets",
   "Iphones",
@@ -35,5 +35,6 @@ export const brands = [
   'ASUS',
   'HP',
   'Razer',
-  'Gigabyte'
+  'Gigabyte',
+  'AMD'
 ];

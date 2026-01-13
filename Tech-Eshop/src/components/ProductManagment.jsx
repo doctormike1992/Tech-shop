@@ -54,7 +54,7 @@ export default function ProductManagment() {
         console.log(productsNum);
         return (
           <div
-            className="flex w-full h-full flex-col justify-center  items-start py-3 gap-3"
+            className="flex w-full h-full flex-col justify-center  items-start py-6 gap-3"
             key={item}
           >
             <div className="flex flex-row pb-2 justify-center text-(--primary) items-center gap-2">
