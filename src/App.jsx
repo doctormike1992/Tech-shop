@@ -24,6 +24,8 @@ export default function App() {
   const uid = useSelector((state) => state.user.userUID);
   const userInfo = useSelector((state) => state.guest.info);
 
+  console.log(import.meta.env.VITE_FIREBASE_API_KEY);
+  
   //ADDING THE USER ON REDUX
   useEffect(() => {
     const auth = getAuth();

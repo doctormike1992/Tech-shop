@@ -18,3 +18,5 @@ const auth = getAuth(app);
  const storage = getStorage(app);
 
 export { app, auth, db, storage };
+
+console.log(import.meta.env.VITE_FIREBASE_API_KEY);
