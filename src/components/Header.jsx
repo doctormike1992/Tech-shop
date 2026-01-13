@@ -17,7 +17,7 @@ import { userActions } from "../store/userSclice";
 
 export default function Header() {
   const modal = useRef();
-  const [darkIcon, setDarkIcon] = useState("/moon.svg");
+  const [darkIcon, setDarkIcon] = useState('/moon.svg');
   const modalContainerRef = useRef(null);
   const searchContainerRef = useRef();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
@@ -45,9 +45,10 @@ export default function Header() {
     const html = document.documentElement;
     html.classList.toggle("dark");
     if (html.classList.contains("dark")) {
-      setDarkIcon("/sun.svg");
+      setDarkIcon('/sun.svg');
     } else {
-      setDarkIcon("/moon.svg");
+      setDarkIcon('/moon.svg');
+      
     }
   }
 
@@ -114,12 +115,34 @@ export default function Header() {
         <h2 className=" text-(--primary) text-xl">
           <Link to="/">Tech-Eshop</Link>
         </h2>
-        {!isMobile && <Search />}
+        {isMobile ? (
+          <div>
+            <div ref={searchContainerRef}>
+              <button>
+                <FontAwesomeIcon className="text-(--secondText)" icon={faSearch} onClick={openModal} />
+              </button>
+            </div>
+
+            <Modal ref={modal} modalClass="w-full">
+              <div ref={modalContainerRef}>
+                <Search
+                  onModal={`w-full flex flex-row transition-transform transition-all duration-300 ease-in-out ${
+                    isVisible ? "translate-y-0.5" : "translate-y-10"
+                  } `}
+                  searchBarModal="bg-stone-50   h-full w-full text-2xl outline-0 py-1 px-5 text-nowrap pr-9  md:w-full relative rounded-lg border-2 border-stone-600"
+                  searchButtonModal=" hidden"
+                />
+              </div>
+            </Modal>
+          </div>
+        ) : (
+          <Search />
+        )}
       </div>
 
       <nav className="flex justify-start text-md font-medium  items-center  w-full">
         <div
-          className={`w-full gap-4 md:gap-6 lg:gap-8 xl:gap-10 flex text-stone-900 items-center justify-start ${
+          className={`w-full gap-5 md:gap-6 lg:gap-8 xl:gap-10 flex text-stone-900 items-center justify-start ${
             userLogState ? "xl:justify-start " : "justify-start"
           }`}
         >
@@ -138,29 +161,8 @@ export default function Header() {
             </NavLink>
           )}
 
-          {isMobile && (
-            <div>
-              <div ref={searchContainerRef}>
-                <FontAwesomeIcon
-                  className="text-(--secondText)"
-                  icon={faSearch}
-                  onClick={openModal}
-                />
-              </div>
 
-              <Modal ref={modal} modalClass="w-full">
-                <div ref={modalContainerRef}>
-                  <Search
-                    onModal={`w-full flex flex-row transition-transform transition-all duration-300 ease-in-out ${
-                      isVisible ? "translate-y-0.5" : "translate-y-10"
-                    } `}
-                    searchBarModal="bg-stone-50   h-full w-full text-2xl outline-0 py-1 px-5 text-nowrap pr-9  md:w-full relative rounded-lg border-2 border-stone-600"
-                    searchButtonModal=" hidden"
-                  />
-                </div>
-              </Modal>
-            </div>
-          )}
+          
 
           {userLogState ? (
             <>
