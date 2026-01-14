@@ -86,11 +86,18 @@ li{
   background-color: white;
   display: flex;
   flex-direction: row;
-  padding: 10px 20px;
+  flex-wrap: wrap;
+  padding: 5px;
   border-radius: 10px;
   animation: animate ease-in-out 1.5s forwards;
   border: 1px solid var(--secondary);
   will-change: transform, opacity;
+}
+
+@media screen and (min-width: 800px) {
+  .animateAdd{
+    padding: 10px 20px;
+  }
 }
 
 @keyframes animate {

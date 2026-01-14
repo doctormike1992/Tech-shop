@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AddProductEffect from "../components/AddProductEffect";
+import { ScrollTop } from "../utils/scrollTop";
 
 
 export default function MainLayout() {
@@ -11,6 +12,7 @@ export default function MainLayout() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <ScrollTop />
       <Header />
       <main className="w-full grow relative">
         <Outlet />

@@ -24,7 +24,6 @@ export default function Orders() {
    setOrderInProgress(ongoingOrders);
  }, [guestOrders]);
 
-  console.log(orderInProgress);
 
   return (
     <>

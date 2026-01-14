@@ -9,7 +9,6 @@ export default function Info() {
   const orders = useSelector((state) => state.guest.orders);
   const [editForm, setEditForm] = useState("close");
 
-  console.log(orders);
 
   return (
     <>

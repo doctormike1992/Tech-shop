@@ -113,7 +113,6 @@ export default function NewProductForm() {
       ...prev,
       { id: crypto.randomUUID(), name: "", value: "" },
     ]);
-    console.log(specs)
   }
 
   function handleDeleteSpec(specId) {

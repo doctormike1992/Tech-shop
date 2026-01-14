@@ -51,7 +51,6 @@ export default function ProductManagment() {
     <>
       {categories.map((item) => {
         const productsNum = products.filter((pro) => pro.category === item);
-        console.log(productsNum);
         return (
           <div
             className="flex w-full h-full flex-col justify-center  items-start py-6 gap-3"

@@ -14,9 +14,11 @@ import Singin from "./Singin";
 import { getAuth, signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../store/userSclice";
+import { saveDarkModeInStorage, getDarkModeInStorage } from "../utils/localeStorage";
 
 export default function Header() {
-  const modal = useRef();
+  const authModal = useRef();
+  const searchModal = useRef();
   const [darkIcon, setDarkIcon] = useState('/moon.svg');
   const modalContainerRef = useRef(null);
   const searchContainerRef = useRef();
@@ -40,16 +42,24 @@ export default function Header() {
     setCartQuantity(cartTotalQuantity);
   }, [cart]);
 
-  //TOGGLE THE DARK MODE IN THE SITE AND THE ICONS FOR IT
+  //GETS THE DARK MODE THEME FROM LOCALE STORAGE
+  useEffect(() => {
+  const theme = getDarkModeInStorage();
+
+  if (theme === "dark") {
+    document.documentElement.classList.add("dark");
+    setDarkIcon("/sun.svg");
+  }
+  }, []);
+
+  //TOGGLE THE DARK MODE IN THE SITE AND THE ICONS FOR IT 
+  // AND ADDS IT TO THE LOCALE STORAGE
   function toggleDark() {
     const html = document.documentElement;
-    html.classList.toggle("dark");
-    if (html.classList.contains("dark")) {
-      setDarkIcon('/sun.svg');
-    } else {
-      setDarkIcon('/moon.svg');
-      
-    }
+    const isDark = html.classList.toggle("dark");
+
+    setDarkIcon(isDark ? "/sun.svg" : "/moon.svg");
+    saveDarkModeInStorage(isDark);
   }
 
   //LOGOUT
@@ -69,7 +79,7 @@ export default function Header() {
   //CLOSSING THE MODAL ON LOGGIN IN
   useEffect(() => {
     if (userLogState) {
-      modal.current.close();
+      authModal.current.close();
     }
   }, [userLogState]);
 
@@ -86,7 +96,7 @@ export default function Header() {
         !modalContainerRef.current.contains(e.target) &&
         !searchContainerRef.current.contains(e.target)
       ) {
-        modal.current.close();
+        searchModal.current.close();
         setIsVisible(false);
       }
     };
@@ -102,7 +112,7 @@ export default function Header() {
 
   //OPENING THE SEARCH MODAL
   function openModal() {
-    modal.current.open();
+    searchModal.current.open();
     setIsVisible(true);
   }
 
@@ -116,14 +126,15 @@ export default function Header() {
           <Link to="/">Tech-Eshop</Link>
         </h2>
         {isMobile ? (
-          <div>
             <div ref={searchContainerRef}>
-              <button>
-                <FontAwesomeIcon className="text-(--secondText)" icon={faSearch} onClick={openModal} />
+              <button onClick={openModal}>
+                <FontAwesomeIcon
+                  className="text-(--secondText)"
+                  icon={faSearch}
+                />
               </button>
-            </div>
 
-            <Modal ref={modal} modalClass="w-full">
+            <Modal ref={searchModal} modalClass="w-full">
               <div ref={modalContainerRef}>
                 <Search
                   onModal={`w-full flex flex-row transition-transform transition-all duration-300 ease-in-out ${
@@ -143,7 +154,7 @@ export default function Header() {
       <nav className="flex justify-start text-md font-medium  items-center  w-full">
         <div
           className={`w-full gap-5 md:gap-6 lg:gap-8 xl:gap-10 flex text-stone-900 items-center justify-start ${
-            userLogState ? "xl:justify-start " : "justify-start"
+            !userLogState && "pl-2"
           }`}
         >
           {adminLogged === "WsPXtBodtbhmqPI8DLTvvufq46B2" && (
@@ -160,9 +171,6 @@ export default function Header() {
               )}
             </NavLink>
           )}
-
-
-          
 
           {userLogState ? (
             <>
@@ -229,7 +237,7 @@ export default function Header() {
           ) : (
             <button
               className="transition-all dark:hover:text-white cursor-pointer text-(--primary) hover:bg-(--blue) hover:text-(--white) py-1 px-2  rounded-md "
-              onClick={() => modal.current.open()}
+              onClick={() => authModal.current.open()}
             >
               <LoginIcon className="w-5 h-5 " />
             </button>
@@ -246,7 +254,7 @@ export default function Header() {
         </button>
       </nav>
       <Modal
-        ref={modal}
+        ref={authModal}
         modalClass="flex flex-col w-full justify-center items-center"
         closeButton
       >

@@ -8,7 +8,7 @@ export default function AddProductEffect() {
     <div className="fixed z-100 bottom-10 right-20 flex flex-col items-center">
       {addedProducts.map((item) => (
         <div className={"animateAdd"} key={item.effectId}>
-          <p>
+          <p className="text-xs md:text-sm text-wrap">
             <FontAwesomeIcon icon={faCircleCheck} />{" "}
             <strong>{item.name}</strong> was added
           </p>
