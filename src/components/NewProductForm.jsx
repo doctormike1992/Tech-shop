@@ -11,7 +11,7 @@ import { faChevronDown, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function NewProductForm() {
-  const [imageSrc, setImageSrc] = useState("/placeholder.png");
+  const [imageSrc, setImageSrc] = useState("/placeholder.avif");
   const [ischeck, setIscheck] = useState(false);
   const [noImage, setNoImage] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -87,7 +87,7 @@ export default function NewProductForm() {
 
       // RESET FORM
       event.target.reset();
-      setImageSrc("/placeholder.png");
+      setImageSrc("/placeholder.avif");
       setSelectedFile(null);
       setIscheck(false);
       setIsLoading(false);
