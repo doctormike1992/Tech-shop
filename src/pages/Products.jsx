@@ -144,7 +144,7 @@ export default function Products() {
             />
           </div>
         </Modal>
-        
+
         <div className="flex py-15 gap-5 items-center flex-row w-full">
           <button
             className="w-fit border rounded-md px-2 py-1 border-(--secondText) dark:border-(--ordersBorder) dark:text-white dark:hover:text-white cursor-pointer hover:bg-(--blue) hover:text-(--white) hover:border-(--blue)"
@@ -157,11 +157,10 @@ export default function Products() {
 
         <div className="w-full  flex flex-col ">
           <ul className="flex w-full flex-row items-center justify-start flex-wrap gap-6  md:py-10  lg:pl-2 ">
-            {filteredProducts.length === 0 ? (
-              <div
-                className="w-12 h-12 border-4 border-stone-900 border-t-transparent
-                            rounded-full animate-spin absolute top-[50%] left-[50%]"
-              ></div>
+            {filteredProducts.length === 0 && products.length !== 0 ? (
+              <h1 className="text-lg md:text-2xl font-medium text-(--primary) text-center w-full">
+                No Products found
+              </h1>
             ) : (
               filteredProducts.map((item) => {
                 const existing = guestFavorites.find((ex) => ex.id === item.id);
